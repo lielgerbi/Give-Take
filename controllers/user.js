@@ -2,6 +2,7 @@ const userService = require('../services/user');
 
 const getUsers = async (req, res) => {
   const Users = await userService.getUsers();
+  
   res.json(Users);
 };
 

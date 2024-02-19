@@ -1,15 +1,24 @@
-const User = require('../models/User');
+const Users = require('../models/User');
 
 const getUsers = async () => {
-    return await User.find({});
-};
+    return await Users.find({});
+    // Users.find({})
+    // .then(function(users) {
+    //   if (users) {
+    //     console.log(users);
+    //     return users;
+    //   } else {
+    //     console.log("no")
+    //   }
+    // }) 
+}
 
 const getUserByName = async (userName) => {
-    return await User.findOne({ userName: userName });
+    return await Users.findOne({ userName: userName });
 };
 
 const createUser = async (newUser) => {
-    const user = new User({
+    const user = new Users({
         userName: newUser.userName,
         password: newUser.password,
         firstName: newUser.firstName,

@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const User = new Schema({
+    _id:{
+        type: mongoose.Schema.Types.ObjectId,
+        required:true
+    },
+
     userName: {
         type: String,
         required: true
@@ -30,5 +35,5 @@ const User = new Schema({
         required: true
     }
 });
-
-module.exports = mongoose.model('User', User);
+const db=mongoose.connection.useDb('give&take')
+module.exports = db.model('Users', User);

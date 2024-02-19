@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Post = new Schema({
-    postID: {
-        type: Number,
-        required: true
+    _id:{
+        type: mongoose.Schema.Types.ObjectId,
+        required:true
     },
     userName: {
         type: String,//reference to the user who posted it
@@ -35,5 +35,5 @@ const Post = new Schema({
         required: true
     }
 });
-
-module.exports = mongoose.model('Post', Post);
+const db=mongoose.connection.useDb('give&take')
+module.exports = db.model('Post', Post);

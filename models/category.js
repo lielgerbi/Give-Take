@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Category = new Schema({
     
     categoryID: {
-        type: Int,
+        type: String,
         required: true
     },
     categoryName: {
@@ -18,4 +18,4 @@ const Category = new Schema({
 
 });
 
-module.exports = mongoose.model('category', Category);
+module.exports = mongoose.model('Category', Category);

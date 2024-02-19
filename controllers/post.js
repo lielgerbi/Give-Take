@@ -41,18 +41,8 @@ const updatePost = async (req, res) => {
     res.send();
   };
 
-  const getUserPostsToView = async (req, res) => {
-    const posts = await postService.getUserPostsToView(req.params.UserGroups , req.params.UserFriends);
-    res.json(posts);
-  };
-  
-  const getPostByGroup = async (req, res) => {
-    const groupPosts = await postService.getPostByGroup(req.params.groupId );
-    res.json(groupPosts);
-  };
-
   const getPostByUser = async (req, res) => {
-    const userPosts = await postService.getUserPostsToView(req.params.userName);
+    const userPosts = await postService.getPostByUser(req.body.userName);
     res.json(userPosts);
   };
 
@@ -65,8 +55,6 @@ const updatePost = async (req, res) => {
     createPost,
     updatePost,
     deletePost,
-    getUserPostsToView,
-    getPostByGroup,
     getPostByUser
 
   };

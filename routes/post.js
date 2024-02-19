@@ -11,14 +11,9 @@ router.route('/:postID')
     .patch(postController.updatePost)
     .delete(postController.deletePost);
 
-router.route('/:userName')
+router.route('/getPostByUser')
     .get(postController.getPostByUser);
 
-router.route('/:groupId')
-    .get(postController.getPostByGroup);
-
-router.route('/:postToView')
-.get(postController.getUserPostsToView);
 
 //TODO: add get Post To View Between Dates 
 
