@@ -17,5 +17,5 @@ const Category = new Schema({
     }
 
 });
-
-module.exports = mongoose.model('Category', Category);
+const db=mongoose.connection.useDb('give&take')
+module.exports = db.model('Category', Category);

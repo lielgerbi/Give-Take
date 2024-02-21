@@ -20,3 +20,10 @@ export const getUserByUserName = async (userName) => {
       });
     }))
   }
+
+  export const getAllCategories = async () => {
+    return (await api().then(async (api) => {
+      return api.get(`/categories` , {
+      });
+    }))
+  }

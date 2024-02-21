@@ -7,7 +7,7 @@
     height: 100%;
 }
 
-.container {
+.container_login {
 
     display: flex !important;
     flex-direction: column;
@@ -20,7 +20,7 @@
     
 }
 
-.container > form {
+.container_login > form {
     width: 70%;
     border: 1px solid #dfdfdf;
     padding: 20px;

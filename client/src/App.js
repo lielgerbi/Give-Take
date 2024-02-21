@@ -9,22 +9,24 @@ import LogIn from "./loginComps/LogIn";
 import SignUp from "./loginComps/SignUp";
 import NewProduct from "./products/newProduct"
 import {
-  getAllProducts
+  getAllProducts,
+  getAllCategories
 } from "./ApiService";
 
 
 function App() {
 
-  const { connectedUser, setConnectedUser, allProducts, setAllProducts} = useContext(GlobalContext);
+  const { connectedUser, setConnectedUser, allProducts, setAllProducts,allCategories ,setAllCategories} = useContext(GlobalContext);
   useEffect(() => {
      fetchData()
   }, []);
 
   async function fetchData(){
     try{
-        const try1 = await getAllProducts();
-        setAllProducts(try1);
-        console.log(try1);
+        const products = await getAllProducts();
+        const categories = await getAllCategories();
+        setAllProducts(products.data);
+        setAllCategories(categories.data);
     }
     catch(err){
       console.log(err);

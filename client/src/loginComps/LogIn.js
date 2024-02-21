@@ -54,7 +54,7 @@ function LogIn() {
     return (
         <>
         <div className="bgImg">
-            <div className="container">
+            <div className="container_login">
                 {Object.keys(formErrors).length === 0 && isSubmit ? (
                     <div className="ui message success">
                         Signed in successfully

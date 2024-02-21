@@ -1,17 +1,12 @@
 const Categories = require('../models/category');
 
-// const getCategories = async () => {
-//     Categories.find({}).then(categories => {
-//         console.log('All Categories:', categories);
-//       })
-//       .catch(error => {
-//         console.error('Error retrieving categories:', error);
-//       });
-// };
+const getCategories = async () => {
+    return await Categories.find({});
+};
 
-// const getCategoryByName = async (categoryName) => {
-//     return await Categories.findOne({categoryName: categoryName });
-// };
+const getCategoryByName = async (categoryName) => {
+    return await Categories.findOne({categoryName: categoryName });
+};
 
 // const newCategory = async (newCategory) => {
 //     const category = new Categories({
@@ -26,5 +21,5 @@ const Categories = require('../models/category');
 
 
 module.exports = {
-    //getCategories, getCategoryByName, newCategory
+    getCategories, getCategoryByName
 }
