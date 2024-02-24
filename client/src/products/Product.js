@@ -10,10 +10,6 @@ function Product(props) {
   const [commentPopUp,setCommentPopUp] = useState(false);
   const [newComment , setNewComment] = useState("");
   let {product} = props;
-  const price = 10000;
-
-
-
   
     // Update Input value
     function handleInput(e) {
