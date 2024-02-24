@@ -1,0 +1,255 @@
+
+.Text {
+    font-family: "Heebo";
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    text-align: center;
+    color: #282949;
+  }
+  
+.Text2 {
+    height: 40px;
+    font-family: "Heebo";
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    text-align: center;
+    color: #282949;
+  }
+  
+  .nofictaion {
+    font-family: "Heebo";
+    display: flex;
+    height: 145px;
+  }
+  .IconsStyle {
+    width: 45px;
+    height: 45px;
+    justify-content: center;
+    object-fit: contain;
+  }
+  .centersvg {
+    padding-bottom: 11px;
+    text-align: center;
+  }
+  
+  .center {
+    font-family: "Heebo";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .divCenter {
+    font-family: "Heebo";
+    justify-content: center;
+  }
+
+  
+  .bodyText1 {
+    width: 94px;
+    height: 21px;
+    font-family: "Heebo";
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #282949;
+    top: 6px;
+    position: relative;
+  }
+  
+  .bodyText2 {
+    width: 62px;
+    height: 18px;
+    font-family: "Heebo";
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #595a7f;
+    top: 5px;
+    position: relative;
+  }
+  
+  .note {
+    width: 387px;
+    height: 21px;
+    font-family: "Heebo";
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #282949;
+    top: 6px;
+    position: relative;
+  }
+  
+  .modalTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: solid 1px #ededf4;
+  }
+  
+  .modalTitleTxt {
+    font-family: "Heebo";
+    font-size: 16px;
+    font-weight: bold;
+    color: #282949;
+  }
+  
+  .XIcon {
+    position: absolute;
+    left: 14px;
+    cursor: pointer;
+  }
+  .Modelbutton {
+    margin-left: 300px;
+    cursor: pointer;
+  }
+  .noteInput {
+    border: none;
+    outline: none !important;
+    font-family: "Heebo";
+    border-bottom: 1px solid lightgray;
+    height: 100px;
+    display: flex;
+  }
+  .modalContiner {
+    padding-top: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+  .icon {
+    position: absolute;
+    left: 14px;
+    top: 0px;
+    cursor: pointer;
+  }
+  
+  .closeButton {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .rightButton {
+    height: 48px;
+    display: flex;
+    align-items: right;
+    justify-content: right;
+    cursor: pointer;
+  }
+  .centerButton {
+    height: 48px;
+    display: initial;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .outer {
+    width: 200px;
+    text-align: center;
+    display: flex;
+    padding-top: 3px;
+  }
+  .inner {
+    display: inline-block;
+    border: 1px solid #5271ff;
+    color: #3e72fe;
+    border-radius: 43.5px;
+    background-color: white;
+    min-width: 70px;
+  }
+  
+  .mainButton {
+    height: 38px;
+    display: initial;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 20%;
+    border: 3px solid green;
+    padding: 7px;
+    border: 1px solid #5271ff;
+    color: #3e72fe;
+    border-radius: 43.5px;
+    background-color: white;
+    min-width: 50px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .blueButton {
+    font-family: "Heebo";
+    outline: none !important;
+    padding: 0;
+    border: none;
+    background: none;
+    margin-left: 7px;
+    margin-right: 7px;
+    min-width: 99px;
+    height: 27.5px;
+    border-radius: 5px;
+    background-color: #5271ff;
+    box-shadow: 0px 2px 2px rgba(255, 255, 255, 0.15);
+    color: white;
+    text-align: center;
+    margin-top: 7px;
+    padding-left: 23px;
+    padding-right: 23px;
+    cursor: pointer;
+  }
+  
+  
+  .delete {
+    margin-right: 20px;
+  }
+  
+  .textTitle {
+    height: 20px;
+    margin-bottom: 7px;
+    font-family: Heebo;
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    text-align: center;
+    color: #282949;
+    
+  }
+.textBody{
+    margin-bottom: 7px;
+    font-family: Heebo;
+    font-size: 14px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    text-align: center;
+    color: #282949;
+    border:1px solid black;
+
+}
+  

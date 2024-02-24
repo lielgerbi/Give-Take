@@ -33,6 +33,10 @@ const Post = new Schema({
     isAvailable:{
         type: Boolean,
         required: true
+    },
+    city:{
+        type:String,
+        required:true
     }
 });
 const db=mongoose.connection.useDb('give&take')

@@ -27,3 +27,10 @@ export const getUserByUserName = async (userName) => {
       });
     }))
   }
+  
+  export const getAllCities = async () => {
+    return (await api().then(async (api) => {
+      return api.get(`/cities` , {
+      });
+    }))
+  }

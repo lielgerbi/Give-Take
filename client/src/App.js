@@ -10,13 +10,14 @@ import SignUp from "./loginComps/SignUp";
 import NewProduct from "./products/newProduct"
 import {
   getAllProducts,
-  getAllCategories
+  getAllCategories,
+  getAllCities
 } from "./ApiService";
 
 
 function App() {
 
-  const { connectedUser, setConnectedUser, allProducts, setAllProducts,allCategories ,setAllCategories} = useContext(GlobalContext);
+  const { connectedUser, setConnectedUser, allProducts, setAllProducts,allCategories ,setAllCategories,allCities,setAllCities} = useContext(GlobalContext);
   useEffect(() => {
      fetchData()
   }, []);
@@ -25,8 +26,11 @@ function App() {
     try{
         const products = await getAllProducts();
         const categories = await getAllCategories();
+        const cities = await getAllCities()
+        console.log(products);
         setAllProducts(products.data);
         setAllCategories(categories.data);
+        setAllCities(cities.data);
     }
     catch(err){
       console.log(err);

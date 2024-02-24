@@ -5,21 +5,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GlobalContext } from "../GlobalContext";
 // import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 
-const categories = [
-  "All Products",
-  "Phones & Tablets",
-  "Cases & Covers",
-  "Screen Guards",
-  "Cables & Chargers",
-  "Power Banks",
-];
+// const categories = [
+//   "All Products",
+//   "Phones & Tablets",
+//   "Cases & Covers",
+//   "Screen Guards",
+//   "Cables & Chargers",
+//   "Power Banks",
+// ];
 
 const brands = ["Apple", "Samsung", "Google", "HTC"];
 
 const manufacturers = ["HOCO", "Nillkin", "Remax", "Baseus"];
 
 function FilterMenuLeft() {
-  // const { allCategories } = useContext(GlobalContext);
+   const { allCategories } = useContext(GlobalContext);
+   const {allCities} = useContext(GlobalContext);
+   var categories = allCategories.map(category => category.categoryName);
+   var cities = allCities.map(city => city.name);
+   var allSubnamesReduce = allCategories.reduce((acc, category) => acc.concat(category.subCategories), []);
+
   return (
     <ul className="list-group list-group-flush rounded">
       <li className="list-group-item d-none d-lg-block">
@@ -42,7 +47,7 @@ function FilterMenuLeft() {
       <li className="list-group-item">
         <h5 className="mt-1 mb-1">Brands</h5>
         <div className="d-flex flex-column">
-          {brands.map((v, i) => {
+          {allSubnamesReduce.map((v, i) => {
             return (
               <div key={i} className="form-check">
                 <input className="form-check-input" type="checkbox" />
@@ -57,7 +62,7 @@ function FilterMenuLeft() {
       <li className="list-group-item">
         <h5 className="mt-1 mb-1">Manufacturers</h5>
         <div className="d-flex flex-column">
-          {manufacturers.map((v, i) => {
+          {cities.map((v, i) => {
             return (
               <div key={i} className="form-check">
                 <input className="form-check-input" type="checkbox" />
@@ -100,11 +105,19 @@ function FilterMenuLeft() {
 function ProductList() {
   const [viewType, setViewType] = useState({ grid: true });
   const { allProducts } = useContext(GlobalContext);
+  var categories = [
+  "All Products",
+  "Phones & Tablets",
+  "Cases & Covers",
+  "Screen Guards",
+  "Cables & Chargers",
+  "Power Banks",
+];
 
-  useEffect(() => {
-    console.log("now in the list:")
-    console.log(allProducts);
-}, []);
+//   useEffect(() => {
+//     console.log("now in the list:")
+//     console.log(allProducts);
+// }, []);
 
   function changeViewType() {
     setViewType({

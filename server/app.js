@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const users = require('./routes/user');
 const posts = require('./routes/post');
 const categories = require("./routes/categories");
+const cities = require("./routes/cities")
 const socketIo = require("socket.io");
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger');
@@ -58,6 +59,7 @@ app.use(express.json());
 app.use('/users', users);
 app.use('/posts', posts);
 app.use('/categories' , categories)
+app.use('/cities' , cities)
 // Start the Express server
 app.listen(3001, () => {
   console.log(`Server is running on http://localhost:${3001}`);
