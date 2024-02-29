@@ -1,55 +1,134 @@
-import Image from "./Phone.jfif";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { useState, useEffect } from "react";
+// import "./loginPage.css";
+// import Image from './background.jpg'; // Import using relative path
 
-function newProduct(props) {
-  const price = 10000;
-  let percentOff;
-  let offPrice = `${price}Ks`;
+// function newProduct() {
+//     const initialValues = {
+//         categoryName: "",
+//         subCategory: "",
+//         details: "",
+//         city: "",
+//     };
+//     const [formValues, setFormValues] = useState(initialValues);
+//     const [formErrors, setFormErrors] = useState({});
+//     const [isSubmit, setIsSubmit] = useState(false);
 
-  if (props.percentOff && props.percentOff > 0) {
-    percentOff = (
-      <div
-        className="badge bg-dim py-2 text-white position-absolute"
-        style={{ top: "0.5rem", right: "0.5rem" }}
-      >
-        {props.percentOff}% OFF
-      </div>
-    );
+//     const handleChange = (e) => {
+//         const { name, value } = e.target;
+//         setFormValues({ ...formValues, [name]: value });
+//     };
 
-    offPrice = (
-      <>
-        <del>{price}Ks</del> {price - (props.percentOff * price) / 100}Ks
-      </>
-    );
-  }
+//     const handleSubmit = (e) => {
+//         e.preventDefault();
+//         setFormErrors(validate(formValues));
+//         setIsSubmit(true);
+//     };
 
-  return (
-    <div className="col">
-      <div className="card shadow-sm">
-        <Link to="/products/1" href="!#" replace>
-          {percentOff}
-          <img
-            className="card-img-top bg-dark cover"
-            height="200"
-            alt=""
-            src={Image}
-          />
-        </Link>
-        <div className="card-body">
-          <h5 className="card-title text-center text-dark text-truncate">
-            Nillkin iPhone X cover
-          </h5>
-          <p className="card-text text-center text-muted mb-0">{offPrice}</p>
-          <div className="d-grid d-block">
-            <button className="btn btn-outline-dark mt-3">
-              <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Add to cart
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+//     useEffect(() => {
+//         console.log(formErrors);
+//         if (Object.keys(formErrors).length === 0 && isSubmit) {
+//             console.log(formValues);
+//         }
+//     }, [formErrors, formValues, isSubmit]);
+//     const validate = (values) => {
+//         const errors = {};
+//         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+//         if (!values.username) {
+//             errors.username = "Username is required!";
+//         }
+//         if (!values.email) {
+//             errors.email = "Email is required!";
+//         } else if (!regex.test(values.email)) {
+//             errors.email = "This is not a valid email format!";
+//         }
+//         if (!values.password) {
+//             errors.password = "Password is required";
+//         } else if (values.password.length < 4) {
+//             errors.password = "Password must be more than 4 characters";
+//         } else if (values.password.length > 10) {
+//             errors.password = "Password cannot exceed more than 10 characters";
+//         }
+//         if (values.password !== values.confirmPassword) {
+//             errors.confirmPassword = "Those passwords didn’t match. Try again.";
+//         }
+//         return errors;
+//     };
+
+//     return (
+//         <>
+//         <div className="bgImg">
+//             <div className="container_login">
+//                 {Object.keys(formErrors).length === 0 && isSubmit ? (
+//                     <div className="ui message success">
+//                         Signed in successfully
+//                     </div>
+//                 ) : (
+//                     console.log("Entered Details", formValues)
+//                 )}
+
+//                 <form onSubmit={handleSubmit}>
+//                     <h1>Sign Up</h1>
+//                     <div className="ui divider"></div>
+//                     <div className="ui form">
+//                         <div className="field">
+//                             <label>Username</label>
+//                             <input
+//                                 type="text"
+//                                 name="username"
+//                                 placeholder="Choose a username"
+//                                 value={formValues.username}
+//                                 onChange={handleChange}
+//                             />
+//                         </div>
+//                         <p>{formErrors.username}</p>
+//                         <div className="field">
+//                             <label>Email</label>
+//                             <input
+//                                 type="text"
+//                                 name="email"
+//                                 placeholder="Email"
+//                                 value={formValues.email}
+//                                 onChange={handleChange}
+//                             />
+//                         </div>
+//                         <p>{formErrors.email}</p>
+//                         <div className="field">
+//                             <label>Password</label>
+//                             <input
+//                                 type="password"
+//                                 name="password"
+//                                 placeholder="Password"
+//                                 value={formValues.password}
+//                                 onChange={handleChange}
+//                             />
+//                         </div>
+//                         <p>{formErrors.password}</p>
+//                         <div className="field">
+//                             <label>Confirm Password</label>
+//                             <input
+//                                 type="password"
+//                                 name="confirmPassword"
+//                                 placeholder="Confirm password"
+//                                 value={formValues.confirmPassword}
+//                                 onChange={handleChange}
+//                             />
+//                         </div>
+//                         <p>{formErrors.confirmPassword}</p>
+//                         <button className="singbutton">Submit</button>
+//                     </div>
+//                 </form>
+//                 <div className="text">
+//                     Already have an account? <span>Login</span>
+//                 </div>
+//             </div>
+//             </div>
+//         </>
+//     );
+// }
+function newProduct() {
+  return(
+    <div>add new product</div>
+  )
 }
 
-export default newProduct;
+ export default newProduct;

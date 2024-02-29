@@ -1,6 +1,7 @@
-import BannerZero from "./banner-0.jpg";
-import BannerOne from "./banner-1.jpg";
-import BannerTwo from "./banner-2.jpg";
+import BannerZero from "./give1.png";
+import BannerOne from "./products.jpg";
+import BannerTwo from "./login2.webp";
+import { useHistory } from 'react-router-dom'; 
 
 function BannerIncidator(props) {
   return (
@@ -39,6 +40,23 @@ function BannerImage(props) {
 }
 
 function Banner() {
+  const history = useHistory();
+
+  const handleImageClick = (index) => {
+    // Logic to determine the page URL based on the index
+    let pageUrl;
+    if(index==0){
+      pageUrl='/newProduct'
+    }
+    if(index==1){
+      pageUrl='/products'
+    }
+    if(index==2){
+      pageUrl='/logIn'
+    }
+    // Navigate to the desired page
+    history.push(pageUrl);
+  };
   return (
     <div
       id="bannerIndicators"
@@ -52,9 +70,15 @@ function Banner() {
         <BannerIncidator index="2" />
       </div>
       <div className="carousel-inner">
+        <a onClick={() => handleImageClick(0)}>
         <BannerImage image={BannerZero} active={true} />
+        </a>
+        <a onClick={() => handleImageClick(1)}>
         <BannerImage image={BannerOne} />
+        </a>
+        <a onClick={() => handleImageClick(2)}>
         <BannerImage image={BannerTwo} />
+        </a>
       </div>
     </div>
   );
