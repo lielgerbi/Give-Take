@@ -61,8 +61,8 @@ app.use('/posts', posts);
 app.use('/categories' , categories)
 app.use('/cities' , cities)
 // Start the Express server
-app.listen(3001, () => {
-  console.log(`Server is running on http://localhost:${3001}`);
+app.listen(443, () => {
+  console.log(`Server is running on http://localhost:${443}`);
 });
 
 
