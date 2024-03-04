@@ -13,7 +13,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 110vh;
+    height: 115vh;
     max-width: 500px;
     width: 100%;
     margin: auto;
@@ -34,7 +34,14 @@ input {
     display: flex;
     border-radius: 9%;
 }
-
+.name {
+    display: flex;
+    font-size: 12px;
+}
+.field{
+    font-size: 13px;
+    margin-right: 10px;
+}
 pre {
     width: 70%;
     color: #fff;
@@ -56,7 +63,9 @@ p {
     margin: 2px;
     padding: 5px;
 }
-
+label{
+    font-size: 15px;
+}
 span{
     color: rgb(0, 95, 236);
     cursor: pointer;

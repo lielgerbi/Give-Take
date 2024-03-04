@@ -1,4 +1,4 @@
-import BannerZero from "./give1.png";
+import BannerZero from "./upload1.jpg";
 import BannerOne from "./products.jpg";
 import BannerTwo from "./login2.webp";
 import { useHistory } from 'react-router-dom'; 

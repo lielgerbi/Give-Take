@@ -1,26 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { GlobalContext } from "../GlobalContext";
 import "./loginPage.css";
+import {
+    findUser
+  } from "../ApiService";
+import { genComponentStyleHook } from "antd/es/theme/internal";
 
 function LogIn() {
     const initialValues = {
-        email: "",
+        userName: "",
         password: "",
     };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-
+    const [userNotExist , setUserNotExist] = useState(false);
+    const {connectedUser,setConnectedUser} = useContext(GlobalContext);
+    const history = useHistory();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
+        try {
+            const user = await findUser(formValues.userName ,formValues.password);
+            console.log(user)
+            setConnectedUser(user.data)
+            history.push("/");
+        } catch (error) {
+            setUserNotExist(true)
+            console.error("not find user:", error);
+        }
     };
-
     useEffect(() => {
         console.log(formErrors);
         if (Object.keys(formErrors).length === 0 && isSubmit) {
@@ -29,14 +45,8 @@ function LogIn() {
     }, [formErrors, formValues, isSubmit]);
     const validate = (values) => {
         const errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.username) {
-            errors.username = "Username is required!";
-        }
-        if (!values.email) {
-            errors.email = "Email is required!";
-        } else if (!regex.test(values.email)) {
-            errors.email = "This is not a valid email format!";
+        if (!values.userName) {
+            errors.userName = "Username is required!";
         }
         if (!values.password) {
             errors.password = "Password is required";
@@ -45,9 +55,7 @@ function LogIn() {
         } else if (values.password.length > 10) {
             errors.password = "Password cannot exceed more than 10 characters";
         }
-        if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = "Those passwords didn’t match. Try again.";
-        }
+       
         return errors;
     };
 
@@ -68,16 +76,16 @@ function LogIn() {
                     <div className="ui divider"></div>
                     <div className="ui form">
                         <div className="field">
-                            <label>Email</label>
+                            <label>userName</label>
                             <input
                                 type="text"
-                                name="email"
-                                placeholder="Email"
-                                value={formValues.email}
+                                name="userName"
+                                placeholder="userName"
+                                value={formValues.userName}
                                 onChange={handleChange}
                             />
                         </div>
-                        <p>{formErrors.email}</p>
+                        <p>{formErrors.userName}</p>
                         <div className="field">
                             <label>Password</label>
                             <input
@@ -89,6 +97,7 @@ function LogIn() {
                             />
                         </div>
                         <p>{formErrors.password}</p>
+                        {userNotExist &&<p>not find</p>}
                         <button className="singbutton">Submit</button>
                     </div>
                 </form>

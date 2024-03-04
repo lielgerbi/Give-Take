@@ -7,6 +7,7 @@ import Landing from "./landing/Landing";
 import ProductList from "./products/ProductList";
 import LogIn from "./loginComps/LogIn";
 import SignUp from "./loginComps/SignUp";
+import HomePage from "./loginComps/HomePage"
 import NewProduct from "./products/newProduct"
 import {
   getAllProducts,
@@ -31,6 +32,7 @@ function App() {
         setAllProducts(products.data);
         setAllCategories(categories.data);
         setAllCities(cities.data);
+        setConnectedUser(undefined)
     }
     catch(err){
       console.log(err);
@@ -58,6 +60,9 @@ function App() {
       </Route>
       <Route path="/newProduct" exact>
         <NewProduct />
+      </Route>
+      <Route path="/home" exact>
+        <HomePage />
       </Route>
       
     </Switch>

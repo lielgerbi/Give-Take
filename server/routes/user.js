@@ -8,7 +8,7 @@ router.route('/')
     .post(userController.createUser);
 
 
-router.route('/:userName')
+router.route('/user')
     .get(userController.getUser)
     .patch(userController.updateUser)
     .delete(userController.deleteUser);

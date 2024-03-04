@@ -8,20 +8,18 @@ import {
   } from "../ApiService";
 
 function SignUp() {
+    const { connectedUser,setConnectedUser} = useContext(GlobalContext);
     const initialValues = {
-        userName: "",
-        firstName:"",
-        lastName:"",
-        email: "",
-        password: "",
-        confirmPassword: "",
+        userName: connectedUser? connectedUser.userName:"",
+        email: connectedUser? connectedUser.email: "",
+        password: connectedUser? connectedUser.password: "",
+        firstName:connectedUser? connectedUser.firstName: "",
+        lastName:connectedUser? connectedUser.lastName: "",
     };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const history = useHistory();
-    const {setConnectedUser} = useContext(GlobalContext);
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -43,6 +41,13 @@ function SignUp() {
         }
     };
     useEffect(() => {
+        console.log("home")
+        console.log(connectedUser)
+        console.log("data set to - ")
+        console.log(initialValues)
+    }, [connectedUser]);
+   
+    useEffect(() => {
         
         if (Object.keys(formErrors).length === 0 && isSubmit) {
             console.log(formValues);
@@ -54,16 +59,16 @@ function SignUp() {
         if (!values.userName) {
             errors.userName = "Username is required!";
         }
-        if (!values.email) {
-            errors.email = "Email is required!";
-        } else if (!regex.test(values.email)) {
-            errors.email = "This is not a valid email format!";
-        }
         if (!values.firstName) {
             errors.firstName = "First name is required!";
         }
         if (!values.lastName) {
             errors.lastName = "Lasr name is required!";
+        }
+        if (!values.email) {
+            errors.email = "Email is required!";
+        } else if (!regex.test(values.email)) {
+            errors.email = "This is not a valid email format!";
         }
         if (!values.password) {
             errors.password = "Password is required";
@@ -72,12 +77,12 @@ function SignUp() {
         } else if (values.password.length > 10) {
             errors.password = "Password cannot exceed more than 10 characters";
         }
-        if (values.password !== values.confirmPassword) {
-            errors.confirmPassword = "Those passwords didn’t match. Try again.";
-        }
+    
         return errors;
     };
 
+   
+   
     return (
         <>
         <div className="bgImg">
@@ -89,11 +94,11 @@ function SignUp() {
                 )  }
 
                 <form onSubmit={handleSubmit}>
-                    <h1>Sign Up</h1>
+                    <h1>User Details</h1>
                     <div className="ui divider"></div>
                     <div className="ui form">
                         <div className="field">
-                            <label>UserName</label>
+                            <label>Username</label>
                             <input
                                 type="text"
                                 name="userName"
@@ -102,18 +107,6 @@ function SignUp() {
                                 onChange={handleChange}
                             />
                         </div>
-                        <p>{formErrors.userName}</p>
-                        <div className="field">
-                            <label>Email</label>
-                            <input
-                                type="text"
-                                name="email"
-                                placeholder="Email"
-                                value={formValues.email}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <p>{formErrors.email}</p>
                         <div className="name">
                             <div className="field">
                                 <label>First Name</label>
@@ -148,24 +141,32 @@ function SignUp() {
                                 onChange={handleChange}
                             />
                         </div>
-                        <p>{formErrors.password}</p>
+                        <p>{formErrors.username}</p>
                         <div className="field">
-                            <label>Confirm Password</label>
+                            <label>Email</label>
                             <input
-                                type="password"
-                                name="confirmPassword"
-                                placeholder="Confirm password"
-                                value={formValues.confirmPassword}
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                                value={formValues.email}
                                 onChange={handleChange}
                             />
                         </div>
-                        <p>{formErrors.confirmPassword}</p>
-                        <button className="singbutton">Submit</button>
+                        <p>{formErrors.email}</p>
+                        <div className="field">
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                value={formValues.password}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <p>{formErrors.password}</p>
+                        <button className="singbutton">update my details</button>
                     </div>
                 </form>
-                <div className="text">
-                    Already have an account? <span>Login</span>
-                </div>
             </div>
             </div>
         </>

@@ -13,35 +13,39 @@ const getUsers = async () => {
     // }) 
 }
 
-const getUserByName = async (userName) => {
-    return await Users.findOne({ userName: userName });
+const getUserByName = async (userName,password) => {
+    return await Users.findOne({ userName: userName, password: password });
 };
 
 const createUser = async (newUser) => {
     const user = new Users({
         userName: newUser.userName,
-        password: newUser.password,
         firstName: newUser.firstName,
         lastName: newUser.lastName,
-        birthDate: newUser.birthDate,
-        isManager: newUser.isManager
+        password: newUser.password,
+        email: newUser.email,
+        isManager: false
     });
 
-    if (newUser.phoneNumber)
-        user.phoneNumber = phoneNumber;
+    console.log("Adding user:", user);
 
-    return await user.save();
+    try {
+        const savedUser = await user.save();
+        console.log("User saved successfully:", savedUser);
+        return savedUser;
+    } catch (error) {
+        console.error("Error saving user:", error);
+        throw error; // You might want to handle or log the error appropriately
+    }
 };
 
-const updateUser = async (userName, firstName, lastName, birthDate, phoneNumber) => {
+const updateUser = async (userName, firstName, lastName, email) => {
     const user = await getUserByName(userName);
 
     if (user) {
         user.firstName = firstName;
         user.lastName = lastName;
-        user.birthDate = birthDate;
-        user.phoneNumber = phoneNumber;
-
+        user.email = email;
         await user.save();
     }
     

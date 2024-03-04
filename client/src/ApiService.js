@@ -34,3 +34,33 @@ export const getUserByUserName = async (userName) => {
       });
     }))
   }
+  export const addUser = async (newUser) => {
+    return (await api().then(async (api) => {
+      return api.post(`/users` , {
+        newUser:newUser
+      });
+    }))
+  }
+  export const findUser = async (userName, password) => {
+    return (await api().then(async (api) => {
+      return api.get(`/users/user`, {
+        params: {
+          userName: userName,
+          password: password
+        }
+      });
+    }))
+  }
+  export const updateUser = async (userName,firstName,lastName,email, password) => {
+    return (await api().then(async (api) => {
+      return api.get(`/users/user`, {
+        params: {
+          userName: userName,
+          firstName:firstName,
+          lastName:lastName,
+          email:email,
+          password: password
+        }
+      });
+    }))
+  }

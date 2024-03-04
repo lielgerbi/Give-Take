@@ -2,16 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const User = new Schema({
-    _id:{
-        type: mongoose.Schema.Types.ObjectId,
-        required:true
-    },
-
     userName: {
-        type: String,
-        required: true
-    },
-    password: {
         type: String,
         required: true
     },
@@ -23,12 +14,13 @@ const User = new Schema({
         type: String,
         required: true
     },
-    birthDate: {
-        type: Date,
+    password: {
+        type: String,
         required: true
     },
-    phoneNumber: {
-        type: String
+    email: {
+        type: String,
+        required: true
     },
     isManager: {
         type: Boolean,

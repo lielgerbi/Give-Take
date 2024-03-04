@@ -1,11 +1,14 @@
+import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { GlobalContext } from "../GlobalContext";
 
 function Header() {
 
 
   const [openedDrawer, setOpenedDrawer] = useState(false)
+  const {connectedUser , setConnectedUser} = useContext(GlobalContext);
 
   function toggleDrawer() {
     setOpenedDrawer(!openedDrawer);
@@ -16,6 +19,13 @@ function Header() {
       setOpenedDrawer(false)
     }
   }
+  function changeNavLogout(event) {
+    setConnectedUser()
+    if (openedDrawer) {
+      setOpenedDrawer(false)
+    }
+  }
+
 
   return (
     <header>
@@ -59,16 +69,29 @@ function Header() {
                   className="dropdown-menu dropdown-menu-end"
                   aria-labelledby="userDropdown"
                 >
+                  {connectedUser == undefined ?
+                  <>
                   <li>
-                    <Link to="/logIn" className="dropdown-item" onClick={changeNav}>
-                      Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/signUp" className="dropdown-item" onClick={changeNav}>
-                      Sign Up
-                    </Link>
-                  </li>
+                  <Link to="/logIn" className="dropdown-item" onClick={changeNav}>
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/signUp" className="dropdown-item" onClick={changeNav}>
+                    Sign Up
+                  </Link>
+                </li></> :
+                <> <li>
+                <Link to="/home" className="dropdown-item" onClick={changeNav}>
+                  home page
+                </Link>
+              </li>
+              <li>
+                <Link to="/" className="dropdown-item" onClick={changeNavLogout}>
+                   logout
+                </Link>
+              </li></>  }
+                  
                 </ul>
               </li>
             </ul>
