@@ -6,6 +6,15 @@
     background-size: cover;
     height: 100%;
 }
+.dropdown {
+    border-bottom: none !important;
+    font-size: 13px;
+    font-family: "Heebo", sans-serif;
+    color: #595a7f;
+    text-align: right;
+    font-weight: normal;
+    padding-right: 3px;
+  }
 
 .container_login {
 

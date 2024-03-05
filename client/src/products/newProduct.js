@@ -1,134 +1,112 @@
-// import { useState, useEffect } from "react";
-// import "./loginPage.css";
-// import Image from './background.jpg'; // Import using relative path
+import { useState, useEffect,useContext } from "react";
+import "../loginComps/loginPage.css";
+import { Dropdown, Menu } from 'antd';
+import { GlobalContext } from "../GlobalContext";
 
-// function newProduct() {
-//     const initialValues = {
-//         categoryName: "",
-//         subCategory: "",
-//         details: "",
-//         city: "",
-//     };
-//     const [formValues, setFormValues] = useState(initialValues);
-//     const [formErrors, setFormErrors] = useState({});
-//     const [isSubmit, setIsSubmit] = useState(false);
+function NewProduct() {
+  const { allCategories } = useContext(GlobalContext);
+  var categories = allCategories.map(category => category.categoryName);
+  var allSubCategories = allCategories.reduce((acc, category) => acc.concat(category.subCategories), []);
 
-//     const handleChange = (e) => {
-//         const { name, value } = e.target;
-//         setFormValues({ ...formValues, [name]: value });
-//     };
+    const initialValues = {
+        categoryName: "",
+        subCategory: "",
+        details: "",
+        city: "",
+        photo:"",
+    };
+    const [formValues, setFormValues] = useState(initialValues);
+    const [isSubmit, setIsSubmit] = useState(false);
 
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         setFormErrors(validate(formValues));
-//         setIsSubmit(true);
-//     };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues({ ...formValues, [name]: value });
+    };
+    const menuCategories = (
+      <Menu className="dropdown" onClick={(e) => handleMenuClick(e)}>
+      {categories.map((item, index) => (
+        <Menu.Item key={index.toString()}>{item}</Menu.Item>
+      ))}
+    </Menu>
+  );
+  const handleMenuClick = (e) => {
+    formValues.categoryName=e.key
+  };
+//   const menuSubCategories = (
+//     <Menu className={styles.dropdown}>
+//     {categories.map((item, index) => (
+//       <Menu.Item key={index.toString()}>{item}</Menu.Item>
+//     ))}
+//   </Menu>
+// );
 
-//     useEffect(() => {
-//         console.log(formErrors);
-//         if (Object.keys(formErrors).length === 0 && isSubmit) {
-//             console.log(formValues);
-//         }
-//     }, [formErrors, formValues, isSubmit]);
-//     const validate = (values) => {
-//         const errors = {};
-//         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-//         if (!values.username) {
-//             errors.username = "Username is required!";
-//         }
-//         if (!values.email) {
-//             errors.email = "Email is required!";
-//         } else if (!regex.test(values.email)) {
-//             errors.email = "This is not a valid email format!";
-//         }
-//         if (!values.password) {
-//             errors.password = "Password is required";
-//         } else if (values.password.length < 4) {
-//             errors.password = "Password must be more than 4 characters";
-//         } else if (values.password.length > 10) {
-//             errors.password = "Password cannot exceed more than 10 characters";
-//         }
-//         if (values.password !== values.confirmPassword) {
-//             errors.confirmPassword = "Those passwords didn’t match. Try again.";
-//         }
-//         return errors;
-//     };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setIsSubmit(true);
+    };
 
-//     return (
-//         <>
-//         <div className="bgImg">
-//             <div className="container_login">
-//                 {Object.keys(formErrors).length === 0 && isSubmit ? (
-//                     <div className="ui message success">
-//                         Signed in successfully
-//                     </div>
-//                 ) : (
-//                     console.log("Entered Details", formValues)
-//                 )}
-
-//                 <form onSubmit={handleSubmit}>
-//                     <h1>Sign Up</h1>
-//                     <div className="ui divider"></div>
-//                     <div className="ui form">
-//                         <div className="field">
-//                             <label>Username</label>
-//                             <input
-//                                 type="text"
-//                                 name="username"
-//                                 placeholder="Choose a username"
-//                                 value={formValues.username}
-//                                 onChange={handleChange}
-//                             />
-//                         </div>
-//                         <p>{formErrors.username}</p>
-//                         <div className="field">
-//                             <label>Email</label>
-//                             <input
-//                                 type="text"
-//                                 name="email"
-//                                 placeholder="Email"
-//                                 value={formValues.email}
-//                                 onChange={handleChange}
-//                             />
-//                         </div>
-//                         <p>{formErrors.email}</p>
-//                         <div className="field">
-//                             <label>Password</label>
-//                             <input
-//                                 type="password"
-//                                 name="password"
-//                                 placeholder="Password"
-//                                 value={formValues.password}
-//                                 onChange={handleChange}
-//                             />
-//                         </div>
-//                         <p>{formErrors.password}</p>
-//                         <div className="field">
-//                             <label>Confirm Password</label>
-//                             <input
-//                                 type="password"
-//                                 name="confirmPassword"
-//                                 placeholder="Confirm password"
-//                                 value={formValues.confirmPassword}
-//                                 onChange={handleChange}
-//                             />
-//                         </div>
-//                         <p>{formErrors.confirmPassword}</p>
-//                         <button className="singbutton">Submit</button>
-//                     </div>
-//                 </form>
-//                 <div className="text">
-//                     Already have an account? <span>Login</span>
-//                 </div>
-//             </div>
-//             </div>
-//         </>
-//     );
-// }
-function newProduct() {
-  return(
-    <div>add new product</div>
-  )
+    useEffect(() => {
+        if (isSubmit) {
+            console.log(formValues);
+        }
+        console.log(formValues)
+    }, [ formValues, isSubmit]);
+    return (
+        <>
+        <div className="bgImg">
+            <div className="container_login">
+                <form onSubmit={handleSubmit}>
+                    <h1>Sign Up</h1>
+                    <div className="ui divider"></div>
+                    <div className="ui form">
+                        <div className="field">
+                            <label>subCategory</label>
+                            <input
+                                type="text"
+                                name="subCategory"
+                                placeholder="Choose a username"
+                                value={formValues.subCategory}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="field">
+                        <Dropdown
+                                overlay={menuCategories}
+                                trigger={["click"]}
+                                className="dropdown"
+                            >
+                              <span>Category</span>  
+                        </Dropdown>
+                        </div>
+                        <div className="field">
+                            <label>details</label>
+                            <input
+                                name="details"
+                                placeholder="details"
+                                value={formValues.details}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="field">
+                            <label>city</label>
+                            <input
+                                name="city"
+                                placeholder="city"
+                                value={formValues.city}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <button className="singbutton">Submit</button>
+                    </div>
+                </form>
+                <div className="text">
+                    Already have an account? <span>Login</span>
+                </div>
+            </div>
+            </div>
+        </>
+    );
 }
 
- export default newProduct;
+
+ export default NewProduct;

@@ -43,7 +43,7 @@ function Header() {
           <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')}>
             <ul className="navbar-nav me-auto mb-lg-0">
               <li className="nav-item">
-                <Link to="/newProduct" className="nav-link" replace onClick={changeNav}>
+                <Link to="/NewProduct" className="nav-link" replace onClick={changeNav}>
                   Add new product
                 </Link>
               </li>
