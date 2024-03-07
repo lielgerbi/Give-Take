@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useHistory  } from "react-router-dom";
 import Template from "./template/Template";
 import { Switch, Route ,BrowserRouter } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
 import { Redirect } from 'react-router';
 import Landing from "./landing/Landing";
 import ProductList from "./products/ProductList";
+import UserProducts from "./products/UserProducts"
 import LogIn from "./loginComps/LogIn";
 import SignUp from "./loginComps/SignUp";
 import HomePage from "./loginComps/HomePage"
-import NewProduct from "./products/newProduct"
+import NewProduct from "./products/newProduct";
+import 'antd/dist/reset.css';
 import {
   getAllProducts,
   getAllCategories,
@@ -17,28 +20,37 @@ import {
 
 
 function App() {
-
+  const history = useHistory();
   const { connectedUser, setConnectedUser, allProducts, setAllProducts,allCategories ,setAllCategories,allCities,setAllCities} = useContext(GlobalContext);
-  useEffect(() => {
-     fetchData()
-  }, []);
+  // useEffect(() => {
+  //   if(connectedUser == undefined){
+  //     window.location.href = 'http://localhost:3000/logIn';
+  //   }
+  //   //  fetchData()
+  // }, []);
 
-  async function fetchData(){
-    try{
-        const products = await getAllProducts();
-        const categories = await getAllCategories();
-        const cities = await getAllCities()
-        console.log(products);
-        setAllProducts(products.data);
-        setAllCategories(categories.data);
-        setAllCities(cities.data);
-        setConnectedUser(undefined)
-    }
-    catch(err){
-      console.log(err);
-    }
+  // useEffect(() => {
+  //   // Redirect to the login page
+  //   history.push('/logIn');
+  // }, [history]);
 
-  }
+  // async function fetchData(){
+  //   try{
+  //       const products = await getAllProducts();
+  //       const categories = await getAllCategories();
+  //       const cities = await getAllCities()
+  //       console.log(products);
+  //       setAllProducts(products.data);
+  //       setAllCategories(categories.data);
+  //       setAllCities(cities.data);
+  //       setConnectedUser(undefined)
+  //   }
+  //   catch(err){
+  //     console.log(err);
+  //   }
+
+  // }
+  
 
   return (
    
@@ -47,7 +59,7 @@ function App() {
        <Template></Template>
     <Switch>
       <Route path="/" exact>
-        <Landing />
+        <LogIn />
       </Route>
       <Route path="/products" exact>
         <ProductList />
@@ -55,14 +67,17 @@ function App() {
       <Route path="/signUp" exact>
         <SignUp />
       </Route>
-      <Route path="/logIn" exact>
-        <LogIn />
+      <Route path="/landing" exact>
+        <Landing />
       </Route>
       <Route path="/newProduct" exact>
         <NewProduct />
       </Route>
       <Route path="/home" exact>
         <HomePage />
+      </Route>
+      <Route path="/myPost" exact>
+        <UserProducts />
       </Route>
       
     </Switch>

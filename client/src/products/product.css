@@ -124,15 +124,18 @@
     cursor: pointer;
   }
   .noteInput {
-    border: none;
-    outline: none !important;
     font-family: "Heebo";
     border-bottom: 1px solid lightgray;
-    height: 100px;
+    margin-top: 70px;
     display: flex;
   }
+  .comment{
+    padding-top: 45px;
+    position: fixed;
+    display: flow-root;
+    max-width: 461px;
+  }
   .modalContiner {
-    padding-top: 4%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -219,7 +222,15 @@
     cursor: pointer;
   }
   
-  
+  .details{
+    text-align: center;
+    text-transform: uppercase;
+    color: #101214;
+    font-family: cursive;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .delete {
     margin-right: 20px;
   }

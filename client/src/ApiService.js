@@ -1,10 +1,26 @@
 import axios from 'axios';
 
+import Userfront from "@userfront/react";
 const api = async () => {
+  console.log(localStorage);  
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem("accessToken"),
+        'refreshToken' : localStorage.getItem("refreshToken")
+
+      }
     });
     return api;
+  }
+
+  export const getUserByUserName = async (userName) => {
+    return (await api().then(async (api) => {
+      return api.get(`/users/${userName}` , {
+          userName:userName
+      });
+    }))
   }
 
 export const getAllProducts = async () => {
@@ -13,13 +29,7 @@ export const getAllProducts = async () => {
     }))
   };
 
-export const getUserByUserName = async (userName) => {
-    return (await api().then(async (api) => {
-      return api.get(`/users/${userName}` , {
-          userName:userName
-      });
-    }))
-  }
+
 
   export const getAllCategories = async () => {
     return (await api().then(async (api) => {
@@ -41,7 +51,7 @@ export const getUserByUserName = async (userName) => {
       });
     }))
   }
-  export const findUser = async (userName, password) => {
+  export const findUser = async (userName, password ,refreshToken) => {
     return (await api().then(async (api) => {
       return api.get(`/users/user`, {
         params: {
@@ -51,16 +61,23 @@ export const getUserByUserName = async (userName) => {
       });
     }))
   }
-  export const updateUser = async (userName,firstName,lastName,email, password) => {
+  export const updateUser = async (newUser) => {
     return (await api().then(async (api) => {
-      return api.get(`/users/user`, {
-        params: {
-          userName: userName,
-          firstName:firstName,
-          lastName:lastName,
-          email:email,
-          password: password
-        }
+      return api.post(`/users/user`, {
+          userName: newUser.userName,
+          firstName:newUser.firstName,
+          lastName:newUser.lastName,
+          email:newUser.email,
+          password: newUser.password
       });
     }))
   }
+
+  export const deletePost = async (postID) => {
+    return (await api().then(async (api) => {
+      return api.get(`/posts/delete` , {
+        postId:postID
+      });
+    }))
+  }
+  

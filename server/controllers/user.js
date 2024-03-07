@@ -1,4 +1,6 @@
 const userService = require('../services/user');
+const jwt = require('jsonwebtoken');
+const secretKey = 'secret_key';
 
 const getUsers = async (req, res) => {
   const Users = await userService.getUsers();
@@ -8,13 +10,19 @@ const getUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   const user = await userService.getUserByName(req.query.userName, req.query.password);
-
+   
   if (!user) {
       console.log("not find" +user)
       return res.status(404).json({ errors: ['User not found'] });
   }
-  console.log("find" +user)
-  res.json(user);
+  const accessToken = jwt.sign({ user }, secretKey, { expiresIn: '1h' });
+  const refreshToken = jwt.sign({ user }, secretKey, { expiresIn: '1d' });
+
+  res
+  .header('refreshToken', refreshToken)
+  .header('Authorization', accessToken)
+  .send(user);
+  
 };
 
 const createUser = async (req, res) => {
@@ -23,8 +31,8 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const user = await userService.updateUser(req.query.userName, req.query.firstName,
-      req.query.lastName, req.query.email);
+    const user = await userService.updateUser(req.body.userName, req.body.firstName,
+      req.body.lastName, req.body.email, req.body.password);
 
     if (!user) {
       return res.status(404).json({ errors: ['User not found'] });
@@ -33,20 +41,11 @@ const updateUser = async (req, res) => {
     res.json(user);
   };
 
-  const deleteUser = async (req, res) => {
-    const user = await userService.deleteUser(req.params.userName);
 
-    if (!user) {
-      return res.status(404).json({ errors: ['User not found'] });
-    }
-  
-    res.send();
-  };
 
   module.exports = {
     getUsers,
     getUser,
     createUser,
-    updateUser,
-    deleteUser
+    updateUser
   };

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
 const User = new Schema({
     userName: {
         type: String,
@@ -27,5 +28,6 @@ const User = new Schema({
         required: true
     }
 });
+
 const db=mongoose.connection.useDb('give&take')
 module.exports = db.model('Users', User);

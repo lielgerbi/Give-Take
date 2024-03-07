@@ -31,7 +31,7 @@ function Header() {
     <header>
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/" onClick={changeNav}>
+          <Link className="navbar-brand" to="/landing" onClick={changeNav}>
             <FontAwesomeIcon
               icon={["fab", "bootstrap"]}
               className="ms-1"
@@ -72,7 +72,7 @@ function Header() {
                   {connectedUser == undefined ?
                   <>
                   <li>
-                  <Link to="/logIn" className="dropdown-item" onClick={changeNav}>
+                  <Link to="/" className="dropdown-item" onClick={changeNav}>
                     Login
                   </Link>
                 </li>

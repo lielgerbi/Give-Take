@@ -5,7 +5,7 @@ const getPosts = async () => {
 };
 
 const getPostById = async (postID) => {
-    return await Post.findOne({ postID: postID });
+    return await Post.findOne({ _id: postID });
 };
 
 const newPost = async (newPost) => {
@@ -24,7 +24,7 @@ const newPost = async (newPost) => {
 };
 
 const updatePost = async (postID, text, photo) => {
-    const post = await getUserByName(postID);
+    const post = await getPostById(postID);
 
     if (post) {
         post.text = text;
@@ -37,7 +37,7 @@ const updatePost = async (postID, text, photo) => {
 };
 
 const deletePost = async (postID) => {
-    const post = await getUserByName(postID);
+    const post = await getPostById(postID);
 
     if (post) {
         await post.remove();

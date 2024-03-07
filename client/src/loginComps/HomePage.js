@@ -4,7 +4,7 @@ import "./loginPage.css";
 import { GlobalContext } from "../GlobalContext";
 import Image from './background.jpg'; // Import using relative path
 import {
-    addUser
+    updateUser
   } from "../ApiService";
 
 function SignUp() {
@@ -32,10 +32,10 @@ function SignUp() {
         setIsSubmit(true);
     
         try {
-            const newUser = await addUser(formValues);
+            const newUser = await updateUser(formValues);
             setConnectedUser(formValues)
             console.log("add", newUser);
-            history.push("/");
+            history.push("/landing");
         } catch (error) {
             console.error("Error adding user:", error);
         }
@@ -82,7 +82,10 @@ function SignUp() {
     };
 
    
-   
+   function editPost(){
+    history.push("/myPost");
+
+   }
     return (
         <>
         <div className="bgImg">
@@ -167,6 +170,8 @@ function SignUp() {
                         <button className="singbutton">update my details</button>
                     </div>
                 </form>
+                <button onClick={() => editPost()}>edit my posts</button>
+
             </div>
             </div>
         </>

@@ -3,7 +3,11 @@ import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../GlobalContext";
 import "./loginPage.css";
 import {
-    findUser
+    findUser,
+     refreshAccessToken,
+    getAllProducts,
+    getAllCategories,
+    getAllCities
   } from "../ApiService";
 import { genComponentStyleHook } from "antd/es/theme/internal";
 
@@ -16,12 +20,35 @@ function LogIn() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const [userNotExist , setUserNotExist] = useState(false);
-    const {connectedUser,setConnectedUser} = useContext(GlobalContext);
+    const { connectedUser, setConnectedUser, allProducts, setAllProducts,allCategories ,setAllCategories,allCities,setAllCities} = useContext(GlobalContext);
     const history = useHistory();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     };
+      useEffect(() => {
+     if(connectedUser!== undefined){ 
+        fetchData()
+     } 
+  }, [connectedUser]);
+
+
+
+  async function fetchData(){
+    try{
+        const products = await getAllProducts();
+        const categories = await getAllCategories();
+        const cities = await getAllCities()
+        setAllProducts(products.data);
+        setAllCategories(categories.data);
+        setAllCities(cities.data);
+        history.push("landing");
+    }
+    catch(err){
+      console.log(err);
+    }
+
+  }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,14 +56,17 @@ function LogIn() {
         setIsSubmit(true);
         try {
             const user = await findUser(formValues.userName ,formValues.password);
-            console.log(user)
+             // Save tokens to local storage
+            localStorage.setItem("accessToken", user.headers.authorization);
+            localStorage.setItem("refreshToken", user.headers.refreshtoken);
+            // Save connected user
             setConnectedUser(user.data)
-            history.push("/");
         } catch (error) {
             setUserNotExist(true)
             console.error("not find user:", error);
         }
     };
+
     useEffect(() => {
         console.log(formErrors);
         if (Object.keys(formErrors).length === 0 && isSubmit) {
@@ -63,14 +93,6 @@ function LogIn() {
         <>
         <div className="bgImg">
             <div className="container_login">
-                {Object.keys(formErrors).length === 0 && isSubmit ? (
-                    <div className="ui message success">
-                        Signed in successfully
-                    </div>
-                ) : (
-                    console.log("Entered Details", formValues)
-                )}
-
                 <form onSubmit={handleSubmit}>
                     <h1>Log In</h1>
                     <div className="ui divider"></div>

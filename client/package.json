@@ -1,8 +1,11 @@
 {
+  
   "name": "Give&Take",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@azure/msal-browser": "^3.10.0",
+    "@fortawesome/fontawesome-free": "^6.5.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
@@ -12,7 +15,8 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "antd": "^5.14.2",
+    "@userfront/react": "^0.3.4",
+    "antd": "^5.15.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.0.1",
     "react": "^17.0.2",

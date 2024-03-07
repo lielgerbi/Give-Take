@@ -1,3 +1,4 @@
+const user = require('../models/user');
 const Users = require('../models/user');
 
 const getUsers = async () => {
@@ -15,6 +16,7 @@ const getUsers = async () => {
 
 const getUserByName = async (userName,password) => {
     return await Users.findOne({ userName: userName, password: password });
+    
 };
 
 const createUser = async (newUser) => {
@@ -39,33 +41,26 @@ const createUser = async (newUser) => {
     }
 };
 
-const updateUser = async (userName, firstName, lastName, email) => {
-    const user = await getUserByName(userName);
+const updateUser = async (userName, firstName, lastName, email, password) => {
+    console.log(userName, firstName, lastName, email, password)
+    const user = await getUserByName(userName ,password);
 
     if (user) {
         user.firstName = firstName;
         user.lastName = lastName;
         user.email = email;
+        user.password = password;
         await user.save();
     }
     
     return user;
 };
 
-const deleteUser = async (userName) => {
-    const user = await getUserByName(userName);
 
-    if (user) {
-        await user.remove();
-    }
-
-    return user;
-};
 
 module.exports = {
     getUsers,
     getUserByName,
     createUser,
-    updateUser,
-    deleteUser
+    updateUser
 }
