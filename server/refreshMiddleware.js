@@ -4,11 +4,6 @@ const secretKey = 'secret_key';
 const authenticate = (req, res, next) => {
   const accessToken = req.headers['authorization'];
   const refreshToken = req.headers['refreshtoken'];
-  
-  // console.log("refreshToken")
-  // console.log(refreshToken);
-  // console.log("accessToken")
-  // console.log(accessToken);
 
   if (!accessToken && !refreshToken) {
     return res.status(401).send('Access Denied. No token provided.');

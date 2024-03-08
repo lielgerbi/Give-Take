@@ -1,6 +1,4 @@
 import axios from 'axios';
-
-import Userfront from "@userfront/react";
 const api = async () => { 
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
@@ -91,6 +89,14 @@ export const getAllProducts = async () => {
         photo:post.photo,
         details:post.details,
         city: post.city
+      });
+    }))
+  }
+  export const newPost = async (userName,post) => {
+    return (await api().then(async (api) => {
+      return api.post(`/posts`, {
+        userName:userName,
+        post:post
       });
     }))
   }

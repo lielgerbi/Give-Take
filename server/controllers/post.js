@@ -16,7 +16,7 @@ const getPostById = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-    const newPost = await postService.createPost(req.body.post);
+    const newPost = await postService.createPost(req.body.userName,req.body.post);
     res.json(newPost);
 };
 

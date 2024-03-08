@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Post = new Schema({
-    _id:{
-        type: mongoose.Schema.Types.ObjectId,
-        required:true
-    },
     userName: {
         type: String,//reference to the user who posted it
         required: true
@@ -21,10 +17,6 @@ const Post = new Schema({
     photo: {
         type: String,//url to the post's photo, if any
         required: false 
-    },
-    date: {
-        type: Date,
-        required: false
     },
     subCategory: {
         type: String,

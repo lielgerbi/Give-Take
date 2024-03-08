@@ -1,13 +1,19 @@
 import { useState, useEffect,useContext } from "react";
 import "../loginComps/loginPage.css";
 import { Select} from 'antd';
+import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../GlobalContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import {
+    newPost,
+    getAllProducts
+  } from "../ApiService";
 
 
 function NewProduct() {
-    const { allCategories ,allCities } = useContext(GlobalContext);
+    const history = useHistory();
+    const {connectedUser, allCategories ,allCities ,setAllProducts,setConnectedUser } = useContext(GlobalContext);
     const [selectedFile, setSelectedFile] = useState(null);
     const initialValues = {
         categoryName: "",
@@ -19,6 +25,7 @@ function NewProduct() {
     const [formValues, setFormValues] = useState(initialValues);
     const [isSubmit, setIsSubmit] = useState(false);
     const [categoryIndex,setCategoryIndex] =useState(-1);
+    const storedUser = localStorage.getItem('user')
     let menuSub = [];
     if (categoryIndex !== -1) {
      menuSub = allCategories[categoryIndex]?.subCategories.map(subCategory => ({
@@ -26,7 +33,16 @@ function NewProduct() {
         label: subCategory,
       }));
     }
-
+    useEffect(() => {
+        // Check if user data exists in localStorage
+        ;
+    
+        if (storedUser && connectedUser==undefined) {
+          // Parse the stored user data
+          const userData = JSON.parse(storedUser);
+          setConnectedUser(userData);
+        }
+      }, []);
       const menuCities = allCities.map(city => ({
         value: city.name,
         label: city.name,
@@ -43,11 +59,22 @@ function NewProduct() {
     };
    
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         handleDownload();
         e.preventDefault();
         setIsSubmit(true);
+        try {
+            debugger
+            const post = await newPost(connectedUser.userName,formValues);
+            console.log("add", post);
+            const products = await getAllProducts();
+            setAllProducts(products.data);
+            history.push("/landing");
+        } catch (error) {
+            console.error("Error adding user:", error);
+        }
     };
+
 
     const handleDownload = () => {
         if (selectedFile) {

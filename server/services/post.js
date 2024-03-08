@@ -8,18 +8,16 @@ const getPostById = async (postID) => {
     return await Post.findOne({ _id: postID });
 };
 
-const newPost = async (newPost) => {
+const createPost = async (userName,newPost) => {
     const post = new Post({
-        postID: newPost.postID,
-        userName: newPost.userName,
-        text: newPost.text,
+        userName: userName,
+        categoryName: newPost.categoryName,
         photo: newPost.photo,
-        groupId: newPost.groupId,
-        timestamp: newUser.timestamp
+        subCategory: newPost.subCategory,
+        details: newPost.details,
+        city: newPost.city,
+        isAvailable:true
     });
-
-    
-    post.postType = newUser.groupId==null ? 'personal' : 'group'
     return await post.save();
 };
 
@@ -57,5 +55,5 @@ const getPostByUser = async (userName) => {
 //TODO: add get Post To View Between Dates 
 
 module.exports = {
-    updatePost, deletePost, newPost, getPostById, getPosts, getPostByUser
+    updatePost, deletePost, createPost, getPostById, getPosts, getPostByUser
 }
