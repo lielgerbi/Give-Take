@@ -1,15 +1,31 @@
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { GlobalContext } from "../GlobalContext";
+import "./headrer.css";
 
 function Header() {
 
 
   const [openedDrawer, setOpenedDrawer] = useState(false)
+  const [currentUser,setCurrentUser] = useState(undefined)
   const {connectedUser , setConnectedUser} = useContext(GlobalContext);
+  useEffect(() => {
+    // Check if user data exists in localStorage
+    const storedUser = localStorage.getItem('user');
 
+    if (storedUser) {
+      debugger
+      // Parse the stored user data
+      const userData = JSON.parse(storedUser);
+
+      // Update state only if necessary
+      if (userData !== connectedUser) {
+        setCurrentUser(userData);
+      }
+    }
+  }, []);
   function toggleDrawer() {
     setOpenedDrawer(!openedDrawer);
   }
@@ -21,6 +37,9 @@ function Header() {
   }
   function changeNavLogout(event) {
     setConnectedUser()
+    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     if (openedDrawer) {
       setOpenedDrawer(false)
     }
@@ -31,6 +50,7 @@ function Header() {
     <header>
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
         <div className="container-fluid">
+          {currentUser !== undefined &&
           <Link className="navbar-brand" to="/landing" onClick={changeNav}>
             <FontAwesomeIcon
               icon={["fab", "bootstrap"]}
@@ -39,8 +59,10 @@ function Header() {
             />
             <span className="ms-2 h5">Shop</span>
           </Link>
+          }
 
-          <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')}>
+          <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')+ (currentUser==undefined? "left" :'')}>
+            {currentUser !== undefined &&
             <ul className="navbar-nav me-auto mb-lg-0">
               <li className="nav-item">
                 <Link to="/NewProduct" className="nav-link" replace onClick={changeNav}>
@@ -48,11 +70,12 @@ function Header() {
                 </Link>
               </li>
             </ul>
-            <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline">
+            }
+            {/* <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline">
               <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
               <span className="ms-3 badge rounded-pill bg-dark">0</span>
-            </button>
-            <ul className="navbar-nav mb-2 mb-lg-0">
+            </button> */}
+            <ul className="navbar-nav mb-2 mb-lg-0" >
               <li className="nav-item dropdown">
                 <a
                   href="!#"
@@ -69,7 +92,7 @@ function Header() {
                   className="dropdown-menu dropdown-menu-end"
                   aria-labelledby="userDropdown"
                 >
-                  {connectedUser == undefined ?
+                  {currentUser == undefined ?
                   <>
                   <li>
                   <Link to="/" className="dropdown-item" onClick={changeNav}>
@@ -90,14 +113,14 @@ function Header() {
                 <Link to="/" className="dropdown-item" onClick={changeNavLogout}>
                    logout
                 </Link>
-              </li></>  }
-                  
-                </ul>
+              </li></> }
+              </ul>  
+                
               </li>
             </ul>
           </div>
 
-          <div className="d-inline-block d-lg-none">
+          {/* <div className="d-inline-block d-lg-none">
             <button type="button" className="btn btn-outline-dark">
               <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
               <span className="ms-3 badge rounded-pill bg-dark">0</span>
@@ -105,7 +128,7 @@ function Header() {
             <button className="navbar-toggler p-0 border-0 ms-3" type="button" onClick={toggleDrawer}>
               <span className="navbar-toggler-icon"></span>
             </button>
-          </div>
+          </div> */}
         </div>
       </nav>
     </header>

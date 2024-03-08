@@ -23,12 +23,15 @@ const newPost = async (newPost) => {
     return await post.save();
 };
 
-const updatePost = async (postID, text, photo) => {
-    const post = await getPostById(postID);
+const updatePost = async (_id,categoryName, subCategory,photo, details, city ) => {
+    const post = await getPostById(_id);
 
     if (post) {
-        post.text = text;
+        post.categoryName = categoryName;
         post.photo = photo;
+        post.subCategory=subCategory;
+        post.details = details;
+        post.city = city
 
         await post.save();
     }
@@ -38,9 +41,9 @@ const updatePost = async (postID, text, photo) => {
 
 const deletePost = async (postID) => {
     const post = await getPostById(postID);
-
     if (post) {
-        await post.remove();
+        post.isAvailable=false  
+        await post.save();
     }
 
     return post;

@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GlobalContext } from "../GlobalContext";
 import { Modal } from 'antd';
+import { useHistory } from "react-router-dom";
 import {
-  deletePost
+  deletePostUser
 } from "../ApiService";
 import { ReactComponent as X } from "./closeModal.svg";
 import "./product.css";
-function Product(props) {
+function Product(props ,onDelete) {
+  const history = useHistory();
   const [commentPopUp,setCommentPopUp] = useState(false);
   const [newComment , setNewComment] = useState("");
   let {product} = props;
@@ -28,11 +30,26 @@ function Product(props) {
      setCommentPopUp(false);
 
    }
+   const deletePost = async () => {
 
-   async function deletePost(){
-     await deletePost(product._id)
 
-   }
+    try {
+      debugger
+        const res = deletePostUser(product._id);
+        history.push("/home");
+    } catch (error) {
+        console.error("Error adding user:", error);
+    }
+};
+
+const handleDelete = () => {
+  debugger
+  const res = deletePostUser(product._id);
+  // Call the onDelete function with the product ID or any identifier
+  onDelete(product.id);
+};
+  
+
   return (
     <>
     <Modal
@@ -95,7 +112,7 @@ function Product(props) {
             <button className="btn btn-outline-dark mt-3" onClick={() => setCommentPopUp(true)}>
               <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Write comments
             </button>
-            {allowEdit && <button className="btn btn-outline-dark mt-3" onClick={deletePost}>
+            {allowEdit && <button className="btn btn-outline-dark mt-3" onClick={handleDelete}>
               <FontAwesomeIcon icon={["fas", "cart-plus"]} /> delete
             </button>}
           </div>

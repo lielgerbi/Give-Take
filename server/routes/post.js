@@ -6,11 +6,12 @@ const authenticate = require("../refreshMiddleware");//todo add auth
 router.get('/',authenticate,postController.getPosts);
 router.post('/',authenticate,postController.createPost);
 router.get('/getPostByUser',authenticate, postController.getPostByUser);
-router.get('/delete',authenticate, postController.deletePost);
+router.post('/delete',authenticate, postController.deletePost);
+router.post('/update',authenticate, postController.updatePost);
+
 
 router.route('/:postID')
     .get(postController.getPosts)
-    .patch(postController.updatePost)
 
 
 

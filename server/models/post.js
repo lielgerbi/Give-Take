@@ -14,9 +14,9 @@ const Post = new Schema({
         type: String,//reference to the group (null if it's a personal post)
         required: false
     },
-    text: {
+    details: {
         type: String,
-        required: true
+        required: false
     },
     photo: {
         type: String,//url to the post's photo, if any
@@ -24,7 +24,7 @@ const Post = new Schema({
     },
     date: {
         type: Date,
-        required: true
+        required: false
     },
     subCategory: {
         type: String,
@@ -32,11 +32,15 @@ const Post = new Schema({
     },
     isAvailable:{
         type: Boolean,
-        required: true
+        required: false
     },
     city:{
         type:String,
-        required:true
+        required:false
+    },
+    comments:{
+        type: Array,
+        required: false
     }
 });
 const db=mongoose.connection.useDb('give&take')

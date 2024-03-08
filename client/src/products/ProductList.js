@@ -144,6 +144,7 @@ function ProductList() {
     setFilteredProducts(allProducts);
  }, [allProducts]);
 
+
   return (
     <div className="container mt-5 py-4 px-xl-5">
       {/* <ScrollToTopOnMount /> */}
@@ -198,7 +199,7 @@ function ProductList() {
             >
             {filteredProducts.map((product, index) => {
                     if (product.isAvailable)
-                    return (<Product key={index} product={product}/>);
+                    return (<Product key={index} product={product} />);
                 })}
             </div>
            

@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 import Userfront from "@userfront/react";
-const api = async () => {
-  console.log(localStorage);  
+const api = async () => { 
     const api = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       headers: {
@@ -73,11 +72,25 @@ export const getAllProducts = async () => {
     }))
   }
 
-  export const deletePost = async (postID) => {
+  export const deletePostUser = async (post) => {
+    debugger
     return (await api().then(async (api) => {
-      return api.get(`/posts/delete` , {
-        postId:postID
+      return api.post(`/posts/delete` , {
+        post:post
       });
     }))
   }
   
+
+  export const updatePost = async (_id,post) => {
+    return (await api().then(async (api) => {
+      return api.post(`/posts/update`, {
+        _id:_id,
+        categoryName: post.categoryName,
+        subCategory:post.subCategory,
+        photo:post.photo,
+        details:post.details,
+        city: post.city
+      });
+    }))
+  }

@@ -21,18 +21,18 @@ const createPost = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-    const post = await postService.updatePost(req.params.postID, req.body.userName,
-      req.body.text, req.body.photo, req.body.groupId, req.body.timestamp);
+    const post = await postService.updatePost(req.body._id, req.body.categoryName,
+      req.body.subCategory, req.body.photo, req.body.details, req.body.city);
 
     if (!post) {
       return res.status(404).json({ errors: ['Post not found'] });
     }
   
-    res.json(post);
+    res.status(200).json(post);
   };
 
   const deletePost = async (req, res) => {
-    const post = await postService.deletePost(req.params.postId);
+    const post = await postService.deletePost(req.body.post._id);
 
     if (!post) {
       return res.status(404).json({ errors: ['Post not found'] });

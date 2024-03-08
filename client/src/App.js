@@ -11,6 +11,7 @@ import LogIn from "./loginComps/LogIn";
 import SignUp from "./loginComps/SignUp";
 import HomePage from "./loginComps/HomePage"
 import NewProduct from "./products/newProduct";
+import EditProducts from "./products/EditProducts"
 import 'antd/dist/reset.css';
 import {
   getAllProducts,
@@ -22,11 +23,23 @@ import {
 function App() {
   const history = useHistory();
   const { connectedUser, setConnectedUser, allProducts, setAllProducts,allCategories ,setAllCategories,allCities,setAllCities} = useContext(GlobalContext);
+  const storedUser = localStorage.getItem('user')
+  useEffect(() => {
+    // Check if user data exists in localStorage
+    ;
+
+    if (storedUser) {
+      // Parse the stored user data
+      const userData = JSON.parse(storedUser);
+      setConnectedUser(userData);
+      fetchData()
+    }
+  }, []);
   // useEffect(() => {
-  //   if(connectedUser == undefined){
-  //     window.location.href = 'http://localhost:3000/logIn';
+  //   if(connectedUser == undefined ){
+       
   //   }
-  //   //  fetchData()
+   
   // }, []);
 
   // useEffect(() => {
@@ -34,22 +47,22 @@ function App() {
   //   history.push('/logIn');
   // }, [history]);
 
-  // async function fetchData(){
-  //   try{
-  //       const products = await getAllProducts();
-  //       const categories = await getAllCategories();
-  //       const cities = await getAllCities()
-  //       console.log(products);
-  //       setAllProducts(products.data);
-  //       setAllCategories(categories.data);
-  //       setAllCities(cities.data);
-  //       setConnectedUser(undefined)
-  //   }
-  //   catch(err){
-  //     console.log(err);
-  //   }
+  async function fetchData(){
+    try{
+        const products = await getAllProducts();
+        const categories = await getAllCategories();
+        const cities = await getAllCities()
+        console.log(products);
+        setAllProducts(products.data);
+        setAllCategories(categories.data);
+        setAllCities(cities.data);
+        setConnectedUser(undefined)
+    }
+    catch(err){
+      console.log(err);
+    }
 
-  // }
+  }
   
 
   return (
@@ -78,6 +91,9 @@ function App() {
       </Route>
       <Route path="/myPost" exact>
         <UserProducts />
+      </Route>
+      <Route path="/editPost" exact>
+        <EditProducts />
       </Route>
       
     </Switch>

@@ -1,161 +1,75 @@
-import { Link } from "react-router-dom";
-import Product from "./Product";
+import { useHistory  } from "react-router-dom";
 import { useState,useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GlobalContext } from "../GlobalContext";
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  deletePostUser,
+  getAllProducts
+} from "../ApiService";
 // import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 
-function FilterMenuLeft({ updateFilteredProducts }) {
-   const { allCategories } = useContext(GlobalContext);
-   const {allCities} = useContext(GlobalContext);
-   const { allProducts } = useContext(GlobalContext);
-   const [selectedFilters, setSelectedFilters] = useState({
-    categories: [],
-    subCategories: [],
-    cities: [],
-  });
-  //  var categories = allCategories.map(category => category.categoryName);
-   var cities = allCities.map(city => city.name);
-   //var allSubnamesReduce = allCategories.reduce((acc, category) => acc.concat(category.subCategories), []);
 
-
-    // Handler for checkbox changes
-    const handleCheckboxChange = (type, value) => {
-      setSelectedFilters(prevState => ({
-        ...prevState,
-        [type]: prevState[type].includes(value)
-          ? prevState[type].filter(filter => filter !== value)
-          : [...prevState[type], value],
-      }));
-    };
-  
-    // Apply button click handler
-    const handleApplyFilters = () => {
-      // Do something with selected filters, e.g., send to the server or update state
-      console.log(selectedFilters);
-
-        // Filter products based on selected criteria
-    const filteredProducts = allProducts.filter(product => {
-    // Check if the product's category is in the selected categories
-    const categoryMatch = selectedFilters.categories.length === 0 || selectedFilters.categories.includes(product.categoryName);
-
-    // Check if the product's subcategory is in the selected subcategories
-    const subCategoryMatch = selectedFilters.subCategories.length === 0 || selectedFilters.subCategories.includes(product.subCategory);
-
-    // Check if the product's city is in the selected cities
-    const cityMatch = selectedFilters.cities.length === 0 || selectedFilters.cities.includes(product.city);
-
-    // Return true only if all criteria match
-    return categoryMatch && subCategoryMatch && cityMatch;
-  });
-  updateFilteredProducts(filteredProducts);
-  console.log(filteredProducts);
-    };
-  return (
-    <ul className="list-group list-group-flush rounded">
-       {allCategories.map((category, i) => {
-            return (<li className="list-group-item">
-        <h5 className="mt-1 mb-1">{category.categoryName}</h5>
-        <div className="d-flex flex-column">
-          {category.subCategories.map((v, i) => {
-            return (
-              <div key={i} className="form-check">
-                <input className="form-check-input" type="checkbox"  onClick={() => {handleCheckboxChange('subCategories', v) ; handleCheckboxChange('categories', category.categoryName)}} />
-                <label className="form-check-label" htmlFor="flexCheckDefault">
-                  {v}
-                </label>
-              </div>
-            );
-          })}
-        </div>
-      </li>
-       );
-      })}
-   
-      <li className="list-group-item">
-        <h5 className="mt-1 mb-1">Cities</h5>
-        <div className="d-flex flex-column">
-          {cities.map((v, i) => {
-            return (
-              <div key={i} className="form-check">
-                <input className="form-check-input" type="checkbox"  onChange={() => handleCheckboxChange('cities', v)}/>
-                <label className="form-check-label" htmlFor="flexCheckDefault">
-                  {v}
-                </label>
-              </div>
-            );
-          })}
-        </div>
-      </li>
-      <li className="list-group-item">
-        
-        <div className="d-grid d-block mb-3">
-          <button className="btn btn-dark" onClick={handleApplyFilters}>Apply</button>
-        </div>
-      </li>
-    </ul>
-  );
-}
 
 function UserProducts() {
+  const history = useHistory();
+  const [isSubmit, setIsSubmit] = useState(false);
   const [viewType, setViewType] = useState({ grid: true });
-  const {connectedUser, allProducts } = useContext(GlobalContext);
-  const [filteredProducts, setFilteredProducts] = useState(allProducts);
+  const {connectedUser, allProducts, setAllProducts ,setEditPost} = useContext(GlobalContext);
+  const [currentUser,setCurrentUser] = useState(undefined)
+  useEffect(() => {
+    // Check if user data exists in localStorage
+    const storedUser = localStorage.getItem('user');
+
+    if (storedUser) {
+      debugger
+      // Parse the stored user data
+      const userData = JSON.parse(storedUser);
+
+      // Update state only if necessary
+      if (userData !== connectedUser) {
+        setCurrentUser(userData);
+      }
+    }
+  }, []);
    // Function to update filtered products based on selected filters
-   const updateFilteredProducts = (filteredProducts) => {
-    setFilteredProducts(filteredProducts);
+  //  const updateFilteredProducts = (filteredProducts) => {
+  //   setFilteredProducts(filteredProducts);
+  // };
+  const handleDelete = async (post) => {
+    try {
+      // Assuming deletePostUser is an asynchronous function
+       let res = await deletePostUser(post);
+      console.log(res);
+      if(res.status == 200){
+        let products = await getAllProducts();
+        setAllProducts(products.data);
+
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  useEffect(() => {
-    setFilteredProducts(allProducts);
- }, [allProducts]);
+  const handleEdit = async (post) => {
+    setEditPost(post)
+    history.push('/editPost')
+   
+  };
 
- useEffect(() => {
-   console.log(connectedUser)
- },);
+
+//   useEffect(() => {
+//     setFilteredProducts(allProducts);
+//  }, [allProducts]);
+
+
   return (
     <div className="container mt-5 py-4 px-xl-5">
       {/* <ScrollToTopOnMount /> */}
-      
-
- 
-
-      <div className="row mb-3 d-block d-lg-none">
-        <div className="col-12">
-          <div id="accordionFilter" className="accordion shadow-sm">
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headingOne">
-                <button
-                  className="accordion-button fw-bold collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseFilter"
-                  aria-expanded="false"
-                  aria-controls="collapseFilter"
-                >
-                  Filter Products
-                </button>
-              </h2>
-            </div>
-            <div
-              id="collapseFilter"
-              className="accordion-collapse collapse"
-              data-bs-parent="#accordionFilter"
-            >
-              <div className="accordion-body p-0">
-                <FilterMenuLeft updateFilteredProducts={updateFilteredProducts}/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    
 
       <div className="row mb-4 mt-lg-3">
-        <div className="d-none d-lg-block col-lg-3">
-          <div className="border rounded shadow-sm">
-            <FilterMenuLeft updateFilteredProducts={updateFilteredProducts} />
-          </div>
-        </div>
         <div className="col-lg-9">
           <div className="d-flex flex-column h-100">
             
@@ -165,10 +79,35 @@ function UserProducts() {
                 (viewType.grid ? "row-cols-xl-3" : "row-cols-xl-2")
               }
             >
-            {filteredProducts.map((product, index) => {
-                debugger
-                    if (product.userName == connectedUser.userName)
-                    return (<Product key={index} product={product} allowEdit= {true}/>);
+            {allProducts.map((product, index) => {
+              debugger
+                    if (product?.userName == currentUser?.userName && currentUser && product.isAvailable ==true)
+                    return (<div className="col" key={index}>
+                    <div className="card shadow-sm">
+                        <img
+                          className="card-img-top bg-dark cover"
+                          height="200"
+                          alt=""
+                          src={Image}
+                        />
+                      <div className="card-body">
+                        <h3 className="card-title text-center text-dark text-truncate">
+                        {product?.subCategory} 
+                        </h3>
+                        <h4 className="card-title text-center text-dark text-truncate">{product?.categoryName}</h4>
+                        <p className="card-text text-center text-muted mb-0">{product?.details}</p>
+              
+                        <div className="d-grid d-block">
+                           <button className="btn btn-outline-dark mt-3" onClick={() => handleDelete(product)}>
+                            <FontAwesomeIcon icon={faTrashAlt} /> Delete
+                          </button>
+                          <button onClick={() => handleEdit(product)}>
+                            <FontAwesomeIcon icon={faPencilAlt} /> Edit
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>);
                 })}
             </div>
            

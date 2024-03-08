@@ -7,14 +7,21 @@ import {
     updateUser
   } from "../ApiService";
 
-function SignUp() {
+function HomePage() {
     const { connectedUser,setConnectedUser} = useContext(GlobalContext);
+    const storedUser = localStorage.getItem('user');
+    const user = connectedUser && connectedUser._id ?connectedUser: JSON.parse(storedUser)
     const initialValues = {
-        userName: connectedUser? connectedUser.userName:"",
-        email: connectedUser? connectedUser.email: "",
-        password: connectedUser? connectedUser.password: "",
-        firstName:connectedUser? connectedUser.firstName: "",
-        lastName:connectedUser? connectedUser.lastName: "",
+        userName: user.userName,
+        email: user.email,
+        password: user.password,
+        firstName:user.firstName,
+        lastName:user.lastName,
+        // userName: connectedUser? connectedUser.userName:"",
+        // email: connectedUser? connectedUser.email: "",
+        // password: connectedUser? connectedUser.password: "",
+        // firstName:connectedUser? connectedUser.firstName: "",
+        // lastName:connectedUser? connectedUser.lastName: "",
     };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -40,12 +47,7 @@ function SignUp() {
             console.error("Error adding user:", error);
         }
     };
-    useEffect(() => {
-        console.log("home")
-        console.log(connectedUser)
-        console.log("data set to - ")
-        console.log(initialValues)
-    }, [connectedUser]);
+    
    
     useEffect(() => {
         
@@ -178,4 +180,4 @@ function SignUp() {
     );
 }
 
-export default SignUp;
+export default HomePage;

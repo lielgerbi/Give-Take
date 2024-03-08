@@ -7,6 +7,7 @@ const GlobalContextProvider = (props) => {
     const [allProducts, setAllProducts] = useState([]);
     const [allCategories, setAllCategories] = useState([]);
     const [allCities, setAllCities] = useState([]);
+    const [editPost , setEditPost] = useState()
    
 
     return (
@@ -14,7 +15,9 @@ const GlobalContextProvider = (props) => {
             connectedUser: connectedUser, setConnectedUser: setConnectedUser,
             allProducts: allProducts, setAllProducts: setAllProducts,
             allCategories: allCategories, setAllCategories: setAllCategories,
-            allCities: allCities, setAllCities: setAllCities
+            allCities: allCities, setAllCities: setAllCities,
+            editPost :editPost , setEditPost: setEditPost
+
         }}>
             {props.children}
         </GlobalContext.Provider>

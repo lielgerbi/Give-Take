@@ -59,6 +59,8 @@ function LogIn() {
              // Save tokens to local storage
             localStorage.setItem("accessToken", user.headers.authorization);
             localStorage.setItem("refreshToken", user.headers.refreshtoken);
+             // Store user data in localStorage
+            localStorage.setItem('user', JSON.stringify(user.data));
             // Save connected user
             setConnectedUser(user.data)
         } catch (error) {
