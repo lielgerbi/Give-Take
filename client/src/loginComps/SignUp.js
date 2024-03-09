@@ -19,6 +19,7 @@ function SignUp() {
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
+    const [userError,setUserError] =useState("");
     const history = useHistory();
     const {setConnectedUser} = useContext(GlobalContext);
 
@@ -32,15 +33,35 @@ function SignUp() {
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
-    
         try {
             const newUser = await addUser(formValues);
-            setConnectedUser(formValues)
-            console.log("add", newUser);
-            history.push("/");
-        } catch (error) {
+          
+            
+              // Status code is in the range 200-299 (success)
+              setConnectedUser(formValues);
+              console.log("add", newUser);
+              history.push("/");
+          } catch (error) {
+              if(error.response.status == 500){
+                  setUserError("change user Name")
+              }
             console.error("Error adding user:", error);
-        }
+          }
+          
+
+    
+        // try {
+        //     const newUser = await addUser(formValues);
+        //     debugger
+        //     if(newUser.status==500){
+        //         setUserError("user name unavible")
+        //     }
+        //     setConnectedUser(formValues)
+        //     console.log("add", newUser);
+        //     history.push("/");
+        // } catch (error) {
+        //     console.error("Error adding user:", error);
+        // }
     };
     useEffect(() => {
         
@@ -103,6 +124,7 @@ function SignUp() {
                             />
                         </div>
                         <p>{formErrors.userName}</p>
+                        {userError!=="" && <p>change user name</p>}
                         <div className="field">
                             <label>Email</label>
                             <input

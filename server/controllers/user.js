@@ -9,7 +9,7 @@ const getUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const user = await userService.getUserByName(req.query.userName, req.query.password);
+  const user = await userService.getUserByNamePassword(req.query.userName, req.query.password);
    
   if (!user) {
       console.log("not find" +user)
@@ -17,7 +17,7 @@ const getUser = async (req, res) => {
   }
   const accessToken = jwt.sign({ user }, secretKey, { expiresIn: '1h' });
   const refreshToken = jwt.sign({ user }, secretKey, { expiresIn: '1d' });
-
+  res.status(200);
   res
   .header('refreshToken', refreshToken)
   .header('Authorization', accessToken)
@@ -26,9 +26,15 @@ const getUser = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
+  const user = await userService.getUserByName(req.body.newUser.userName);
+      if (user){
+        return res.status(500).json({ errors: ['User name exsit'] });
+      }
     const newUser = await userService.createUser(req.body.newUser);
+    res.status(200);
     res.json(newUser);
 };
+
 
 const updateUser = async (req, res) => {
     const user = await userService.updateUser(req.body.userName, req.body.firstName,

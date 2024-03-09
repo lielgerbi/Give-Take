@@ -21,11 +21,11 @@ const User = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: false
     },
     isManager: {
         type: Boolean,
-        required: true
+        required: false
     }
 });
 

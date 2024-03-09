@@ -6,7 +6,8 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import {
   deletePostUser,
-  getAllProducts
+  getAllProducts,
+  getFile
 } from "../ApiService";
 // import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 
@@ -19,14 +20,12 @@ function UserProducts() {
   const {connectedUser, allProducts, setAllProducts ,setEditPost} = useContext(GlobalContext);
   const [currentUser,setCurrentUser] = useState(undefined)
   useEffect(() => {
+    console.log(allProducts)
     // Check if user data exists in localStorage
     const storedUser = localStorage.getItem('user');
-
     if (storedUser) {
-      debugger
       // Parse the stored user data
       const userData = JSON.parse(storedUser);
-
       // Update state only if necessary
       if (userData !== connectedUser) {
         setCurrentUser(userData);
@@ -59,10 +58,6 @@ function UserProducts() {
   };
 
 
-//   useEffect(() => {
-//     setFilteredProducts(allProducts);
-//  }, [allProducts]);
-
 
   return (
     <div className="container mt-5 py-4 px-xl-5">
@@ -80,16 +75,16 @@ function UserProducts() {
               }
             >
             {allProducts.map((product, index) => {
-              debugger
                     if (product?.userName == currentUser?.userName && currentUser && product.isAvailable ==true)
                     return (<div className="col" key={index}>
                     <div className="card shadow-sm">
-                        <img
+                        {/* <img
                           className="card-img-top bg-dark cover"
                           height="200"
                           alt=""
                           src={Image}
-                        />
+                        /> */}
+                        {/* {product.photo!=="" && product.photo && <img src={} alt="Uploaded Image" className="card-img-top bg-dark cover" />} */}
                       <div className="card-body">
                         <h3 className="card-title text-center text-dark text-truncate">
                         {product?.subCategory} 

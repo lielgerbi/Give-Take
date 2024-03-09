@@ -34,7 +34,6 @@ function Product(props ,onDelete) {
 
 
     try {
-      debugger
         const res = deletePostUser(product._id);
         history.push("/home");
     } catch (error) {
@@ -43,7 +42,6 @@ function Product(props ,onDelete) {
 };
 
 const handleDelete = () => {
-  debugger
   const res = deletePostUser(product._id);
   // Call the onDelete function with the product ID or any identifier
   onDelete(product.id);

@@ -3,19 +3,14 @@ const Users = require('../models/user');
 
 const getUsers = async () => {
     return await Users.find({});
-    // Users.find({})
-    // .then(function(users) {
-    //   if (users) {
-    //     console.log(users);
-    //     return users;
-    //   } else {
-    //     console.log("no")
-    //   }
-    // }) 
 }
 
-const getUserByName = async (userName,password) => {
+const getUserByNamePassword = async (userName,password) => {
     return await Users.findOne({ userName: userName, password: password });
+    
+};
+const getUserByName= async (userName) => {
+    return await Users.findOne({ userName: userName });
     
 };
 
@@ -62,5 +57,6 @@ module.exports = {
     getUsers,
     getUserByName,
     createUser,
-    updateUser
+    updateUser,
+    getUserByNamePassword
 }

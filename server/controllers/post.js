@@ -11,7 +11,7 @@ const getPostById = async (req, res) => {
   if (!post) {
       return res.status(404).json({ errors: ['Pser not found'] });
   }
-
+  res.status(200)
   res.json(post);
 };
 
@@ -37,7 +37,7 @@ const updatePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ errors: ['Post not found'] });
     }
-  
+    res.status(200)
     res.send();
   };
 

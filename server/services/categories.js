@@ -4,10 +4,6 @@ const getCategories = async () => {
     return await Categories.find({});
 };
 
-const getCategoryByName = async (categoryName) => {
-    return await Categories.findOne({categoryName: categoryName });
-};
-
 // const newCategory = async (newCategory) => {
 //     const category = new Categories({
 //         categoryID: newCategory.categoryID,
@@ -21,5 +17,5 @@ const getCategoryByName = async (categoryName) => {
 
 
 module.exports = {
-    getCategories, getCategoryByName
+    getCategories
 }

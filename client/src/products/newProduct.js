@@ -5,9 +5,13 @@ import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../GlobalContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { v4 as uuidv4 } from 'uuid';
+import path from 'path';
+
 import {
     newPost,
-    getAllProducts
+    getAllProducts,
+    newfile
   } from "../ApiService";
 
 
@@ -60,11 +64,14 @@ function NewProduct() {
    
 
     const handleSubmit = async (e) => {
-        handleDownload();
+        
         e.preventDefault();
         setIsSubmit(true);
         try {
-            debugger
+            const saveImage = await handleDownload();
+            // const directoryPath = saveImage.filePath.replace(/[^\\]*$/, '');
+            const directoryPath = saveImage.filePath.substring(0, saveImage.filePath.lastIndexOf('\\') + 1);
+            // formValues.photo=directoryPath+formValues.photo;
             const post = await newPost(connectedUser.userName,formValues);
             console.log("add", post);
             const products = await getAllProducts();
@@ -76,17 +83,30 @@ function NewProduct() {
     };
 
 
-    const handleDownload = () => {
+    const handleDownload = async() => {
         if (selectedFile) {
-          const downloadLink = document.createElement('a');
-          downloadLink.href = URL.createObjectURL(selectedFile);
-          downloadLink.download = selectedFile.name;
-          document.body.appendChild(downloadLink);
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
-        } else {
-          console.log('No file selected.');
-        }
+            var guid= uuidv4();
+            const fileExtension = selectedFile.name.split('.').pop();
+            guid = guid + "." + fileExtension;
+            formValues.photo=guid
+
+            //const fileName =formValues.photo;
+            const formData = new FormData();
+            formData.append('image', selectedFile, guid); 
+            for (var key of formData.entries()) {
+                console.log(key[0] + ', ' + key[1]);
+            }
+            try{
+                 const res = await newfile(formData)
+                console.log('File uploaded. Server response:');
+                return res
+            }
+            catch(error){
+                console.error('Error uploading file:');
+            }
+          } else {
+            console.error('No file selected.');
+          }
       };
 
     const onChangeCity = (value) => {
@@ -105,8 +125,21 @@ function NewProduct() {
     };
 
     const handleFileChange = (event) => {
+        var preview = document.getElementById('preview');
         const file = event.target.files[0];
         setSelectedFile(file);
+        if (file) {
+            var reader = new FileReader();
+    
+            reader.onload = function(e) {
+              preview.src = e.target.result;
+            };
+    
+            reader.readAsDataURL(file);
+          } else {
+            // Handle case where no file is selected
+            preview.src = ""; // Clear the preview if no file is selected
+          }
     };
     
     useEffect(() => {
@@ -167,11 +200,13 @@ function NewProduct() {
                             <input
                             type="file"
                             onChange={handleFileChange}
+                            id="imageInput" accept="image/*"
                             className="file-input"
                             />
                             <FontAwesomeIcon icon={faUpload} className="upload-icon" />
                             Choose File
                         </label>
+                        <img id="preview" src="" alt="Image Preview"style={{maxWidth: 200,  maxheight: 200}}></img>
                         {selectedFile!== null && <label>{selectedFile.name}</label>}
                         </div>
                             

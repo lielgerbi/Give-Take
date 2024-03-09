@@ -1,9 +1,7 @@
 const setupApp = require('../app');
 const request = require("supertest");
 const mongoose = require("mongoose");
-const city =require("../models/city");
 const jwt = require('jsonwebtoken');
-const authenticate = require('../refreshMiddleware');
 
 // Mock the jwt library
 jest.mock('jsonwebtoken');
@@ -20,10 +18,9 @@ afterAll(async () => {
       console.error('Error closing MongoDB connection:', error);
     }
   });
-
+//getCities
 describe('Cities Controller', () => {
     test('should get cities with valid authentication', async () => {
-        console.log(app);
       // Mock the decoded user
       const mockUser = { id: '123', username: 'testuser' };
       jwt.verify.mockReturnValue({ user: mockUser });
@@ -41,7 +38,6 @@ describe('Cities Controller', () => {
   
       // Assert the response status and any other expectations
       expect(response.status).toBe(200);
+      expect(response.body.length).toBeGreaterThan(1);
     });
-  
-    // Add more test cases for other scenarios (e.g., invalid tokens, no tokens, etc.)
   });

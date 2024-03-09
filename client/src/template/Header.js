@@ -16,7 +16,6 @@ function Header() {
     const storedUser = localStorage.getItem('user');
 
     if (storedUser) {
-      debugger
       // Parse the stored user data
       const userData = JSON.parse(storedUser);
 

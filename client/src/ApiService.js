@@ -71,7 +71,6 @@ export const getAllProducts = async () => {
   }
 
   export const deletePostUser = async (post) => {
-    debugger
     return (await api().then(async (api) => {
       return api.post(`/posts/delete` , {
         post:post
@@ -100,3 +99,45 @@ export const getAllProducts = async () => {
       });
     }))
   }
+  export const getFile = async () => {
+    debugger
+    return (await api().then(async (api) => {
+      return api.post(`file/uploads`, {
+      });
+    }))
+  }
+
+  
+export const newfile = async (formData) => {
+  const apiFile = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+    headers: {
+      'Authorization': localStorage.getItem("accessToken"),
+      'refreshToken': localStorage.getItem("refreshToken"),
+      'Content-Type': 'multipart/form-data',  // Set the Content-Type header for formData
+    }
+  });
+
+  try {
+    const response = await apiFile.post('/file/upload', formData);
+    return response.data;
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    throw error;
+  }
+}
+  // export const newfile = async (formData) => {
+  //   const apiFile = axios.create({
+  //     baseURL: process.env.REACT_APP_API_URL,
+  //     headers: {
+  //       'Authorization': localStorage.getItem("accessToken"),
+  //       'refreshToken' : localStorage.getItem("refreshToken")
+
+  //     }
+  //   });
+  //   return (await apiFile().then(async (api) => {
+  //     return api.post(`/file/upload`, {
+  //       formData:formData
+  //     });
+  //   }))
+  // }

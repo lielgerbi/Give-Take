@@ -6,13 +6,17 @@ const mongoose = require('mongoose');
 const socketIo = require('socket.io');
 const users = require('./routes/user');
 const posts = require('./routes/post');
+const file = require('./routes/file')
 const categories = require('./routes/categories');
 const cities = require('./routes/cities');
 const jwt = require('jsonwebtoken');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger');
+const path = require('path');
 
 const app = express();
+
+
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
@@ -39,31 +43,13 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-// Function to connect to MongoDB and return a promise
-const connectToMongoDB = () => {
-  return new Promise((resolve, reject) => {
-    mongoose.connect(
-      'mongodb+srv://lielgerbi2000:135792468i@cluster0.b7saegs.mongodb.net',
-      {}
-    );
-
-    const db = mongoose.connection.useDb('give&take');
-
-    mongoose.connection.on('connected', () => {
-      console.log('Connected to MongoDB');
-      resolve();
-    });
-
-    mongoose.connection.on('error', (err) => {
-      console.error(err);
-      reject(err);
-    });
-  });
-};
 const setupApp = new Promise((resolve, reject) => {
   var db = mongoose.connection;
-  mongoose.connect(`mongodb+srv://lielgerbi2000:135792468i@cluster0.b7saegs.mongodb.net`, {
-  })
+  // mongoose.connect(`mongodb+srv://lielgerbi2000:135792468i@cluster0.b7saegs.mongodb.net`, {
+  // })
+      mongoose.connect(`mongodb://admin:bartar20%40CS@10.10.248.226:21771/`, {
+})
+
   .then(() => {
     db = db.useDb('give&take')
     console.log("connect to mongo")
@@ -75,7 +61,7 @@ const setupApp = new Promise((resolve, reject) => {
     app.use(express.json());
     // Swagger UI setup
     // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
-
+    app.use('/file', file)
     app.use('/users', users);
     app.use('/posts', posts);
     app.use('/categories', categories);

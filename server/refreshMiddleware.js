@@ -18,7 +18,7 @@ const authenticate = (req, res, next) => {
       return res.status(401).send('Access Denied. No refresh token provided.');
     }
 
-    try {
+  try {
       console.log("4")
       const decoded = jwt.verify(refreshToken, secretKey);
       const accessToken = jwt.sign({ user: decoded.user }, secretKey, { expiresIn: '1h' });

@@ -10,10 +10,6 @@ router.post('/delete',authenticate, postController.deletePost);
 router.post('/update',authenticate, postController.updatePost);
 
 
-router.route('/:postID')
-    .get(postController.getPosts)
-
-
 
 //TODO: add get Post To View Between Dates 
 
