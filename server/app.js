@@ -19,7 +19,7 @@ const app = express();
 
 const options ={
   key: fs.readFileSync('./client-key.pem'),
-  cert: fs.readFileSync('./cliend-cert.pem')
+  cert: fs.readFileSync('./client-cert.pem')
 }
 const server = https.createServer(options,app);
 const io = socketIo(server, {
