@@ -17,14 +17,14 @@ const path = require('path');
 
 const app = express();
 
-const options ={
-  key: fs.readFileSync('./client-key.pem'),
-  cert: fs.readFileSync('./client-cert.pem')
-}
-const server = https.createServer(options,app);
+// const options ={
+//   key: fs.readFileSync('./client-key.pem'),
+//   cert: fs.readFileSync('./client-cert.pem')
+// }
+const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: 'http://10.10.248.226:80',
+    origin: 'http://localhost:80',
   },
 });
 let connectedUsers = 0;
