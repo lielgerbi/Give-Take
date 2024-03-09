@@ -79,7 +79,7 @@
   "scripts": {
   
     
-  "start": "react-scripts start --port 80 --openssl-legacy-provider start",
+  "start": "set PORT=80 && react-scripts start",
   
     
   "build": "react-scripts build",
