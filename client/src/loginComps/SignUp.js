@@ -5,13 +5,17 @@ import { GlobalContext } from "../GlobalContext";
 import { v4 as uuidv4 } from 'uuid';
 import Image from './background.jpg'; // Import using relative path
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 import {
     newfile,
     addUser
   } from "../ApiService";
 
 function SignUp() {
+    const [ googleUser, setGoogleUser ] = useState([]);
+    const [ profile, setProfile ] = useState([]);
     const initialValues = {
         userName: "",
         firstName:"",
@@ -19,7 +23,8 @@ function SignUp() {
         email: "",
         password: "",
         confirmPassword: "",
-        photo:""
+        photo:"",
+        googleUser:false
     };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -130,6 +135,55 @@ function SignUp() {
         return errors;
     };
 
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => setGoogleUser(codeResponse),
+        onError: (error) => console.log('Login Failed:', error)
+    });
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            if (googleUser) {
+              const response = await axios.get(
+                `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleUser.access_token}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${googleUser.access_token}`,
+                    Accept: 'application/json'
+                  }
+                }
+              );
+      
+              if (response.data) {
+                formValues.userName = response.data.email;
+                formValues.firstName = response.data.given_name;
+                formValues.lastName = response.data.family_name;
+                formValues.email = response.data.email;
+                formValues.password = response.data.email;
+                formValues.confirmPassword = response.data.email;
+                formValues.googleUser = true;
+      
+                const newUser = await addUser(formValues);
+                setConnectedUser(formValues);
+                console.log("add", newUser);
+                history.push("/");
+              }
+            }
+          } catch (error) {
+            if (error.response && error.response.status === 500) {
+              setUserError("change user Name");
+            }
+            console.error("Error adding user:", error);
+          }
+        };
+      
+        fetchData(); // Call the asynchronous function here
+      
+      }, [googleUser]);
+      
+    
+
+
     return (
         <>
         <div className="bgImg">
@@ -232,6 +286,7 @@ function SignUp() {
                         <button className="singbutton">Submit</button>
                     </div>
                 </form>
+                <button onClick={login}>Sign in with Google 🚀 </button>
                 <div className="text">
                     Already have an account? <span>Login</span>
                 </div>

@@ -1,6 +1,8 @@
 import { useState, useEffect,useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../GlobalContext";
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import "./loginPage.css";
 import {
     findUser,
@@ -9,6 +11,7 @@ import {
     getAllCategories,
     getAllCities
   } from "../ApiService";
+  import axios from 'axios';
 import { genComponentStyleHook } from "antd/es/theme/internal";
 
 function LogIn() {
@@ -16,6 +19,8 @@ function LogIn() {
         userName: "",
         password: "",
     };
+    const [ googleUser, setGoogleUser ] = useState([]);
+    const [ profile, setProfile ] = useState([]);
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
@@ -90,6 +95,65 @@ function LogIn() {
        
         return errors;
     };
+    const responseMessage = (response) => {
+        console.log(response);
+        setGoogleUser(response)
+    };
+    const errorMessage = (error) => {
+        console.log(error);
+    };
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => setGoogleUser(codeResponse),
+        onError: (error) => console.log('Login Failed:', error)
+    });
+
+    // log out function to log the user out of google and set the profile array to null
+    const logOut = () => {
+        googleLogout();
+        setProfile(null);
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            if (googleUser) {
+              const response = await axios.get(
+                `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleUser.access_token}`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${googleUser.access_token}`,
+                    Accept: 'application/json'
+                  }
+                }
+              );
+      
+              if (response.data) {
+                formValues.userName = response.data.email;
+                formValues.firstName = response.data.given_name;
+                formValues.lastName = response.data.family_name;
+                formValues.email = response.data.email;
+                formValues.password = response.data.email;
+                formValues.confirmPassword = response.data.email;
+                formValues.googleUser = true;
+      
+                const user = await findUser(formValues.userName ,formValues.password);
+                // Save tokens to local storage
+               localStorage.setItem("accessToken", user.headers.authorization);
+               localStorage.setItem("refreshToken", user.headers.refreshtoken);
+                // Store user data in localStorage
+               localStorage.setItem('user', JSON.stringify(user.data));
+               // Save connected user
+               setConnectedUser(user.data)
+              }
+            }
+          } catch (error) {
+            console.error("Error adding user:", error);
+          }
+        };
+      
+        fetchData(); // Call the asynchronous function here
+      
+      }, [googleUser]);
 
     return (
         <>
@@ -125,6 +189,7 @@ function LogIn() {
                         <button className="singbutton">Submit</button>
                     </div>
                 </form>
+                <button onClick={login}>Sign in with Google 🚀 </button>
                 <div className="text">
                     Already have an account? <span>Login</span>
                 </div>

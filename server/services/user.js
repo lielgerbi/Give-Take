@@ -22,7 +22,8 @@ const createUser = async (newUser) => {
         password: newUser.password,
         email: newUser.email,
         isManager: false,
-        photo: newUser.photo
+        photo: newUser.photo,
+        googleUser: newUser.googleUser
     });
 
     console.log("Adding user:", user);
