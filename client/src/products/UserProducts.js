@@ -56,6 +56,23 @@ function UserProducts() {
     history.push('/editPost')
    
   };
+//   const handleFileChange = (event) => {
+//     var preview = document.getElementById('preview');
+//     const file = event.target.files[0];
+//     setSelectedFile(file);
+//     if (file) {
+//         var reader = new FileReader();
+
+//         reader.onload = function(e) {
+//           preview.src = e.target.result;
+//         };
+
+//         reader.readAsDataURL(file);
+//       } else {
+//         // Handle case where no file is selected
+//         preview.src = ""; // Clear the preview if no file is selected
+//       }
+// };
 
 
 
@@ -84,7 +101,7 @@ function UserProducts() {
                           alt=""
                           src={Image}
                         /> */}
-                        {/* {product.photo!=="" && product.photo && <img src={} alt="Uploaded Image" className="card-img-top bg-dark cover" />} */}
+                        {product.photo!=="" && product.photo && <img src={'http://localhost:443/'+product.photo} alt="Uploaded Image" className="card-img-top bg-dark cover" />}
                       <div className="card-body">
                         <h3 className="card-title text-center text-dark text-truncate">
                         {product?.subCategory} 

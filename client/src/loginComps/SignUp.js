@@ -2,8 +2,12 @@ import { useState, useEffect,useContext } from "react";
 import { useHistory } from "react-router-dom";
 import "./loginPage.css";
 import { GlobalContext } from "../GlobalContext";
+import { v4 as uuidv4 } from 'uuid';
 import Image from './background.jpg'; // Import using relative path
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import {
+    newfile,
     addUser
   } from "../ApiService";
 
@@ -15,29 +19,71 @@ function SignUp() {
         email: "",
         password: "",
         confirmPassword: "",
+        photo:""
     };
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const [userError,setUserError] =useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
     const history = useHistory();
     const {setConnectedUser} = useContext(GlobalContext);
+   
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     };
 
+    const handleDownload = async () => {
+        if (selectedFile) {
+            var guid= uuidv4();
+            const fileExtension = selectedFile.name.split('.').pop();
+            guid = guid + "." + fileExtension;
+            formValues.photo=guid
 
+            //const fileName =formValues.photo;
+            const formData = new FormData();
+            formData.append('image', selectedFile, guid); 
+            for (var key of formData.entries()) {
+                console.log(key[0] + ', ' + key[1]);
+            }
+            try{
+                 const res = await newfile(formData)
+                console.log('File uploaded. Server response:');
+                return res
+            }
+            catch(error){
+                console.error('Error uploading file:');
+            }
+          } else {
+            console.error('No file selected.');
+          }
+      };
+      const handleFileChange = (event) => {
+        var preview = document.getElementById('preview');
+        const file = event.target.files[0];
+        setSelectedFile(file);
+        if (file) {
+            var reader = new FileReader();
+    
+            reader.onload = function(e) {
+              preview.src = e.target.result;
+            };
+    
+            reader.readAsDataURL(file);
+          } else {
+            // Handle case where no file is selected
+            preview.src = ""; // Clear the preview if no file is selected
+          }
+    };
     const handleSubmit = async (e) => {
+        handleDownload();
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
         try {
             const newUser = await addUser(formValues);
-          
-            
-              // Status code is in the range 200-299 (success)
               setConnectedUser(formValues);
               console.log("add", newUser);
               history.push("/");
@@ -47,21 +93,6 @@ function SignUp() {
               }
             console.error("Error adding user:", error);
           }
-          
-
-    
-        // try {
-        //     const newUser = await addUser(formValues);
-        //     debugger
-        //     if(newUser.status==500){
-        //         setUserError("user name unavible")
-        //     }
-        //     setConnectedUser(formValues)
-        //     console.log("add", newUser);
-        //     history.push("/");
-        // } catch (error) {
-        //     console.error("Error adding user:", error);
-        // }
     };
     useEffect(() => {
         
@@ -181,6 +212,22 @@ function SignUp() {
                                 onChange={handleChange}
                             />
                         </div>
+                        <div className="image-uploader-container">
+                        <label className="file-input-label">
+                            <input
+                            type="file"
+                            onChange={handleFileChange}
+                            className="file-input"
+                            />
+                            <FontAwesomeIcon icon={faUpload} className="upload-icon" />
+                            Choose File
+                        </label>
+                        <img id="preview" src="" alt="Image Preview"style={{maxWidth: 200,  maxheight: 200}}></img>
+                        {selectedFile!== null && <label>{selectedFile.name}</label>}
+                        </div>
+                            
+                            
+
                         <p>{formErrors.confirmPassword}</p>
                         <button className="singbutton">Submit</button>
                     </div>

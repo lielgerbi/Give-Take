@@ -8,7 +8,7 @@ const router = express.Router();
 // Set up storage for multer
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/');
+        cb(null, 'public/');
       },
     filename: (req, file, cb) => {
         cb(null,  file.originalname);
@@ -22,7 +22,7 @@ router.post('/upload', upload.single('image'), (req, res) => {
             return res.status(400).json({ error: 'No file uploaded.' });
         }
 
-        const filePath = path.join(__dirname, '..', 'uploads', req.file.filename);
+        const filePath = path.join(__dirname, '..', 'public', req.file.filename);
         return res.status(200).json({ message: 'File uploaded successfully.', filePath });
     } catch (error) {
         console.error('Error uploading file:', error);

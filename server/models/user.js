@@ -26,6 +26,10 @@ const User = new Schema({
     isManager: {
         type: Boolean,
         required: false
+    },
+    photo:{
+        type: String,//url to the post's photo, if any
+        required: false 
     }
 });
 

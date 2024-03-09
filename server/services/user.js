@@ -21,7 +21,8 @@ const createUser = async (newUser) => {
         lastName: newUser.lastName,
         password: newUser.password,
         email: newUser.email,
-        isManager: false
+        isManager: false,
+        photo: newUser.photo
     });
 
     console.log("Adding user:", user);
@@ -36,8 +37,9 @@ const createUser = async (newUser) => {
     }
 };
 
-const updateUser = async (userName, firstName, lastName, email, password) => {
-    console.log(userName, firstName, lastName, email, password)
+const updateUser = async (userName, firstName, lastName, email, password,photo) => {
+    console.log("service now")
+    console.log(userName, firstName, lastName, email, password, photo)
     const user = await getUserByName(userName ,password);
 
     if (user) {
@@ -45,6 +47,7 @@ const updateUser = async (userName, firstName, lastName, email, password) => {
         user.lastName = lastName;
         user.email = email;
         user.password = password;
+        user.photo = photo;
         await user.save();
     }
     

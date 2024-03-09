@@ -65,7 +65,8 @@ export const getAllProducts = async () => {
           firstName:newUser.firstName,
           lastName:newUser.lastName,
           email:newUser.email,
-          password: newUser.password
+          password: newUser.password,
+          photo:newUser.photo
       });
     }))
   }

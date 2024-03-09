@@ -37,8 +37,10 @@ const createUser = async (req, res) => {
 
 
 const updateUser = async (req, res) => {
+  console.log("update user cintroller")
+  console.log(req.body)
     const user = await userService.updateUser(req.body.userName, req.body.firstName,
-      req.body.lastName, req.body.email, req.body.password);
+      req.body.lastName, req.body.email, req.body.password , req.body.photo);
 
     if (!user) {
       return res.status(404).json({ errors: ['User not found'] });

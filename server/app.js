@@ -59,6 +59,7 @@ const setupApp = new Promise((resolve, reject) => {
     }));
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(express.json());
+    app.use(express.static('public'))
     // Swagger UI setup
     // app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
     app.use('/file', file)

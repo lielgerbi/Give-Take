@@ -5,9 +5,11 @@ import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../GlobalContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { v4 as uuidv4 } from 'uuid';
 import {
     updatePost,
-    getAllProducts
+    getAllProducts,
+    newfile
   } from "../ApiService";
 
 
@@ -65,17 +67,30 @@ function NewProduct() {
         }
     };
 
-    const handleDownload = () => {
+    const handleDownload = async () => {
         if (selectedFile) {
-          const downloadLink = document.createElement('a');
-          downloadLink.href = URL.createObjectURL(selectedFile);
-          downloadLink.download = selectedFile.name;
-          document.body.appendChild(downloadLink);
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
-        } else {
-          console.log('No file selected.');
-        }
+            var guid= uuidv4();
+            const fileExtension = selectedFile.name.split('.').pop();
+            guid = guid + "." + fileExtension;
+            formValues.photo=guid
+
+            //const fileName =formValues.photo;
+            const formData = new FormData();
+            formData.append('image', selectedFile, guid); 
+            for (var key of formData.entries()) {
+                console.log(key[0] + ', ' + key[1]);
+            }
+            try{
+                 const res = await newfile(formData)
+                console.log('File uploaded. Server response:');
+                return res
+            }
+            catch(error){
+                console.error('Error uploading file:');
+            }
+          } else {
+            console.error('No file selected.');
+          }
       };
 
     const onChangeCity = (value) => {
@@ -93,10 +108,10 @@ function NewProduct() {
         formValues.subCategory = value;
     };
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setSelectedFile(file);
-    };
+    // const handleFileChange = (event) => {
+    //     const file = event.target.files[0];
+    //     setSelectedFile(file);
+    // };
     
     useEffect(() => {
         if (isSubmit) {
@@ -104,6 +119,36 @@ function NewProduct() {
         }
         console.log(formValues)
     }, [ formValues, isSubmit]);
+    useEffect(() => {
+        var preview = document.getElementById('preview');
+        if (editPost.photo) {
+            preview.src = 'http://localhost:443/'+editPost.photo;
+          } else {
+            // Handle case where no file is selected
+            preview.src = ""; // Clear the preview if no file is selected
+          }
+
+    }, []);
+
+    
+    const handleFileChange = (event) => {
+        var preview = document.getElementById('preview');
+        const file = event.target.files[0];
+        setSelectedFile(file);
+        if (file) {
+            var reader = new FileReader();
+    
+            reader.onload = function(e) {
+              preview.src = e.target.result;
+            };
+    
+            reader.readAsDataURL(file);
+          } else {
+            // Handle case where no file is selected
+            preview.src = ""; // Clear the preview if no file is selected
+          }
+    };
+    
 
     return (
         <>
@@ -164,6 +209,7 @@ function NewProduct() {
                             <FontAwesomeIcon icon={faUpload} className="upload-icon" />
                             Choose File
                         </label>
+                        <img id="preview" src="" alt="Image Preview"style={{maxWidth: 200,  maxheight: 200}}></img>
                         {selectedFile!== null && <label>{selectedFile.name}</label>}
                         </div>
                             

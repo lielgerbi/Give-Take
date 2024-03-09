@@ -2,8 +2,12 @@ import { useState, useEffect,useContext } from "react";
 import { useHistory } from "react-router-dom";
 import "./loginPage.css";
 import { GlobalContext } from "../GlobalContext";
+import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import Image from './background.jpg'; // Import using relative path
 import {
+    newfile,
     updateUser
   } from "../ApiService";
 
@@ -17,12 +21,14 @@ function HomePage() {
         password: user.password,
         firstName:user.firstName,
         lastName:user.lastName,
+        photo : user.photo
         // userName: connectedUser? connectedUser.userName:"",
         // email: connectedUser? connectedUser.email: "",
         // password: connectedUser? connectedUser.password: "",
         // firstName:connectedUser? connectedUser.firstName: "",
         // lastName:connectedUser? connectedUser.lastName: "",
     };
+    const [selectedFile, setSelectedFile] = useState(null);
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
@@ -31,16 +37,27 @@ function HomePage() {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     };
+    useEffect(() => {
+        var preview = document.getElementById('preview');
+        if (user.photo) {
+            preview.src = 'http://localhost:443/'+user.photo;
+          } else {
+            // Handle case where no file is selected
+            preview.src = ""; // Clear the preview if no file is selected
+          }
 
+    }, []);
 
     const handleSubmit = async (e) => {
+         handleDownload();
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
     
         try {
             const newUser = await updateUser(formValues);
-            setConnectedUser(formValues)
+            debugger
+            setConnectedUser(newUser.data)
             console.log("add", newUser);
             history.push("/landing");
         } catch (error) {
@@ -88,6 +105,50 @@ function HomePage() {
     history.push("/myPost");
 
    }
+
+   const handleDownload = async () => {
+    if (selectedFile) {
+        var guid= uuidv4();
+        const fileExtension = selectedFile.name.split('.').pop();
+        guid = guid + "." + fileExtension;
+        formValues.photo=guid;
+        debugger
+
+        //const fileName =formValues.photo;
+        const formData = new FormData();
+        formData.append('image', selectedFile, guid); 
+        for (var key of formData.entries()) {
+            console.log(key[0] + ', ' + key[1]);
+        }
+        try{
+             const res = await newfile(formData)
+            console.log('File uploaded. Server response:');
+            return res
+        }
+        catch(error){
+            console.error('Error uploading file:');
+        }
+      } else {
+        console.error('No file selected.');
+      }
+  };
+  const handleFileChange = (event) => {
+    var preview = document.getElementById('preview');
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    if (file) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        // Handle case where no file is selected
+        preview.src = ""; // Clear the preview if no file is selected
+      }
+};
     return (
         <>
         <div className="bgImg">
@@ -169,6 +230,19 @@ function HomePage() {
                             />
                         </div>
                         <p>{formErrors.password}</p>
+                        <div className="image-uploader-container">
+                        <label className="file-input-label">
+                            <input
+                            type="file"
+                            onChange={handleFileChange}
+                            className="file-input"
+                            />
+                            <FontAwesomeIcon icon={faUpload} className="upload-icon" />
+                            Choose File
+                        </label>
+                        <img id="preview" src="" alt="Image Preview"style={{maxWidth: 200,  maxheight: 200}}></img>
+                        {selectedFile!== null && <label>{selectedFile.name}</label>}
+                        </div>
                         <button className="singbutton">update my details</button>
                     </div>
                 </form>
