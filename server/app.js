@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const http = require('http');
+const https = require('http');
 const mongoose = require('mongoose');
 const socketIo = require('socket.io');
 const users = require('./routes/user');
@@ -16,8 +16,11 @@ const path = require('path');
 
 const app = express();
 
-
-const server = http.createServer(app);
+const options ={
+  key: fs.readFileSync('./client-key.pem'),
+  cert: fs.readFileSync('./cliend-cert.pem')
+}
+const server = https.createServer(options,app);
 const io = socketIo(server, {
   cors: {
     origin: 'http://localhost:3000',
