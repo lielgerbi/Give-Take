@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const https = require('http');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const socketIo = require('socket.io');
 const users = require('./routes/user');
