@@ -5,7 +5,8 @@ const api = async () => {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem("accessToken"),
-        'refreshToken' : localStorage.getItem("refreshToken")
+        'refreshToken' : localStorage.getItem("refreshToken"),
+        'Access-Control-Allow-Private-Network': true
 
       }
     });

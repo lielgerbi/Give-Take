@@ -45,13 +45,13 @@ function Banner() {
   const handleImageClick = (index) => {
     // Logic to determine the page URL based on the index
     let pageUrl;
-    if(index==0){
+    if(index===0){
       pageUrl='/newProduct'
     }
-    if(index==1){
+    if(index===1){
       pageUrl='/products'
     }
-    if(index==2){
+    if(index===2){
       pageUrl='/logIn'
     }
     // Navigate to the desired page

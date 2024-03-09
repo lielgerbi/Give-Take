@@ -106,7 +106,7 @@ const handleDelete = () => {
           <p className="card-text text-center text-muted mb-0">{product?.details}</p>
 
           <div className="d-grid d-block">
-            total comments {product.comments ==undefined ? 0: product.comments.length}
+            total comments {product.comments ===undefined ? 0: product.comments.length}
             <button className="btn btn-outline-dark mt-3" onClick={() => setCommentPopUp(true)}>
               <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Write comments
             </button>

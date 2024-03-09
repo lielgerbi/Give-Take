@@ -41,7 +41,7 @@ function NewProduct() {
         // Check if user data exists in localStorage
         ;
     
-        if (storedUser && connectedUser==undefined) {
+        if (storedUser && connectedUser===undefined) {
           // Parse the stored user data
           const userData = JSON.parse(storedUser);
           setConnectedUser(userData);

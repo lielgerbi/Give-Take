@@ -93,7 +93,7 @@ function SignUp() {
               console.log("add", newUser);
               history.push("/");
           } catch (error) {
-              if(error.response.status == 500){
+              if(error.response.status === 500){
                   setUserError("change user Name")
               }
             console.error("Error adding user:", error);

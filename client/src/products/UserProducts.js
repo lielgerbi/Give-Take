@@ -41,7 +41,7 @@ function UserProducts() {
       // Assuming deletePostUser is an asynchronous function
        let res = await deletePostUser(post);
       console.log(res);
-      if(res.status == 200){
+      if(res.status === 200){
         let products = await getAllProducts();
         setAllProducts(products.data);
 
@@ -92,7 +92,7 @@ function UserProducts() {
               }
             >
             {allProducts.map((product, index) => {
-                    if (product?.userName == currentUser?.userName && currentUser && product.isAvailable ==true)
+                    if (product?.userName === currentUser?.userName && currentUser && product.isAvailable=== true)
                     return (<div className="col" key={index}>
                     <div className="card shadow-sm">
                         {/* <img

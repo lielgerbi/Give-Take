@@ -60,7 +60,7 @@ function Header() {
           </Link>
           }
 
-          <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')+ (currentUser==undefined? "left" :'')}>
+          <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')+ (currentUser===undefined? "left" :'')}>
             {currentUser !== undefined &&
             <ul className="navbar-nav me-auto mb-lg-0">
               <li className="nav-item">
@@ -91,7 +91,7 @@ function Header() {
                   className="dropdown-menu dropdown-menu-end"
                   aria-labelledby="userDropdown"
                 >
-                  {currentUser == undefined ?
+                  {currentUser === undefined ?
                   <>
                   <li>
                   <Link to="/" className="dropdown-item" onClick={changeNav}>
