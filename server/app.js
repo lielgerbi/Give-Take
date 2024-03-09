@@ -24,7 +24,7 @@ const options ={
 const server = https.createServer(options,app);
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:80',
+    origin: 'http://10.10.248.226:80',
   },
 });
 let connectedUsers = 0;
