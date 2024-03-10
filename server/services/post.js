@@ -52,8 +52,6 @@ const getPostByUser = async (userName) => {
 };
 
 
-//TODO: add get Post To View Between Dates 
-
 module.exports = {
     updatePost, deletePost, createPost, getPostById, getPosts, getPostByUser
 }

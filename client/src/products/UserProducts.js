@@ -9,8 +9,6 @@ import {
   getAllProducts,
 } from "../ApiService";
 
-
-
 function UserProducts() {
   const history = useHistory();
   const {connectedUser, allProducts, setAllProducts ,setEditPost} = useContext(GlobalContext);

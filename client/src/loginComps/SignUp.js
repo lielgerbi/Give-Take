@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import "./loginPage.css";
 import { GlobalContext } from "../GlobalContext";
 import { v4 as uuidv4 } from 'uuid';
-import Image from './background.jpg'; // Import using relative path
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +14,6 @@ import {
 
 function SignUp() {
     const [ googleUser, setGoogleUser ] = useState([]);
-    const [ profile, setProfile ] = useState([]);
     const initialValues = {
         userName: "",
         firstName:"",
@@ -50,12 +48,8 @@ function SignUp() {
             //const fileName =formValues.photo;
             const formData = new FormData();
             formData.append('image', selectedFile, guid); 
-            for (var key of formData.entries()) {
-                console.log(key[0] + ', ' + key[1]);
-            }
             try{
-                 const res = await newfile(formData)
-                console.log('File uploaded. Server response:');
+                const res = await newfile(formData);
                 return res
             }
             catch(error){
@@ -90,7 +84,6 @@ function SignUp() {
         try {
             const newUser = await addUser(formValues);
               setConnectedUser(formValues);
-              console.log("add", newUser);
               history.push("/");
           } catch (error) {
               if(error.response.status === 500){
@@ -99,12 +92,7 @@ function SignUp() {
             console.error("Error adding user:", error);
           }
     };
-    useEffect(() => {
-        
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formValues);
-        }
-    }, [formErrors, formValues, isSubmit]);
+
     const validate = (values) => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -177,7 +165,7 @@ function SignUp() {
           }
         };
       
-        fetchData(); // Call the asynchronous function here
+        fetchData();
       
       }, [googleUser]);
       

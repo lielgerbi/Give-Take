@@ -6,8 +6,6 @@ import { GlobalContext } from "../GlobalContext";
 import "./headrer.css";
 
 function Header() {
-
-
   const [openedDrawer, setOpenedDrawer] = useState(false)
   const [currentUser,setCurrentUser] = useState(undefined)
   const {connectedUser , setConnectedUser} = useContext(GlobalContext);
@@ -25,9 +23,6 @@ function Header() {
       }
     }
   }, []);
-  function toggleDrawer() {
-    setOpenedDrawer(!openedDrawer);
-  }
 
   function changeNav(event) {
     if (openedDrawer) {
@@ -70,10 +65,6 @@ function Header() {
               </li>
             </ul>
             }
-            {/* <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline">
-              <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-              <span className="ms-3 badge rounded-pill bg-dark">0</span>
-            </button> */}
             <ul className="navbar-nav mb-2 mb-lg-0" >
               <li className="nav-item dropdown">
                 <a
@@ -118,16 +109,6 @@ function Header() {
               </li>
             </ul>
           </div>
-
-          {/* <div className="d-inline-block d-lg-none">
-            <button type="button" className="btn btn-outline-dark">
-              <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-              <span className="ms-3 badge rounded-pill bg-dark">0</span>
-            </button>
-            <button className="navbar-toggler p-0 border-0 ms-3" type="button" onClick={toggleDrawer}>
-              <span className="navbar-toggler-icon"></span>
-            </button>
-          </div> */}
         </div>
       </nav>
     </header>

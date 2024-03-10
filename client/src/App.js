@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useHistory  } from "react-router-dom";
-import Template from "./template/Template";
+import React, { useEffect, useContext } from "react";
+import Header from "./template/Header";
 import { Switch, Route ,BrowserRouter } from "react-router-dom";
 import { GlobalContext } from "./GlobalContext";
-import { Redirect } from 'react-router';
 import Landing from "./landing/Landing";
 import ProductList from "./products/ProductList";
 import UserProducts from "./products/UserProducts"
@@ -21,13 +19,10 @@ import {
 
 
 function App() {
-  const history = useHistory();
-  const { connectedUser, setConnectedUser, allProducts, setAllProducts,allCategories ,setAllCategories,allCities,setAllCities} = useContext(GlobalContext);
+  const {setConnectedUser,setAllProducts, setAllCategories, setAllCities} = useContext(GlobalContext);
   const storedUser = localStorage.getItem('user')
   useEffect(() => {
     // Check if user data exists in localStorage
-    ;
-
     if (storedUser) {
       // Parse the stored user data
       const userData = JSON.parse(storedUser);
@@ -35,24 +30,13 @@ function App() {
       fetchData()
     }
   }, []);
-  // useEffect(() => {
-  //   if(connectedUser == undefined ){
-       
-  //   }
-   
-  // }, []);
 
-  // useEffect(() => {
-  //   // Redirect to the login page
-  //   history.push('/logIn');
-  // }, [history]);
 
   async function fetchData(){
     try{
         const products = await getAllProducts();
         const categories = await getAllCategories();
         const cities = await getAllCities()
-        console.log(products);
         setAllProducts(products.data);
         setAllCategories(categories.data);
         setAllCities(cities.data);
@@ -68,8 +52,8 @@ function App() {
   return (
    
     <BrowserRouter >
-     <div>
-       <Template></Template>
+      <div>
+      <Header></Header>
     <Switch>
       <Route path="/" exact>
         <LogIn />

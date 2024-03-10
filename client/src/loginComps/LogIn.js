@@ -2,17 +2,14 @@ import { useState, useEffect,useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../GlobalContext";
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
-import { GoogleLogin } from '@react-oauth/google';
 import "./loginPage.css";
 import {
     findUser,
-     refreshAccessToken,
     getAllProducts,
     getAllCategories,
     getAllCities
   } from "../ApiService";
   import axios from 'axios';
-import { genComponentStyleHook } from "antd/es/theme/internal";
 
 function LogIn() {
     const initialValues = {
@@ -20,6 +17,7 @@ function LogIn() {
         password: "",
     };
     const [ googleUser, setGoogleUser ] = useState([]);
+    //todo
     const [ profile, setProfile ] = useState([]);
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -95,13 +93,6 @@ function LogIn() {
        
         return errors;
     };
-    const responseMessage = (response) => {
-        console.log(response);
-        setGoogleUser(response)
-    };
-    const errorMessage = (error) => {
-        console.log(error);
-    };
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setGoogleUser(codeResponse),
         onError: (error) => console.log('Login Failed:', error)
@@ -151,7 +142,7 @@ function LogIn() {
           }
         };
       
-        fetchData(); // Call the asynchronous function here
+        fetchData(); 
       
       }, [googleUser]);
 

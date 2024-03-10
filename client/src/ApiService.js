@@ -128,18 +128,3 @@ export const newfile = async (formData) => {
     throw error;
   }
 }
-  // export const newfile = async (formData) => {
-  //   const apiFile = axios.create({
-  //     baseURL: process.env.REACT_APP_API_URL,
-  //     headers: {
-  //       'Authorization': localStorage.getItem("accessToken"),
-  //       'refreshToken' : localStorage.getItem("refreshToken")
-
-  //     }
-  //   });
-  //   return (await apiFile().then(async (api) => {
-  //     return api.post(`/file/upload`, {
-  //       formData:formData
-  //     });
-  //   }))
-  // }

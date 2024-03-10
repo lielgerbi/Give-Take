@@ -6,7 +6,6 @@ import { GlobalContext } from "../GlobalContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
-import path from 'path';
 
 import {
     newPost,
@@ -39,8 +38,6 @@ function NewProduct() {
     }
     useEffect(() => {
         // Check if user data exists in localStorage
-        ;
-    
         if (storedUser && connectedUser===undefined) {
           // Parse the stored user data
           const userData = JSON.parse(storedUser);
@@ -64,14 +61,10 @@ function NewProduct() {
    
 
     const handleSubmit = async (e) => {
-        
         e.preventDefault();
         setIsSubmit(true);
         try {
-            const saveImage = await handleDownload();
-            // const directoryPath = saveImage.filePath.replace(/[^\\]*$/, '');
-            const directoryPath = saveImage.filePath.substring(0, saveImage.filePath.lastIndexOf('\\') + 1);
-            // formValues.photo=directoryPath+formValues.photo;
+            await handleDownload();
             const post = await newPost(connectedUser.userName,formValues);
             console.log("add", post);
             const products = await getAllProducts();
@@ -93,12 +86,8 @@ function NewProduct() {
             //const fileName =formValues.photo;
             const formData = new FormData();
             formData.append('image', selectedFile, guid); 
-            for (var key of formData.entries()) {
-                console.log(key[0] + ', ' + key[1]);
-            }
             try{
-                 const res = await newfile(formData)
-                console.log('File uploaded. Server response:');
+                const res = await newfile(formData)
                 return res
             }
             catch(error){
@@ -215,10 +204,9 @@ function NewProduct() {
                    
                         <button className="singbutton">upload my product</button>
                     </div>
-                </form>
-                
+                </form>   
             </div>
-            </div>
+        </div>
         </>
     );
 }

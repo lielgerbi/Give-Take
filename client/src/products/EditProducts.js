@@ -22,7 +22,7 @@ function NewProduct() {
         subCategory: editPost.subCategory,
         details: editPost.details,
         city: editPost.city,
-        photo: "", // TODO
+        photo: ""
     };
     const [formValues, setFormValues] = useState(initialValues);
     const [isSubmit, setIsSubmit] = useState(false);
@@ -77,12 +77,8 @@ function NewProduct() {
             //const fileName =formValues.photo;
             const formData = new FormData();
             formData.append('image', selectedFile, guid); 
-            for (var key of formData.entries()) {
-                console.log(key[0] + ', ' + key[1]);
-            }
             try{
-                 const res = await newfile(formData)
-                console.log('File uploaded. Server response:');
+                const res = await newfile(formData)
                 return res
             }
             catch(error){
@@ -94,26 +90,15 @@ function NewProduct() {
       };
 
     const onChangeCity = (value) => {
-        console.log(allCategories)
-        console.log(`selected ${value}`);
         formValues.city = value
     };
     const onChangeCategory = (value) => {
-        console.log(`selected ${value}`);
-        formValues.categoryName = value;
         setCategoryIndex(allCategories.findIndex(category => category.categoryName === value));
     };
     const onChangeSubCategory = (value) => {
-        console.log(`selected ${value}`);
         formValues.subCategory = value;
     };
     
-    useEffect(() => {
-        if (isSubmit) {
-            console.log(formValues);
-        }
-        console.log(formValues)
-    }, [ formValues, isSubmit]);
     useEffect(() => {
         var preview = document.getElementById('preview');
         if (editPost.photo) {

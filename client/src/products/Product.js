@@ -1,17 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import Image from "./Phone.jfif";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { GlobalContext } from "../GlobalContext";
 import { Modal } from 'antd';
-import { useHistory } from "react-router-dom";
+import { ReactComponent as X } from "./closeModal.svg";
+import "./product.css";
 import {
   deletePostUser
 } from "../ApiService";
-import { ReactComponent as X } from "./closeModal.svg";
-import "./product.css";
+
+
 function Product(props ,onDelete) {
-  const history = useHistory();
   const [commentPopUp,setCommentPopUp] = useState(false);
   const [newComment , setNewComment] = useState("");
   let {product} = props;
@@ -30,20 +27,10 @@ function Product(props ,onDelete) {
      setCommentPopUp(false);
 
    }
-   const deletePost = async () => {
 
-
-    try {
-        const res = deletePostUser(product._id);
-        history.push("/home");
-    } catch (error) {
-        console.error("Error adding user:", error);
-    }
-};
 
 const handleDelete = () => {
   const res = deletePostUser(product._id);
-  // Call the onDelete function with the product ID or any identifier
   onDelete(product.id);
 };
   

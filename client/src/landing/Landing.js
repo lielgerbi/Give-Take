@@ -12,7 +12,7 @@ function Landing() {
       <div className="d-flex flex-column bg-white py-4">
         <div className="d-flex justify-content-center">
           <Link to="/products" className="btn btn-primary" replace>
-            ראה מוצרים חדשים
+              See new product
           </Link>
         </div>
       </div>

@@ -5,7 +5,6 @@ import { GlobalContext } from "../GlobalContext";
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
-import Image from './background.jpg'; // Import using relative path
 import {
     newfile,
     updateUser
@@ -22,11 +21,6 @@ function HomePage() {
         firstName:user.firstName,
         lastName:user.lastName,
         photo : user.photo
-        // userName: connectedUser? connectedUser.userName:"",
-        // email: connectedUser? connectedUser.email: "",
-        // password: connectedUser? connectedUser.password: "",
-        // firstName:connectedUser? connectedUser.firstName: "",
-        // lastName:connectedUser? connectedUser.lastName: "",
     };
     const [selectedFile, setSelectedFile] = useState(null);
     const [formValues, setFormValues] = useState(initialValues);
@@ -56,22 +50,13 @@ function HomePage() {
     
         try {
             const newUser = await updateUser(formValues);
-            debugger
             setConnectedUser(newUser.data)
-            console.log("add", newUser);
             history.push("/landing");
         } catch (error) {
             console.error("Error adding user:", error);
         }
     };
     
-   
-    useEffect(() => {
-        
-        if (Object.keys(formErrors).length === 0 && isSubmit) {
-            console.log(formValues);
-        }
-    }, [formErrors, formValues, isSubmit]);
     const validate = (values) => {
         const errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -112,17 +97,13 @@ function HomePage() {
         const fileExtension = selectedFile.name.split('.').pop();
         guid = guid + "." + fileExtension;
         formValues.photo=guid;
-        debugger
 
         //const fileName =formValues.photo;
         const formData = new FormData();
         formData.append('image', selectedFile, guid); 
-        for (var key of formData.entries()) {
-            console.log(key[0] + ', ' + key[1]);
-        }
+    
         try{
-             const res = await newfile(formData)
-            console.log('File uploaded. Server response:');
+            const res = await newfile(formData);
             return res
         }
         catch(error){

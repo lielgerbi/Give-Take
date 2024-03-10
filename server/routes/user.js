@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
 const userController = require('../controllers/user')
-const authenticate = require("../refreshMiddleware");//todo add auth
+const authenticate = require("../refreshMiddleware");
 
 
 // routes/users.js

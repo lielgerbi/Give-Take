@@ -46,8 +46,6 @@ const updatePost = async (req, res) => {
     res.json(userPosts);
   };
 
-  //TODO: add get Post To View Between Dates 
-
 
   module.exports = {
     getPosts,
