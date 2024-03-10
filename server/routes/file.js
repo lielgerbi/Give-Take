@@ -66,7 +66,7 @@ router.post('/upload', upload.single('image'), (req, res) => {
         }
          
         const filePath = path.join(__dirname, '..', 'public', req.file.filename);
-        console.log("filePath")
+        console.log(filePath)
         return res.status(200).json({ message: 'File uploaded successfully.', filePath });
     } catch (error) {
         console.error('Error uploading file:', error);
