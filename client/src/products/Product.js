@@ -79,7 +79,7 @@ const handleDelete = () => {
           <h5 className="card-title text-center text-dark text-truncate">
           {product?.subCategory} {product?.categoryName}
           </h5>
-          <p className="card-text text-center text-muted mb-0">{product?.details.length>20 ? product?.details.substring(0, 20) + '...': product?.details}</p>
+          <p className="card-text text-center text-muted mb-0">{product?.details.length>20 ? product?.details.substring(0, 20) + '...': product?.details==""? product?.details:"no details were added"}</p>
 
           <div className="d-grid d-block">
             total comments {product.comments ===undefined ? 0: product.comments.length}
