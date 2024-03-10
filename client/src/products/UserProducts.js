@@ -101,7 +101,7 @@ function UserProducts() {
                           alt=""
                           src={Image}
                         /> */}
-                        {product.photo!=="" && product.photo && <img src={'http://localhost:443/'+product.photo} alt="Uploaded Image" className="card-img-top bg-dark cover" />}
+                        {product.photo!=="" && product.photo && <img src={'http://10.10.248.226/:443/'+product.photo} alt="Uploaded Image" className="card-img-top bg-dark cover" />}
                       <div className="card-body">
                         <h3 className="card-title text-center text-dark text-truncate">
                         {product?.subCategory} 
