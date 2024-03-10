@@ -34,7 +34,7 @@ function HomePage() {
     useEffect(() => {
         var preview = document.getElementById('preview');
         if (user.photo) {
-            preview.src = 'http://10.10.248.226:443/'+user.photo;
+            preview.src = process.env.REACT_APP_API_URL+'/'+user.photo;
           } else {
             // Handle case where no file is selected
             preview.src = ""; // Clear the preview if no file is selected

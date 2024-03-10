@@ -102,7 +102,7 @@ function NewProduct() {
     useEffect(() => {
         var preview = document.getElementById('preview');
         if (editPost.photo) {
-            preview.src = 'http://10.10.248.226:443/'+editPost.photo;
+            preview.src = process.env.REACT_APP_API_URL+'/'+editPost.photo;
           } else {
             // Handle case where no file is selected
             preview.src = ""; // Clear the preview if no file is selected
