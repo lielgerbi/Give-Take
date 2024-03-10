@@ -68,12 +68,7 @@ const handleDelete = () => {
       </div >
       <div className="divCenter" style={{ paddingTop: "10px", paddingBottom: "10px" }} >
         <div className="nofictaion">
-          
-            {/* <div className={styles.divCenter}></div> */}
             <div className="modalContiner">
-            {/* <div>
-              <lable className="details"></lable>
-            </div> */}
             <div className="comment">
                {product.comments && (
                   product.comments.map((comment, index) => (
@@ -92,12 +87,7 @@ const handleDelete = () => {
     </Modal>
     <div className="col">
       <div className="card shadow-sm">
-          <img
-            className="card-img-top bg-dark cover"
-            height="200"
-            alt=""
-            src={Image}
-          />
+            {product.photo!=="" && product.photo && <img src={'http://10.10.248.226:443/'+product.photo} height="200" alt="Uploaded Image" className="card-img-top bg-dark cover" />}
         <div className="card-body">
           <h3 className="card-title text-center text-dark text-truncate">
           {product?.subCategory} 

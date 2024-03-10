@@ -107,11 +107,6 @@ function NewProduct() {
         console.log(`selected ${value}`);
         formValues.subCategory = value;
     };
-
-    // const handleFileChange = (event) => {
-    //     const file = event.target.files[0];
-    //     setSelectedFile(file);
-    // };
     
     useEffect(() => {
         if (isSubmit) {
@@ -122,7 +117,7 @@ function NewProduct() {
     useEffect(() => {
         var preview = document.getElementById('preview');
         if (editPost.photo) {
-            preview.src = 'http://localhost:443/'+editPost.photo;
+            preview.src = 'http://10.10.248.226:443/'+editPost.photo;
           } else {
             // Handle case where no file is selected
             preview.src = ""; // Clear the preview if no file is selected
@@ -211,9 +206,7 @@ function NewProduct() {
                         </label>
                         <img id="preview" src="" alt="Image Preview"style={{maxWidth: 200,  maxheight: 200}}></img>
                         {selectedFile!== null && <label>{selectedFile.name}</label>}
-                        </div>
-                            
-                            
+                        </div>  
                         </div>
                    
                         <button className="singbutton">edit my product</button>
