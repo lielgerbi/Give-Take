@@ -202,7 +202,7 @@ function ProductList() {
                     return (<Product key={index} product={product} />);
                 })}
             </div>
-            
+
            
           </div>
         </div>
