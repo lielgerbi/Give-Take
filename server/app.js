@@ -49,10 +49,10 @@ const corsOptions = {
 
 const setupApp = new Promise((resolve, reject) => {
   var db = mongoose.connection;
-  mongoose.connect(`mongodb+srv://lielgerbi2000:135792468i@cluster0.b7saegs.mongodb.net`, {
-  })
-     // mongoose.connect(`mongodb://admin:bartar20%40CS@10.10.248.226:21771/`, {
-//})
+  // mongoose.connect(`mongodb+srv://lielgerbi2000:135792468i@cluster0.b7saegs.mongodb.net`, {
+  // })
+     mongoose.connect(`mongodb://admin:bartar20%40CS@10.10.248.226:21771/`, {
+})
 
   .then(() => {
     db = db.useDb('give&take')
