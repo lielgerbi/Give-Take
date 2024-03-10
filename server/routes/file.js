@@ -16,6 +16,47 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+// routes/file.js
+
+/**
+ * @swagger
+ * tags:
+ *   name: Upload
+ *   description: API for upload files
+ */
+
+
+/**
+ * @swagger
+ * /upload:
+ *   post:
+ *     summary: Upload an image file
+ *     tags: [Upload]
+ *     consumes:
+ *       - multipart/form-data
+ *     parameters:
+ *       - in: formData
+ *         name: image
+ *         type: file
+ *         required: true
+ *         description: Image file to upload
+ *     responses:
+ *       '200':
+ *         description: File uploaded successfully
+ *         content:
+ *           application/json:
+ *             example: {"message": "File uploaded successfully.", "filePath": "/public/filename.jpg"}
+ *       '400':
+ *         description: No file uploaded
+ *         content:
+ *           application/json:
+ *             example: {"error": "No file uploaded."}
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             example: {"error": "Internal server error."}
+ */
 router.post('/upload', upload.single('image'), (req, res) => {
     try {
         if (!req.file) {
@@ -30,24 +71,5 @@ router.post('/upload', upload.single('image'), (req, res) => {
     }
 });
 
-// router.post('/uploads', (req, res) => {
-//     // if(req.query.filename === 'rocket'){
-//        res.sendFile(path.join(__dirname, "uploads/fed4ddb2-11ea-4808-829d-92793de11972.png"));
-//     // }
-//   })
-
-// router.post('/uploads', fileController.getFile);
-// Handle file upload
-// router.post('/upload', upload.single('image'), (req, res) => {
-//     return res.send("Single file")
-// });
 
 module.exports = router;
-
-
-// const express = require('express');
-// var router = express.Router();
-// const filesController = require('../controllers/files');
-// const authenticate = require("../refreshMiddleware");//todo add auth
-
-// router.post('/file',authenticate,filesController.saveFile);

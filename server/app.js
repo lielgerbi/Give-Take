@@ -12,7 +12,7 @@ const categories = require('./routes/categories');
 const cities = require('./routes/cities');
 const jwt = require('jsonwebtoken');
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpecs = require('./swagger');
+const swaggerSpec = require('./swaggerConfig'); 
 const path = require('path');
 
 const app = express();
@@ -49,10 +49,10 @@ const corsOptions = {
 
 const setupApp = new Promise((resolve, reject) => {
   var db = mongoose.connection;
-  // mongoose.connect(`mongodb+srv://lielgerbi2000:135792468i@cluster0.b7saegs.mongodb.net`, {
-  // })
-      mongoose.connect(`mongodb://admin:bartar20%40CS@10.10.248.226:21771/`, {
-})
+  mongoose.connect(`mongodb+srv://lielgerbi2000:135792468i@cluster0.b7saegs.mongodb.net`, {
+  })
+     // mongoose.connect(`mongodb://admin:bartar20%40CS@10.10.248.226:21771/`, {
+//})
 
   .then(() => {
     db = db.useDb('give&take')
@@ -71,6 +71,8 @@ const setupApp = new Promise((resolve, reject) => {
     app.use('/posts', posts);
     app.use('/categories', categories);
     app.use('/cities', cities);
+    // Serve Swagger UI
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     app.post('/refresh', (req, res) => {
       const refreshToken = req.cookies['refreshToken'];
