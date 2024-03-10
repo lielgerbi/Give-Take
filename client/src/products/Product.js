@@ -76,9 +76,9 @@ const handleDelete = () => {
       <div className="card shadow-sm">
             {product.photo!=="" && product.photo && <img src={'http://10.10.248.226:443/'+product.photo} height="200" alt="Uploaded Image" className="card-img-top bg-dark cover" />}
         <div className="card-body">
-          <h3 className="card-title text-center text-dark text-truncate">
-          {product?.subCategory} +{product?.categoryName}
-          </h3>
+          <h4 className="card-title text-center text-dark text-truncate">
+          {product?.subCategory} {product?.categoryName}
+          </h4>
           <p className="card-text text-center text-muted mb-0">{product?.details}</p>
 
           <div className="d-grid d-block">
