@@ -59,11 +59,14 @@ const upload = multer({ storage: storage });
  */
 router.post('/upload', upload.single('image'), (req, res) => {
     try {
+        console.log("file upload")
+        console.log(req)
         if (!req.file) {
             return res.status(400).json({ error: 'No file uploaded.' });
         }
-
+         
         const filePath = path.join(__dirname, '..', 'public', req.file.filename);
+        console.log("filePath")
         return res.status(200).json({ message: 'File uploaded successfully.', filePath });
     } catch (error) {
         console.error('Error uploading file:', error);
