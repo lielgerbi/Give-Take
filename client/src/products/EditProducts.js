@@ -34,10 +34,10 @@ function NewProduct() {
         label: subCategory,
       }));
     }
-
+         
       const menuCities = allCities.map(city => ({
-        value: city.name,
-        label: city.name,
+        value: city,
+        label: city,
       }));
 
       const menuCategories = allCategories.map(category => ({

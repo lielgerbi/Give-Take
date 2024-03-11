@@ -89,7 +89,8 @@ export const getAllProducts = async () => {
         subCategory:post.subCategory,
         photo:post.photo,
         details:post.details,
-        city: post.city
+        city: post.city,
+        comments: post.comments
       });
     }))
   }

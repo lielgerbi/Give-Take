@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Product from "./Product";
 import { useState,useEffect, useContext } from "react";
+import { Select} from 'antd';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GlobalContext } from "../GlobalContext";
 // import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
@@ -9,12 +10,17 @@ function FilterMenuLeft({ updateFilteredProducts }) {
    const { allCategories } = useContext(GlobalContext);
    const {allCities} = useContext(GlobalContext);
    const { allProducts } = useContext(GlobalContext);
+   const [selectCity, setSelectCity] = useState()
    const [selectedFilters, setSelectedFilters] = useState({
     categories: [],
     subCategories: [],
     cities: [],
   });
-   var cities = allCities.map(city => city.name);
+  const menuCities = allCities.map(city => ({
+    value: city,
+    label: city,
+  }));
+
   
     // Handler for checkbox changes
     const handleCheckboxChange = (type, value) => {
@@ -25,9 +31,13 @@ function FilterMenuLeft({ updateFilteredProducts }) {
           : [...prevState[type], value],
       }));
     };
+    const onChangeCity = (value) => {
+      console.log(`selected ${value}`);
+      setSelectCity(value)
+  };
     const handleApplyFilters = () => {
     // Filter products based on selected criteria
-    const filteredProducts = allProducts.filter(product => {
+    var filteredProducts = allProducts.filter(product => {
     // Check if the product's category is in the selected categories
     const categoryMatch = selectedFilters.categories.length === 0 || selectedFilters.categories.includes(product.categoryName);
 
@@ -35,11 +45,16 @@ function FilterMenuLeft({ updateFilteredProducts }) {
     const subCategoryMatch = selectedFilters.subCategories.length === 0 || selectedFilters.subCategories.includes(product.subCategory);
 
     // Check if the product's city is in the selected cities
-    const cityMatch = selectedFilters.cities.length === 0 || selectedFilters.cities.includes(product.city);
-
+    //const cityMatch = selectCity=="" || selectedFilters.allCities.includes(product.city);
+    
     // Return true only if all criteria match
-    return categoryMatch && subCategoryMatch && cityMatch;
+    debugger
+    return categoryMatch && subCategoryMatch ;
   });
+
+  filteredProducts = filteredProducts.filter(product => {
+    return product.city === selectCity;
+});
   updateFilteredProducts(filteredProducts);
   console.log(filteredProducts);
     };
@@ -66,7 +81,7 @@ function FilterMenuLeft({ updateFilteredProducts }) {
       <li className="list-group-item">
         <h5 className="mt-1 mb-1">Cities</h5>
         <div className="d-flex flex-column">
-          {cities.map((v, i) => {
+          {/* {allCities && allCities.map((v, i) => {
             return (
               <div key={i} className="form-check">
                 <input className="form-check-input" type="checkbox"  onChange={() => handleCheckboxChange('cities', v)}/>
@@ -75,7 +90,14 @@ function FilterMenuLeft({ updateFilteredProducts }) {
                 </label>
               </div>
             );
-          })}
+          })} */}
+          <Select
+                            showSearch
+                            placeholder="Select City"
+                            style={{ width: 150 }}
+                            onChange={onChangeCity}
+                            options={menuCities}
+                        />
         </div>
       </li>
       <li className="list-group-item">  

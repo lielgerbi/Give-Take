@@ -35,16 +35,105 @@ function LogIn() {
      } 
   }, [connectedUser]);
 
+//   async function getAllCitiesInIsrael() {
+//     try {
+//       const response = await axios.get('http://api.openweathermap.org/data/2.5/find', {
+//         params: {
+//           q: 'Israel',
+//           type: 'like',
+//           sort: 'population',
+//           cnt: 30,  // Adjust the count as needed
+//           APPID: '3959e282f06b8ec89d75e2fde6c36672',  // Replace with your API key
+//         },
+//       });
+  
+//       // Extract the list of cities
+//       const israelCities = response.data.list.map(city => city.name);
+//       debugger
+  
+//       return israelCities;
+//     } catch (error) {
+//       console.error(error);
+//       throw error; // Rethrow the error if needed
+//     }
+//   }
+  async function getAllCitiesFromRestApi() {
+    try {
+      // Axios request using async/await
+      const response = await axios({
+        method: 'get',
+        url: 'https://countriesnow.space/api/v0.1/countries',
+      });
+      let israelCities =[]
+      debugger
+      if(response.data.data ){
+        // Handle the response data here
+      console.log(response.data.data);
+      
+      // If you want to filter cities for a specific country (e.g., Israel)
+      israelCities = response.data.data
+        .filter(item => item.country === "Israel")
+        .map(item => item.cities);
+      }
+      
+      return israelCities
+      // return israelCities;
+    } catch (error) {
+      // Handle errors here
+      console.error(error);
+    }
+  }
 
-
+  async function getAllCitiesInIsrael() {
+    try {
+      const response = await axios.get('http://api.geonames.org/searchJSON?country=IL&username=liel&maxRows=100', {
+        params: {
+          country: 'IL',
+          username: 'liel',
+          maxRows:100
+        }
+      });
+  
+      // Extract the list of cities
+      const israelCities = response.data.geonames.map(city => city.name);
+      debugger
+  
+      return israelCities;
+    } catch (error) {
+      console.error(error);
+      throw error; // Rethrow the error if needed
+    }
+  }
+//   async function getAllCitiesInIsrael() {
+//     try {
+//       const response = await axios.get('http://api.openweathermap.org/data/2.5/find', {
+//         params: {
+//           q: 'Israel',
+//           type: 'like',
+//           sort: 'population',
+//           cnt: 30,  // Adjust the count as needed
+//           APPID: 'YOUR_OPENWEATHERMAP_API_KEY',  // Replace with your API key
+//         },
+//       });
+  
+//       // Extract the list of cities
+//       const israelCities = response.data.list.map(city => city.name);
+//       debugger
+//       return israelCities;
+//     } catch (error) {
+//       console.error(error);
+//       throw error; // Rethrow the error if needed
+//     }
+//   }
   async function fetchData(){
     try{
         const products = await getAllProducts();
         const categories = await getAllCategories();
-        const cities = await getAllCities()
+        const cities = (( allCities==undefined || allCities.length==0 )? await getAllCitiesInIsrael() : allCities);
+        debugger
         setAllProducts(products.data);
         setAllCategories(categories.data);
-        setAllCities(cities.data);
+        setAllCities(cities);
         history.push("landing");
     }
     catch(err){
@@ -54,6 +143,7 @@ function LogIn() {
   }
 
     const handleSubmit = async (e) => {
+        debugger
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);

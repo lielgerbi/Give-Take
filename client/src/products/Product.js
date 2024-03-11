@@ -1,30 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect,useState,useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Modal } from 'antd';
+import { Button, Modal } from 'antd';
+import { useHistory } from "react-router-dom";
 import { ReactComponent as X } from "./closeModal.svg";
+import { GlobalContext } from "../GlobalContext";
 import "./product.css";
 import {
+  updatePost,
+  getAllProducts,
   deletePostUser
 } from "../ApiService";
 
 
 function Product(props ,onDelete) {
+  const history = useHistory();
   const [commentPopUp,setCommentPopUp] = useState(false);
   const [newComment , setNewComment] = useState("");
+  const {connectedUser ,setAllProducts ,setConnectedUser } = useContext(GlobalContext);
+  const storedUser = localStorage.getItem('user');
+//   const initialValues = {
+//     categoryName: product.categoryName,
+//     subCategory: product.subCategory,
+//     details: product.details,
+//     city: product.city,
+//     photo: product.photo,
+//     details : product.details
+// };
   let {product} = props;
   let {allowEdit} = props;
   
+  useEffect(() => {
+    // Check if user data exists in localStorage
+    if (storedUser && connectedUser===undefined) {
+      // Parse the stored user data
+      const userData = JSON.parse(storedUser);
+      setConnectedUser(userData);
+    }
+    setNewComment("")
+  }, []);
     // Update Input value
     function handleInput(e) {
       setNewComment(e.target.value)
    }
 
-   function addComment(){
+   async function addComment(){
      if (newComment.length)
      {
-       console.log("TODO - "+newComment);
+       debugger;
+      var comment = { userName: connectedUser.userName, text: newComment};
+      product.comments.push(comment);
+      const post = await updatePost(product._id,product);
+      console.log("edit", post);
+      const products = await getAllProducts();
+      setNewComment("")
+      setAllProducts(products.data);
+      setCommentPopUp(false);
+      history.push("/products");
      }
-     setCommentPopUp(false);
+     
 
    }
 
@@ -38,7 +71,8 @@ const handleDelete = () => {
   return (
     <>
     <Modal
-      height={400}
+      // height={400}
+      title={product.details}
       visible={commentPopUp}
       onCancel={() => setCommentPopUp(false)}
       onOk={()=> addComment()}
@@ -59,7 +93,7 @@ const handleDelete = () => {
             <div className="comment">
                {product.comments && (
                   product.comments.map((comment, index) => (
-                    <div className="textBody" key={index}>{comment.text} - {comment.userid}</div>
+                    <div className="textBody" key={index}>{comment.text} - {comment.userName}</div>
                   ))
                 )}
                 <input type="text"  placeholder="enter comment" onInput={event => handleInput(event)} onChange={event => handleInput(event)} />

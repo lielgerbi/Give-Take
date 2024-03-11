@@ -42,11 +42,13 @@ function NewProduct() {
           // Parse the stored user data
           const userData = JSON.parse(storedUser);
           setConnectedUser(userData);
+          
         }
       }, []);
+      
       const menuCities = allCities.map(city => ({
-        value: city.name,
-        label: city.name,
+        value: city,
+        label: city,
       }));
 
       const menuCategories = allCategories.map(category => ({
