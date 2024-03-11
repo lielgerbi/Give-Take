@@ -21,7 +21,7 @@ const createPost = async (userName,newPost) => {
     return await post.save();
 };
 
-const updatePost = async (_id,categoryName, subCategory,photo, details, city ) => {
+const updatePost = async (_id,categoryName, subCategory,photo, details, city,comments ) => {
     const post = await getPostById(_id);
 
     if (post) {
@@ -30,6 +30,7 @@ const updatePost = async (_id,categoryName, subCategory,photo, details, city ) =
         post.subCategory=subCategory;
         post.details = details;
         post.city = city
+        post.comments = comments
 
         await post.save();
     }

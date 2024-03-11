@@ -21,8 +21,9 @@ const createPost = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
+  console.log(req.body)
     const post = await postService.updatePost(req.body._id, req.body.categoryName,
-      req.body.subCategory, req.body.photo, req.body.details, req.body.city);
+      req.body.subCategory, req.body.photo, req.body.details, req.body.city ,req.body.comments);
 
     if (!post) {
       return res.status(404).json({ errors: ['Post not found'] });
