@@ -47,10 +47,10 @@ function UserProducts() {
   };
 
   return (
-    <div className="container mt-5 py-4 px-xl-5">
-      <div className="row mb-4 mt-lg-3">
-        <div className="col-lg-9">
-          <div className="d-flex flex-column h-100">
+    <div className="container mt-5 py-4 pr-xl-4">
+  <div className="row mb-4 mt-lg-3">
+    <div className="col-lg-9">
+      <div className="d-flex flex-column h-100">
 
             <div
               className={
