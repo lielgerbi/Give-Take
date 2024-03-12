@@ -48,6 +48,8 @@ function Header() {
     if (openedDrawer) {
       setOpenedDrawer(false);
     }
+    window.location.reload();
+
   }
 
   return (

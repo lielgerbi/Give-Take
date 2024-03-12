@@ -80,7 +80,7 @@
   
     
   "start": "set PORT=80 && react-scripts start",
-  
+  "prod" : "serve -s build -p 80",
     
   "build": "react-scripts build",
   "build:dev": "env-cmd -f .env.development react-scripts build",

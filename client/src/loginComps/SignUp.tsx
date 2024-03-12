@@ -83,7 +83,8 @@ function SignUp(): JSX.Element {
         try {
             const newUser = await addUser(formValues);
               setConnectedUser(formValues);
-              history.push("/");
+              history.push("/landing");
+              window.location.reload();
           } catch (error: any) {
               if(error.response.status === 500){
                   setUserError("change user Name")

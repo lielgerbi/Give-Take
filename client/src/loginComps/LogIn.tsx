@@ -21,6 +21,7 @@ interface FormValues {
 }
 
 function LogIn(): JSX.Element {
+  const history = useHistory();
     const initialValues: FormValues = {
         userName: "",
         password: "",
@@ -33,7 +34,6 @@ function LogIn(): JSX.Element {
     const [isSubmit, setIsSubmit] = useState<boolean>(false);
     const [userNotExist , setUserNotExist] = useState<boolean>(false);
     const { connectedUser, setConnectedUser, setAllProducts, setAllCategories, allCities, setAllCities } = useContext(GlobalContext);
-    const history = useHistory();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
@@ -70,6 +70,7 @@ function LogIn(): JSX.Element {
             localStorage.setItem("refreshToken", user.headers.refreshtoken);
             localStorage.setItem('user', JSON.stringify(user.data));
             setConnectedUser(user.data);
+
         } catch (error) {
             setUserNotExist(true);
             console.error("not find user:", error);
