@@ -1,13 +1,13 @@
-const Cities = require('../models/city');
+// const Cities = require('../models/city');
 
-const getCities = async () => {
-    return await Cities.find({});
-};
-
-
+// const getCities = async () => {
+//     return await Cities.find({});
+// };
 
 
 
-module.exports = {
-    getCities
-}
+
+
+// module.exports = {
+//     getCities
+// }

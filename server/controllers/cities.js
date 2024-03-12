@@ -1,12 +1,12 @@
-const citiesService = require('../services/cities');
+// const citiesService = require('../services/cities');
 
-const getCities = async (req, res) => {
-  const Cities = await citiesService.getCities();
-  res.status(200)
-  res.json(Cities);
-};
+// const getCities = async (req, res) => {
+//   const Cities = await citiesService.getCities();
+//   res.status(200)
+//   res.json(Cities);
+// };
 
-  module.exports = {
-    getCities
+//   module.exports = {
+//     getCities
 
-  };
+//   };
