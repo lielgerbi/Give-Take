@@ -54,7 +54,7 @@ function UserProducts() {
 
             <div
               className={
-                "row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 mb-4 flex-shrink-0  row-cols-xl-3"
+                "row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 g-3 mb-4 flex-shrink-0"
               }
             >
               {allProducts.map((product, index) => {
