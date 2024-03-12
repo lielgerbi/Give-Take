@@ -65,7 +65,7 @@ function LogIn(): JSX.Element {
         setFormErrors(validate(formValues));
         setIsSubmit(true);
         try {
-            const user = await findUser(formValues.userName, formValues.password ,"");
+            const user = await findUser(formValues.userName, formValues.password);
             localStorage.setItem("accessToken", user.headers.authorization);
             localStorage.setItem("refreshToken", user.headers.refreshtoken);
             localStorage.setItem('user', JSON.stringify(user.data));
