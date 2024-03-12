@@ -27,7 +27,7 @@ export const addUser = async (newUser: any): Promise<AxiosResponse> => {
   return api.post(`/users`, { newUser });
 }
 
-export const findUser = async (userName: string, password: string, refreshToken: string): Promise<AxiosResponse> => {
+export const findUser = async (userName: string, password: string): Promise<AxiosResponse> => {
   return api.get(`/users/user`, { params: { userName, password } });
 }
 
