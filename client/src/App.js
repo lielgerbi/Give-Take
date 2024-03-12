@@ -61,11 +61,7 @@ function App() {
   async function getAllCitiesInIsrael() {
     try {
       const response = await axios.get('http://api.geonames.org/searchJSON?country=IL&username=liel&maxRows=100', {
-        params: {
-          country: 'IL',
-          username: 'liel',
-          maxRows:100
-        }
+    
       });
   
       // Extract the list of cities
