@@ -1,7 +1,7 @@
 import PostModel, { IPost } from '../models/post';
 
 const getPosts = async (): Promise<IPost[]> => {
-    return await PostModel.find({});
+    return await PostModel.find({isAvailable: true});
 };
 
 const getPostById = async (postID: string): Promise<IPost | null> => {
