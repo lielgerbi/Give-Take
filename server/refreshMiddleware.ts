@@ -1,7 +1,13 @@
-const jwt = require('jsonwebtoken');
+import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+
+interface AuthenticatedRequest extends Request {
+  user?: any; // Define the user property
+}
+
 const secretKey = 'secret_key';
 
-const authenticate = (req, res, next) => {
+const authenticate = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const accessToken = req.headers['authorization'];
   const refreshToken = req.headers['refreshtoken'];
 
@@ -10,7 +16,7 @@ const authenticate = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(accessToken, secretKey);
+    const decoded = jwt.verify(accessToken as string, secretKey) as { user: any };
     req.user = decoded.user;
     next();
   } catch (error) {
@@ -18,21 +24,61 @@ const authenticate = (req, res, next) => {
       return res.status(401).send('Access Denied. No refresh token provided.');
     }
 
-  try {
-      console.log("4")
-      const decoded = jwt.verify(refreshToken, secretKey);
-      const accessToken = jwt.sign({ user: decoded.user }, secretKey, { expiresIn: '1h' });
+    try {
+      const decoded = jwt.verify(refreshToken as string, secretKey) as { user: any };
+      const newAccessToken = jwt.sign({ user: decoded.user }, secretKey, { expiresIn: '1h' });
 
       res
         .header('refreshToken', refreshToken)
-        .header('Authorization', accessToken)
+        .header('Authorization', newAccessToken)
         .send(decoded.user);
     } catch (error) {
       return res.status(400).send('Invalid Token.');
     }
   }
 };
-module.exports = authenticate;
+
+export default authenticate;
+
+
+
+
+
+// const jwt = require('jsonwebtoken');
+// const secretKey = 'secret_key';
+
+// const authenticate = (req, res, next) => {
+//   const accessToken = req.headers['authorization'];
+//   const refreshToken = req.headers['refreshtoken'];
+
+//   if (!accessToken && !refreshToken) {
+//     return res.status(401).send('Access Denied. No token provided.');
+//   }
+
+//   try {
+//     const decoded = jwt.verify(accessToken, secretKey);
+//     req.user = decoded.user;
+//     next();
+//   } catch (error) {
+//     if (!refreshToken) {
+//       return res.status(401).send('Access Denied. No refresh token provided.');
+//     }
+
+//   try {
+//       console.log("4")
+//       const decoded = jwt.verify(refreshToken, secretKey);
+//       const accessToken = jwt.sign({ user: decoded.user }, secretKey, { expiresIn: '1h' });
+
+//       res
+//         .header('refreshToken', refreshToken)
+//         .header('Authorization', accessToken)
+//         .send(decoded.user);
+//     } catch (error) {
+//       return res.status(400).send('Invalid Token.');
+//     }
+//   }
+// };
+// module.exports = authenticate;
 
 // const jwt = require('jsonwebtoken');
 
