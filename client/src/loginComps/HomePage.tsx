@@ -124,10 +124,6 @@ function HomePage(): JSX.Element {
         }
     };
 
-    const editPost = (): void => {
-        history.push("/myPost");
-    };
-
     return (
         <>
             <div className="bgImg">
@@ -225,7 +221,6 @@ function HomePage(): JSX.Element {
                             <button className="singbutton">update my details</button>
                         </div>
                     </form>
-                    <button onClick={editPost}>edit my posts</button>
                 </div>
             </div>
         </>

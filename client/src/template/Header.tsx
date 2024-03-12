@@ -112,6 +112,11 @@ function Header() {
                         </Link>
                       </li>
                       <li>
+                        <Link to="/myPost" className="dropdown-item" onClick={changeNav}>
+                          my products
+                        </Link>
+                      </li>
+                      <li>
                         <Link to="/" className="dropdown-item" onClick={changeNavLogout}>
                           logout
                         </Link>
