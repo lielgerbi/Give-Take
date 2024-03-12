@@ -103,11 +103,22 @@ function NewProduct() {
   const onChangeSubCategory = (value: string) => {
     formValues.subCategory = value;
   };
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    var preview = document.getElementById('preview') as HTMLImageElement;
+    const file = event.target.files![0];
+    setSelectedFile(file);
+    if (file) {
+        var reader = new FileReader();
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    setSelectedFile(file || null);
-  };
+        reader.onload = function(e) {
+            preview.src = e.target!.result as string;
+        };
+
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = ""; // Clear the preview if no file is selected
+    }
+};
 
   useEffect(() => {
     if (isSubmit) {
