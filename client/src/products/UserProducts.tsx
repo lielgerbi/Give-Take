@@ -62,7 +62,7 @@ function UserProducts() {
                   return (
                     <div className="col" key={index}>
                       <div className="card shadow-sm">
-                        {product.photo !== "" && product.photo && <img src={'http://10.10.248.226:443/' + product.photo} alt="Uploaded Image" className="card-img-top bg-dark cover" />}
+                        {product.photo !== "" && product.photo && <img src={'http://10.10.248.226:443/' + product.photo} alt="Uploaded Image" className="card-img-top bg-dark cover productImg" />}
                         <div className="card-body">
                           <h5 className="card-title text-center text-dark text-truncate">
                             {product?.subCategory} {product?.categoryName}

@@ -10,6 +10,11 @@
     text-align: center;
     color: #282949;
   }
+
+  .productImg{
+    min-height: 259px;
+    max-height: 259px;
+  }
   
 .Text2 {
     height: 40px;
