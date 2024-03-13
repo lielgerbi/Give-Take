@@ -1,54 +1,58 @@
 
 import axios, { AxiosResponse } from 'axios';
 
-const api = axios.create({
-  baseURL: "http://10.10.248.226:443",
-  headers: {
-    'Content-Type': 'application/json',
-    'authorization': localStorage.getItem("accessToken") || '',
-    'refreshToken': localStorage.getItem("refreshToken") || '',
-    'Access-Control-Allow-Private-Network': 'true'
-  }
-});
+function api() {
+  return axios.create({
+    baseURL: "http://10.10.248.226:443",
+    headers: {
+      'Content-Type': 'application/json',
+      'authorization': localStorage.getItem("accessToken") || '',
+      'refreshToken': localStorage.getItem("refreshToken") || '',
+      'Access-Control-Allow-Private-Network': 'true'
+    }
+  });
+}
 
 export const getUserByUserName = async (userName: string): Promise<AxiosResponse> => {
-  return api.get(`/users/${userName}`, { params: { userName } });
+  return api().get(`/users/${userName}`, { params: { userName } });
 }
 
 export const getAllProducts = async (): Promise<AxiosResponse> => {
-  return api.get(`/posts`);
+  debugger
+  console.log(localStorage)
+  return api().get(`/posts`);
 };
 
 export const getAllCategories = async (): Promise<AxiosResponse> => {
-  return api.get(`/categories`);
+  return api().get(`/categories`);
 }
 
 export const addUser = async (newUser: any): Promise<AxiosResponse> => {
-  return api.post(`/users`, { newUser });
+  return api().post(`/users`, { newUser });
 }
 
 export const findUser = async (userName: string, password: string): Promise<AxiosResponse> => {
-  return api.get(`/users/user`, { params: { userName, password } });
+  return api().get(`/users/user`, { params: { userName, password } });
 }
 
 export const updateUser = async (newUser: any): Promise<AxiosResponse> => {
-  return api.post(`/users/user`, newUser);
+  return api().post(`/users/user`, newUser);
 }
 
 export const deletePostUser = async (post: any): Promise<AxiosResponse> => {
-  return api.post(`/posts/delete`, { post });
+  return api().post(`/posts/delete`, { post });
 }
 
 export const updatePost = async (_id: string, post: any): Promise<AxiosResponse> => {
-  return api.post(`/posts/update`, { _id, ...post });
+  return api().post(`/posts/update`, { _id, ...post });
 }
 
 export const newPost = async (userName: string, post: any): Promise<AxiosResponse> => {
-  return api.post(`/posts`, { userName, post });
+  return api().post(`/posts`, { userName, post });
 }
 
 export const getFile = async (): Promise<AxiosResponse> => {
-  return api.post(`file/uploads`);
+  return api().post(`file/uploads`);
 }
 
 export const newfile = async (formData: FormData): Promise<any> => {

@@ -35,14 +35,16 @@ const createPostController = async (req: Request, res: Response): Promise<void> 
 
 const updatePostController = async (req: Request, res: Response): Promise<void> => {
   try {
+    console.log(req.body)
     const post = await updatePostService(req.body._id, req.body.categoryName, req.body.subCategory, req.body.photo, req.body.details, req.body.city, req.body.comments);
-
+     
     if (!post) {
       res.status(404).json({ errors: ['Post not found'] });
     } else {
       res.json(post);
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };

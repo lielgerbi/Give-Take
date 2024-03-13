@@ -42,6 +42,7 @@ function Header() {
 
   function changeNavLogout(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     setConnectedUser(undefined); // Update with undefined
+    debugger
     localStorage.removeItem('user');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

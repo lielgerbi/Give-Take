@@ -32,6 +32,7 @@ function App() {
       // Parse the stored user data
       const userData = JSON.parse(storedUser);
       setConnectedUser(userData);
+      debugger
       fetchData();
     }
   }, []);

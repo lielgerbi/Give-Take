@@ -51,8 +51,8 @@ const Product: React.FC<ProductProps> = ({product}) => {
     setNewComment(e.target.value)
   }
 
-  async function addComment() {
-    async function addComment() {
+async function addComment() {
+  debugger
       if (newComment.length && product.comments !== undefined && product._id!==undefined) {
         const comment: Comment = { userName: connectedUser.userName, text: newComment };
         product.comments.push(comment);
@@ -68,13 +68,10 @@ const Product: React.FC<ProductProps> = ({product}) => {
         console.error("Product comments are undefined");
       }
     }
-    
-  }
 
   return (
     <>
       <Modal
-        title={product.details}
         visible={commentPopUp}
         onCancel={() => setCommentPopUp(false)}
         onOk={addComment}
