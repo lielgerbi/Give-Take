@@ -31,7 +31,7 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
       app.use(express.json());
       app.use(express.static('public'));
       app.use(express.static(path.join(__dirname, 'build')));
-
+      app.use(express.static(__dirname, { dotfiles: 'allow' } ));
       // Swagger UI setup
       app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
       app.use('/file', file);
@@ -41,14 +41,6 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
 
       // Serve Swagger UI
       app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-      app.use((req, res, next) => {
-        if (req.secure) {
-            next();
-        } else {
-            console.log("Arrived to controller for switch")
-            res.redirect('https://' + req.headers.host + req.url);
-        }
-    });
 
       resolve(app); // Pass the app object to resolve
     })

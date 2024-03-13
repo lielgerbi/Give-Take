@@ -1,5 +1,5 @@
 import { Application } from 'express'; // Import Express namespace
-import https from 'https';
+import http from 'http';
 import fs from 'fs';
 import setupApp from './app';
 
@@ -7,13 +7,13 @@ setupApp.then((app: Application) => { // Change to Application
   // The setupApp promise resolves when the database connection is successfully established
   
   // if(process.env.NODE_ENV== 'prod'){
-    const option = {
-      key: fs.readFileSync('./key.pem'),
-      cert: fs.readFileSync('./cert.pem')
-    }
-    console.log(option.key)
-    https.createServer(option, app).listen(443, () => {
-      console.log(`Server is running on https://localhost:${443}`);
+    // const option = {
+    //   key: fs.readFileSync('./key.pem'),
+    //   cert: fs.readFileSync('./cert.pem')
+    // }
+    // console.log(option.key)
+    http.createServer(app).listen(80, () => {
+      console.log(`Server is running on https://localhost:${80}`);
     });
   // }
   
