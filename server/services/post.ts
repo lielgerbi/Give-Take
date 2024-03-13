@@ -21,7 +21,7 @@ const createPost = async (userName: string, newPost: Partial<IPost>): Promise<IP
     return await post.save();
 };
 
-const updatePost = async (_id: string, categoryName: string, subCategory: string, photo: string, details: string, city: string, comments: string[]): Promise<IPost | null> => {
+const updatePost = async (_id: string, categoryName: string, subCategory: string, photo: string, details: string, city: string, comments: object[]): Promise<IPost | null> => {
     const post = await getPostById(_id);
 
     if (post) {

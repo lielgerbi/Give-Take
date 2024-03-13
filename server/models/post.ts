@@ -8,7 +8,7 @@ export interface IPost extends Document {
   subCategory?: string;
   isAvailable?: boolean;
   city?: string;
-  comments?: string[];
+  comments?: object[];
 }
 
 const postSchema: Schema = new Schema({
@@ -41,7 +41,7 @@ const postSchema: Schema = new Schema({
     required: false,
   },
   comments: {
-    type: [String],
+    type: [Object],
     required: false,
   },
 });
