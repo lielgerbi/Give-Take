@@ -10,9 +10,10 @@ import categories from './routes/categories';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swaggerConfig';
 import path from 'path';
+import fs from 'fs';
 
 const app: Application = express();
-const server = https.createServer(app);
+
 
 const setupApp = new Promise<Application>((resolve, reject) => { // Change here
   let db: mongoose.Connection;
