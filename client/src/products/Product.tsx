@@ -52,7 +52,6 @@ const Product: React.FC<ProductProps> = ({product}) => {
   }
 
 async function addComment() {
-  debugger
       if (newComment.length && product.comments !== undefined && product._id!==undefined) {
         const comment: Comment = { userName: connectedUser.userName, text: newComment };
         product.comments.push(comment);

@@ -47,22 +47,47 @@ function FilterMenuLeft({ updateFilteredProducts }: { updateFilteredProducts: (f
 
     const handleApplyFilters = () => {
         // Filter products based on selected criteria
+        debugger
+        var mergedArray;
         var filteredProducts = allProducts.filter(product => {
             // Check if the product's category is in the selected categories
             const categoryMatch = selectedFilters.categories.length === 0 || selectedFilters.categories.includes(product.categoryName);
 
             // Check if the product's subcategory is in the selected subcategories
             const subCategoryMatch = selectedFilters.subCategories.length === 0 || selectedFilters.subCategories.includes(product.subCategory);
-
+            if (subCategoryMatch && categoryMatch){
+                console.log(product);
+                debugger
+            }
             // Return true only if all criteria match
             return categoryMatch && subCategoryMatch;
         });
+        console.log(filteredProducts);
+        debugger
 
-        filteredProducts = filteredProducts.filter(product => {
+       if (selectCity!== undefined)
+       {
+        var filteredProductsCity = allProducts.filter(product => {
             return product.city === selectCity;
         });
-
-        updateFilteredProducts(filteredProducts);
+        
+        //marge filters arrays
+         // Combine the arrays
+    const combinedArray = [...filteredProducts, ...filteredProductsCity];
+  
+    // Use reduce to filter out duplicates based on _id
+     mergedArray = combinedArray.reduce((acc, current) => {
+        const x = acc.find((item: any) => item._id === current._id);
+        if (!x) {
+        return acc.concat([current]);
+        } else {
+        return acc;
+        }
+        }, []);
+    }  
+       
+       
+    mergedArray!==undefined ? updateFilteredProducts(mergedArray):updateFilteredProducts(filteredProducts);
     };
 
     return (

@@ -18,8 +18,6 @@ export const getUserByUserName = async (userName: string): Promise<AxiosResponse
 }
 
 export const getAllProducts = async (): Promise<AxiosResponse> => {
-  debugger
-  console.log(localStorage)
   return api().get(`/posts`);
 };
 

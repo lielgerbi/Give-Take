@@ -32,7 +32,6 @@ function App() {
       // Parse the stored user data
       const userData = JSON.parse(storedUser);
       setConnectedUser(userData);
-      debugger
       fetchData();
     }
   }, []);
@@ -56,7 +55,6 @@ function App() {
   }
   async function fetchData() {
     try {
-      debugger
       const products = await getAllProducts();
       const categories = await getAllCategories();
       const cities =
@@ -66,7 +64,6 @@ function App() {
       setAllProducts(products.data);
       setAllCategories(categories.data);
       setAllCities(cities);
-      setConnectedUser(undefined);
     } catch (err) {
       console.log(err);
     }

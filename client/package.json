@@ -79,7 +79,7 @@
   "scripts": {
   
     
-  "start": "set PORT=80 && react-scripts start",
+  "start": "set HTTPS=true && react-scripts start",
   "prod" : "serve -s build -p 80",
     
   "build": "react-scripts build",

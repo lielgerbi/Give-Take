@@ -40,17 +40,15 @@ function LogIn(): JSX.Element {
         setFormValues({ ...formValues, [name]: value });
     };
 
-    useEffect(() => {
-      debugger
+    useEffect(() => {    
         if(connectedUser !== undefined){ 
             fetchData();
+            history.push("/landing");
         } 
     }, [connectedUser]);
 
     async function fetchData(): Promise<void> {
         try {
-          debugger
-          console.log(localStorage)
             const products = await getAllProducts();
             const categories = await getAllCategories();
             const cities = (allCities == undefined || allCities.length == 0) ? await getAllCitiesInIsrael() : allCities;
@@ -63,7 +61,6 @@ function LogIn(): JSX.Element {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-      debugger
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
