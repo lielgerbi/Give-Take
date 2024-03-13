@@ -33,8 +33,8 @@ describe('Users Controller', () => {
   
       // Make a request to your route
       const response = await request(app).get('/users/')
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken);
+      .set('authorization', headers.authorization)
+      .set('refreshtoken', headers.refreshtoken);
   
       // Assert the response status and any other expectations
       expect(response.status).toBe(200);
@@ -56,8 +56,8 @@ describe('Users Controller', () => {
   
       // Make a request to your route
       const response = await request(app).get('/users/user')
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken)
+        .set('authorization', headers.authorization)
+        .set('refreshtoken', headers.refreshtoken)
         .query({
             userName: 'user1',
             password: 'password1',
@@ -84,8 +84,8 @@ describe('Users Controller', () => {
       }
       // Make a request to your route
       const response = await request(app).post('/users')
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken)
+        .set('authorization', headers.authorization)
+        .set('refreshtoken', headers.refreshtoken)
         .send({newUser});
 
       // Assert the response status and any other expectations
@@ -109,8 +109,8 @@ describe('Users Controller', () => {
       };
       // Make a request to your route
       const response = await request(app).post('/users/user')
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken)
+        .set('authorization', headers.authorization)
+        .set('refreshtoken', headers.refreshtoken)
         .send({userName:'test',password:'testupdate',
         firstName:'test',lastName:'test'
         });

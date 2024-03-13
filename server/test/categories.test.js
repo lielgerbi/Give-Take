@@ -33,8 +33,8 @@ describe('Categories Controller', () => {
   
       // Make a request to your route
       const response = await request(app).get('/categories/')
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken);
+        .set('authorization', headers.authorization)
+        .set('refreshtoken', headers.refreshtoken);
   
       // Assert the response status and any other expectations
       expect(response.status).toBe(200);

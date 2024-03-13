@@ -30,7 +30,7 @@ const authenticate = (req: AuthenticatedRequest, res: Response, next: NextFuncti
 
       res
         .header('refreshToken', refreshToken)
-        .header('Authorization', newAccessToken)
+        .header('authorization', newAccessToken)
         .send(decoded.user);
     } catch (error) {
       return res.status(400).send('Invalid Token.');

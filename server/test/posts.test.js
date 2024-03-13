@@ -34,8 +34,8 @@ describe('Posts Controller', () => {
   
       // Make a request to your route
       const response = await request(app).get('/posts/')
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken);
+      .set('authorization', headers.authorization)
+      .set('refreshtoken', headers.refreshtoken);
   
       // Assert the response status and any other expectations
       expect(response.status).toBe(200);
@@ -58,8 +58,8 @@ describe('Posts Controller', () => {
       // Make a request to your route
       const response = await request(app).get(`/posts/getPostByUser`)
         .send({ userName:'user1' })
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken);
+        .set('authorization', headers.authorization)
+        .set('refreshtoken', headers.refreshtoken);
         
   
       // Assert the response status and any other expectations
@@ -88,8 +88,8 @@ describe('Posts Controller', () => {
 
       // Make a request to your route
       const response = await request(app).post('/posts')
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken)
+        .set('authorization', headers.authorization)
+        .set('refreshtoken', headers.refreshtoken)
         .send({userName,post});
 
       // Assert the response status and any other expectations
@@ -117,8 +117,8 @@ describe('Posts Controller', () => {
 
       // Make a request to your route
       const response = await request(app).post('/posts/delete')
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken)
+        .set('authorization', headers.authorization)
+        .set('refreshtoken', headers.refreshtoken)
         .send({post});
 
       // Assert the response status and any other expectations
@@ -142,8 +142,8 @@ describe('Users Controller', () => {
 
       // Make a request to your route
       const response = await request(app).post('/posts/update')
-        .set('Authorization', headers.authorization)
-        .set('Refreshtoken', headers.refreshtoken)
+        .set('authorization', headers.authorization)
+        .set('refreshtoken', headers.refreshtoken)
         .send({_id:'65eb61f102e74adac8ec1716',categoryName:'test1',subCategory:'test',
         details:'test',isAvailable:true ,city:'test'
         });

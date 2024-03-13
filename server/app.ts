@@ -23,7 +23,7 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
       db = mongoose.connection.useDb('give&take');
       console.log('connect to mongo');
       app.use(cors({
-        exposedHeaders: ['Authorization', 'refreshToken'],
+        exposedHeaders: ['authorization', 'refreshToken'],
         credentials: true,
       }));
       app.use(bodyParser.urlencoded({ extended: true }));

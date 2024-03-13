@@ -2,10 +2,10 @@
 import axios, { AxiosResponse } from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: "http://10.10.248.226:443",
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': localStorage.getItem("accessToken") || '',
+    'authorization': localStorage.getItem("accessToken") || '',
     'refreshToken': localStorage.getItem("refreshToken") || '',
     'Access-Control-Allow-Private-Network': 'true'
   }
@@ -55,7 +55,7 @@ export const newfile = async (formData: FormData): Promise<any> => {
   const apiFile = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     headers: {
-      'Authorization': localStorage.getItem("accessToken") || '',
+      'authorization': localStorage.getItem("accessToken") || '',
       'refreshToken': localStorage.getItem("refreshToken") || '',
       'Content-Type': 'multipart/form-data',
     }

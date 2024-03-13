@@ -55,6 +55,7 @@ function App() {
   }
   async function fetchData() {
     try {
+      debugger
       const products = await getAllProducts();
       const categories = await getAllCategories();
       const cities =

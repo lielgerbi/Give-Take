@@ -28,7 +28,7 @@ const getUserController = async (req: Request, res: Response): Promise<void> => 
     } else {
       const accessToken = jwt.sign({ user }, secretKey, { expiresIn: '1h' });
       const refreshToken = jwt.sign({ user }, secretKey, { expiresIn: '1d' });
-      res.status(200).header('refreshToken', refreshToken).header('Authorization', accessToken).json(user);
+      res.status(200).header('refreshToken', refreshToken).header('authorization', accessToken).json(user);
     }
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error' });

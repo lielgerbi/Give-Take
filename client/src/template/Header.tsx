@@ -48,8 +48,8 @@ function Header() {
     if (openedDrawer) {
       setOpenedDrawer(false);
     }
-    window.location.reload();
-
+    console.log(localStorage)
+    debugger
   }
 
   return (
@@ -68,7 +68,7 @@ function Header() {
           }
 
           <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '') + (currentUser === undefined ? "left" : '')}>
-            {currentUser !== undefined &&
+            {connectedUser !== undefined &&
               <ul className="navbar-nav me-auto mb-lg-0">
                 <li className="nav-item">
                   <Link to="/NewProduct" className="nav-link" replace onClick={changeNav}>
@@ -94,7 +94,7 @@ function Header() {
                   className="dropdown-menu dropdown-menu-end"
                   aria-labelledby="userDropdown"
                 >
-                  {currentUser === undefined ?
+                  {connectedUser === undefined ?
                     <>
                       <li>
                         <Link to="/" className="dropdown-item" onClick={changeNav}>

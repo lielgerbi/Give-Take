@@ -41,6 +41,7 @@ function LogIn(): JSX.Element {
     };
 
     useEffect(() => {
+      debugger
         if(connectedUser !== undefined){ 
             fetchData();
         } 
@@ -48,19 +49,21 @@ function LogIn(): JSX.Element {
 
     async function fetchData(): Promise<void> {
         try {
+          debugger
+          console.log(localStorage)
             const products = await getAllProducts();
             const categories = await getAllCategories();
             const cities = (allCities == undefined || allCities.length == 0) ? await getAllCitiesInIsrael() : allCities;
             setAllProducts(products.data);
             setAllCategories(categories.data);
             setAllCities(cities);
-            history.push("landing");
         } catch(err) {
             console.log(err);
         }
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+      debugger
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
@@ -70,6 +73,7 @@ function LogIn(): JSX.Element {
             localStorage.setItem("refreshToken", user.headers.refreshtoken);
             localStorage.setItem('user', JSON.stringify(user.data));
             setConnectedUser(user.data);
+            history.push("/landing");
 
         } catch (error) {
             setUserNotExist(true);
@@ -187,7 +191,7 @@ function LogIn(): JSX.Element {
                         </div>
                         <p>{formErrors.password}</p>
                         {userNotExist &&<p>not find</p>}
-                        <button className="singbutton">Submit</button>
+                        <button type="submit" className="singbutton">Submit</button>
                     </div>
                 </form>
                 {/* <button onClick={login}>Sign in with Google 🚀 </button> */}
