@@ -1,16 +1,30 @@
 
 import axios, { AxiosResponse } from 'axios';
+import https from 'https'
 
 function api() {
-  return axios.create({
+return axios.create({
     baseURL: "https://10.10.248.226:443",
     headers: {
       'Content-Type': 'application/json',
       'authorization': localStorage.getItem("accessToken") || '',
       'refreshToken': localStorage.getItem("refreshToken") || '',
       'Access-Control-Allow-Private-Network': 'true'
-    }
+    },
+    httpsAgent: new https.Agent({  
+      rejectUnauthorized: false
+    })
   });
+
+  // return axios.create({
+  //   baseURL: "https://10.10.248.226:443",
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'authorization': localStorage.getItem("accessToken") || '',
+  //     'refreshToken': localStorage.getItem("refreshToken") || '',
+  //     'Access-Control-Allow-Private-Network': 'true'
+  //   }
+  // });
 }
 
 export const getUserByUserName = async (userName: string): Promise<AxiosResponse> => {
