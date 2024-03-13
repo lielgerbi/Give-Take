@@ -4,8 +4,8 @@ import setupApp from './app';
 
 setupApp.then((app: Application) => { // Change to Application
   // The setupApp promise resolves when the database connection is successfully established
-  const server = app.listen(80, () => {
-    console.log(`Server is running on http://localhost:${80}`);
+  const server = app.listen(443, () => {
+    console.log(`Server is running on https://localhost:${443}`);
   });
 }).catch(error => {
   console.error('Error setting up the app:', error);

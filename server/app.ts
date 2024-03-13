@@ -1,7 +1,7 @@
 import express , { Application } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import http from 'http';
+import https from 'https';
 import mongoose from 'mongoose';
 import users from './routes/user';
 import posts from './routes/post';
@@ -12,7 +12,7 @@ import swaggerSpec from './swaggerConfig';
 import path from 'path';
 
 const app: Application = express();
-const server = http.createServer(app);
+const server = https.createServer(app);
 
 const setupApp = new Promise<Application>((resolve, reject) => { // Change here
   let db: mongoose.Connection;
