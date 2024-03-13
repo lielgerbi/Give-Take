@@ -11,6 +11,7 @@ setupApp.then((app: Application) => { // Change to Application
       key: fs.readFileSync('./key.pem'),
       cert: fs.readFileSync('./cert.pem')
     }
+    console.log(option.key)
     https.createServer(option, app).listen(443, () => {
       console.log(`Server is running on https://localhost:${443}`);
     });

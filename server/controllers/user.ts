@@ -13,6 +13,7 @@ const getUsersController = async (req: Request, res: Response): Promise<void> =>
 };
 const getUserController = async (req: Request, res: Response): Promise<void> => {
   try {
+    console.log("Arrived to controller for user")
     const userName: string | undefined = req.query.userName as string | undefined;
     const password: string | undefined = req.query.password as string | undefined;
 
