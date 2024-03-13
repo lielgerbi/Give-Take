@@ -2,9 +2,11 @@
   "name": "node-express-mongodb-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js",
+    "start": "ts-node index.ts",
+    "prod": "ts-node -P ./tsconfig_prod.json index.ts",
+    "dev":"ts-node -P ./tsconfig.json index.ts",
     "test": "jest --detectOpenHandles --forceExit --coverage",
     "test:debug": "node --inspect-brk -r ts-node/register ./node_modules/.bin/jest"
   },

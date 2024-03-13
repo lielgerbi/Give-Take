@@ -1,7 +1,6 @@
 import express , { Application } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import https from 'https';
 import mongoose from 'mongoose';
 import users from './routes/user';
 import posts from './routes/post';
@@ -10,7 +9,9 @@ import categories from './routes/categories';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swaggerConfig';
 import path from 'path';
-import fs from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app: Application = express();
 
@@ -19,7 +20,7 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
   let db: mongoose.Connection;
 
   mongoose
-    .connect(`mongodb://admin:bartar20%40CS@10.10.248.226:21771/`, {})
+    .connect(process.env.DATABASE_URL || '', {})
     .then(() => {
       db = mongoose.connection.useDb('give&take');
       console.log('connect to mongo');
