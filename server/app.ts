@@ -45,6 +45,7 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
         if (req.secure) {
             next();
         } else {
+            console.log("Arrived to controller for switch")
             res.redirect('https://' + req.headers.host + req.url);
         }
     });
