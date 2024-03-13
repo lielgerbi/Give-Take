@@ -41,6 +41,13 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
 
       // Serve Swagger UI
       app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+      app.use((req, res, next) => {
+        if (req.secure) {
+            next();
+        } else {
+            res.redirect('https://' + req.headers.host + req.url);
+        }
+    });
 
       resolve(app); // Pass the app object to resolve
     })

@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 
 function api() {
   return axios.create({
-    baseURL: "https://10.10.248.226:443",
+    baseURL: "http://10.10.248.226:443",
     headers: {
       'Content-Type': 'application/json',
       'authorization': localStorage.getItem("accessToken") || '',
