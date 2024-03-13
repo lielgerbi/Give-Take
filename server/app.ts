@@ -20,7 +20,7 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
   let db: mongoose.Connection;
 
   mongoose
-    .connect(process.env.DATABASE_URL || '', {})
+    .connect(process.env.DATABASE_URL || 'mongodb://localhost:27017/node-express-mongodb-server', {})
     .then(() => {
       db = mongoose.connection.useDb('give&take');
       console.log('connect to mongo');
