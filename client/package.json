@@ -80,7 +80,7 @@
   
     
   "start": "set HTTPS=true && react-scripts start",
-  "prod" : "serve -s build -p 80",
+  "prod" : "serve -s build -p 80 --ssl-cert cert.pem --ssl-key key.pem",
     
   "build": "react-scripts build",
   "build:dev": "env-cmd -f .env.development react-scripts build",
