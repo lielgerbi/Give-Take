@@ -133,8 +133,63 @@ function ProductList() {
 
     useEffect(() => {
         setFilteredProducts(allProducts);
-    }, [allProducts
+    }, [allProducts]);
 
+    return (
+        <div className="container mt-5 py-4 px-xl-5">
+            <div className="row mb-3 d-block d-lg-none">
+                <div className="col-12">
+                    <div id="accordionFilter" className="accordion shadow-sm">
+                        <div className="accordion-item">
+                            <h2 className="accordion-header" id="headingOne">
+                                <button
+                                    className="accordion-button fw-bold collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseFilter"
+                                    aria-expanded="false"
+                                    aria-controls="collapseFilter"
+                                >
+                                    Filter Products
+                                </button>
+                            </h2>
+                        </div>
+                        <div
+                            id="collapseFilter"
+                            className="accordion-collapse collapse"
+                            data-bs-parent="#accordionFilter">
+                            <div className="accordion-body p-0">
+                                <FilterMenuLeft updateFilteredProducts={updateFilteredProducts} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="row mb-4 mt-lg-3">
+                <div className="d-none d-lg-block col-lg-3">
+                    <div className="border rounded shadow-sm">
+                        <FilterMenuLeft updateFilteredProducts={updateFilteredProducts} />
+                    </div>
+                </div>
+                <div className="col-lg-9">
+                    <div className="d-flex flex-column h-100">
+                        <div
+                            className={
+                                "row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 mb-4 flex-shrink-0 row-cols-xl-3"
+                            }
+                        >
+                            {filteredProducts.map((product, index) => {
+                                return (<Product key={index} product={product as ProductProps['product']} />);
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default ProductList;
 
 
 // import React, { useState, useEffect, useContext } from "react";
@@ -327,5 +382,4 @@ function ProductList() {
 //         </div>
 //     );
 // }
-
-// export default ProductList;
+// export default ProductList
