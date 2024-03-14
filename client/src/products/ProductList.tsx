@@ -47,7 +47,6 @@ function FilterMenuLeft({ updateFilteredProducts }: { updateFilteredProducts: (f
 
     const handleApplyFilters = () => {
         // Filter products based on selected criteria
-        debugger
         var mergedArray;
         var filteredProducts = allProducts.filter(product => {
             // Check if the product's category is in the selected categories
@@ -55,16 +54,9 @@ function FilterMenuLeft({ updateFilteredProducts }: { updateFilteredProducts: (f
 
             // Check if the product's subcategory is in the selected subcategories
             const subCategoryMatch = selectedFilters.subCategories.length === 0 || selectedFilters.subCategories.includes(product.subCategory);
-            if (subCategoryMatch && categoryMatch){
-                console.log(product);
-                debugger
-            }
             // Return true only if all criteria match
             return categoryMatch && subCategoryMatch;
         });
-        console.log(filteredProducts);
-        debugger
-
        if (selectCity!== undefined)
        {
         var filteredProductsCity = allProducts.filter(product => {
