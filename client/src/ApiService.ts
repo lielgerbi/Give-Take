@@ -69,7 +69,7 @@ export const getFile = async (): Promise<AxiosResponse> => {
 
 export const newfile = async (formData: FormData): Promise<any> => {
   const apiFile = axios.create({
-    baseURL: process.env.REACT_APP_API_REMOTE_URL,
+    baseURL: process.env.REACT_APP_API_URL,
     headers: {
       'authorization': localStorage.getItem("accessToken") || '',
       'refreshToken': localStorage.getItem("refreshToken") || '',
