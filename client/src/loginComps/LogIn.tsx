@@ -59,20 +59,21 @@ function LogIn(): JSX.Element {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        setFormErrors(validate(formValues));
-        setIsSubmit(true);
-        try {
-            console.log(formValues)
-            const user = await findUser(formValues.userName, formValues.password);
-            localStorage.setItem("accessToken", user.headers.authorization);
-            localStorage.setItem("refreshToken", user.headers.refreshtoken);
-            localStorage.setItem('user', JSON.stringify(user.data));
-            setConnectedUser(user.data);
-            history.push("/products");
-
-        } catch (error) {
-            setUserNotExist(true);
-            console.error("not find user:", error);
+        var flagErrors = await validate(formValues);
+        if(flagErrors==false){
+            try {
+                setIsSubmit(true);
+                const user = await findUser(formValues.userName, formValues.password);
+                localStorage.setItem("accessToken", user.headers.authorization);
+                localStorage.setItem("refreshToken", user.headers.refreshtoken);
+                localStorage.setItem('user', JSON.stringify(user.data));
+                setConnectedUser(user.data);
+                history.push("/products");
+    
+            } catch (error) {
+                setUserNotExist(true);
+                console.error("not find user:", error);
+            }
         }
     };
     useEffect(() => {
@@ -82,19 +83,25 @@ function LogIn(): JSX.Element {
         }
     }, [formErrors, formValues, isSubmit]);
 
-    const validate = (values: FormValues): { [key: string]: string } => {
+    const validate = (values: FormValues): boolean => {
         const errors: { [key: string]: string } = {};
+        let flag: boolean = false;
         if (!values.userName) {
+            flag = true;
             errors.userName = "Username is required!";
         }
         if (!values.password) {
+            flag = true;
             errors.password = "Password is required";
         } else if (values.password.length < 4) {
+            flag = true;
             errors.password = "Password must be more than 4 characters";
         } else if (values.password.length > 10) {
+            flag = true;
             errors.password = "Password cannot exceed more than 10 characters";
         }
-        return errors;
+        setFormErrors(errors);
+        return flag
     };
     interface City {
       name: string;

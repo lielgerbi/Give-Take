@@ -111,8 +111,8 @@ function SignUp(): JSX.Element {
     };
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        setFormErrors(validate(formValues));
-        if (Object.keys(formErrors).length === 0){
+        var flagError :boolean = await validate(formValues);
+        if (flagError ==false){
             try {
                 await handleDownload();
                 setIsSubmit(true);
@@ -135,34 +135,44 @@ function SignUp(): JSX.Element {
         history.push('/');
       };
 
-    const validate = (values: typeof initialValues): {[key: string]: string} => {
+    const validate = (values: typeof initialValues): boolean => {
+        let flag: boolean = false;
         const errors: {[key: string]: string} = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
         if (!values.userName) {
             errors.userName = "Username is required!";
+            flag=true;
         }
         if (!values.email) {
             errors.email = "Email is required!";
+            flag=true;
         } else if (!regex.test(values.email)) {
             errors.email = "This is not a valid email format!";
+            flag=true;
         }
         if (!values.firstName) {
             errors.firstName = "First name is required!";
+            flag=true;
         }
         if (!values.lastName) {
             errors.lastName = "Last name is required!";
+            flag=true;
         }
         if (!values.password) {
             errors.password = "Password is required";
+            flag=true;
         } else if (values.password.length < 4) {
             errors.password = "Password must be more than 4 characters";
+            flag=true;
         } else if (values.password.length > 10) {
             errors.password = "Password cannot exceed more than 10 characters";
         }
         if (values.password !== values.confirmPassword) {
             errors.confirmPassword = "Those passwords didn’t match. Try again.";
+            flag=true;
         }
-        return errors;
+        setFormErrors(errors);
+        return flag;
     };
 
     const login = useGoogleLogin({
