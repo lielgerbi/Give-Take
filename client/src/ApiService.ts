@@ -4,7 +4,7 @@ import https from 'https'
 
 function api() {
 return axios.create({
-    baseURL: "https://10.10.248.226:443",
+    baseURL: "https://193.106.55.226:443",
     headers: {
       'Content-Type': 'application/json',
       'authorization': localStorage.getItem("accessToken") || '',
