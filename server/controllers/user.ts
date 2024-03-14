@@ -54,6 +54,8 @@ const createUserController = async (req: Request, res: Response): Promise<void> 
 };
 
 const updateUserController = async (req: Request, res: Response): Promise<void> => {
+  console.log("update controller");
+  console.log(req.body);
   try {
     const user = await updateUserService(req.body.userName, req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.photo);
     if (!user) {

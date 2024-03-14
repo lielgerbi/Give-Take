@@ -35,7 +35,7 @@ const createUser = async (newUser: Partial<IUser>): Promise<IUser> => {
 
 const updateUser = async (userName: string, firstName: string, lastName: string, email: string, password: string, photo: string): Promise<IUser | null> => {
     const user = await getUserByName(userName);
-
+    console.log("find"+user);
     if (user) {
         user.firstName = firstName;
         user.lastName = lastName;
