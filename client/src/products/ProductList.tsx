@@ -140,6 +140,7 @@ function ProductList() {
     };
 
     useEffect(() => {
+        console.log(allProducts)
         setFilteredProducts(allProducts);
     }, [allProducts]);
 

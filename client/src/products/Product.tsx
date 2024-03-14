@@ -37,6 +37,8 @@ const Product: React.FC<ProductProps> = ({product}) => {
   const storedUser = localStorage.getItem('user');
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_API_URL)
+    console.log(product?.photo)
     // Check if user data exists in localStorage
     if (storedUser && connectedUser === undefined) {
       // Parse the stored user data
