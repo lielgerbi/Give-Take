@@ -70,8 +70,8 @@ function FilterMenuLeft({ updateFilteredProducts }: { updateFilteredProducts: (f
             return product.city === selectCity;
         });
         
-        //marge filters arrays
-         // Combine the arrays
+    //marge filters arrays
+    // Combine the arrays
     const combinedArray = [...filteredProducts, ...filteredProductsCity];
   
     // Use reduce to filter out duplicates based on _id
