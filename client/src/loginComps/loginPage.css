@@ -22,7 +22,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 115vh;
+    /* height: 115vh; */
     max-width: 500px;
     width: 100%;
     margin: auto;
