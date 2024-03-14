@@ -20,9 +20,9 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
   let db: mongoose.Connection;
 
   mongoose
-    .connect('mongodb://admin:bartar20%40CS@10.10.248.226:21771/', {})
+    .connect((process.env.DATABASE_URL!), {})
     .then(() => {
-      db = mongoose.connection.useDb('give&take');
+      db = mongoose.connection.useDb(process.env.DB!);
       console.log('connect to mongo');
       app.use(cors());
       app.use(cors({
