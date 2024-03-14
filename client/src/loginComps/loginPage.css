@@ -1,0 +1,122 @@
+
+.bgImg {
+    background: url('./backgroud.jpg') no-repeat center center fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+}
+.dropdown {
+    border-bottom: none !important;
+    font-size: 13px;
+    font-family: "Heebo", sans-serif;
+    color: #595a7f;
+    text-align: right;
+    font-weight: normal;
+    padding-right: 3px;
+  }
+
+.container_login {
+    padding-top: 33px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    
+}
+.container_signup {
+    padding-top: 33px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    
+}
+
+.container_login > form {
+    width: 70%;
+    border: 1px solid #dfdfdf;
+    padding: 20px;
+    border-radius: 5px;
+    background: #fff;
+}
+.container_signup > form {
+    width: 70%;
+    border: 1px solid #dfdfdf;
+    padding: 20px;
+    border-radius: 5px;
+    background: #fff;
+}
+input {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    border-radius: 9%;
+}
+.name {
+    display: flex;
+    font-size: 12px;
+}
+.field{
+    font-size: 13px;
+    margin-right: 10px;
+    margin-bottom: 7px;
+}
+pre {
+    width: 70%;
+    color: #fff;
+    font-size: larger;
+}
+
+.singbutton {
+    background: #05b462 !important;
+    padding: 5px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+p {
+    color: rgb(255, 0, 0);
+}
+
+.text {
+    margin: 2px;
+    padding: 5px;
+}
+label{
+    font-size: 15px;
+}
+span{
+    color: rgb(0, 95, 236);
+    cursor: pointer;
+}
+.image-uploader-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .file-input-label {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  .upload-icon {
+    margin-right: 10px;
+  }
+  
