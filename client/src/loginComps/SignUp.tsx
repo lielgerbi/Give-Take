@@ -110,24 +110,26 @@ function SignUp(): JSX.Element {
           }
     };
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-        await handleDownload();
         e.preventDefault();
         setFormErrors(validate(formValues));
-        console.log(formErrors);
-        try {
-            setIsSubmit(true);
-            const newUser = await addUser(formValues);
-            localStorage.setItem("accessToken", newUser.headers.authorization);
-            localStorage.setItem("refreshToken", newUser.headers.refreshtoken);
-            localStorage.setItem('user', JSON.stringify(newUser.data));
-            setConnectedUser(formValues);
-            history.push("/products");
-          } catch (error: any) {
-              if(error.response.status === 500){
-                  setUserError("change user Name")
-              }
-            console.error("Error adding user:", error);
-          }
+        if (Object.keys(formErrors).length === 0){
+            try {
+                await handleDownload();
+                setIsSubmit(true);
+                const newUser = await addUser(formValues);
+                localStorage.setItem("accessToken", newUser.headers.authorization);
+                localStorage.setItem("refreshToken", newUser.headers.refreshtoken);
+                localStorage.setItem('user', JSON.stringify(newUser.data));
+                setConnectedUser(formValues);
+                history.push("/products");
+              } catch (error: any) {
+                  if(error.response.status === 500){
+                      setUserError("change user Name")
+                  }
+                console.error("Error adding user:", error);
+              }            
+        }
+        
     };
     const handleClickLogin = () => {
         history.push('/');
