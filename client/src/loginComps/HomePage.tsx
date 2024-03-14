@@ -127,7 +127,7 @@ function HomePage(): JSX.Element {
     return (
         <>
             <div className="bgImg">
-                <div className="container_login">
+                <div className="container_signup">
                     {Object.keys(formErrors).length === 0 && isSubmit && (
                         <div className="ui message success">
                             Signed in successfully

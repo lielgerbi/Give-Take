@@ -129,7 +129,7 @@ function NewProduct() {
   return (
     <>
       <div className="bgImg">
-        <div className="container_login">
+        <div className="container_signup">
           <form onSubmit={handleSubmit}>
             <h1>upload product</h1>
             <div className="ui divider"></div>
