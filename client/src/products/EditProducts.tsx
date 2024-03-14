@@ -66,7 +66,7 @@ function EditProduct() {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleDownload();
+        await handleDownload();
         setIsSubmit(true);
         try {
             const post = await updatePost(editPost._id, formValues);

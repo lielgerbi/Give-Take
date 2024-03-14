@@ -9,7 +9,9 @@ import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import {
     newfile,
-    addUser
+    addUser,
+    getAllProducts,
+    getAllCategories,
 } from "../ApiService";
 
 function SignUp(): JSX.Element {
@@ -30,7 +32,39 @@ function SignUp(): JSX.Element {
     const [userError,setUserError] =useState("");
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const history = useHistory();
-    const {setConnectedUser} = useContext(GlobalContext);
+    const {connectedUser, setConnectedUser,setAllProducts, setAllCategories, allCities, setAllCities} = useContext(GlobalContext);
+    useEffect(() => {    
+        if(connectedUser !== undefined){ 
+            fetchData();
+            history.push("/products");
+        } 
+    }, [connectedUser]);
+    async function fetchData(): Promise<void> {
+        try {
+            const products = await getAllProducts();
+            const categories = await getAllCategories();
+            const cities = (allCities == undefined || allCities.length == 0) ? await getAllCitiesInIsrael() : allCities;
+            setAllProducts(products.data);
+            setAllCategories(categories.data);
+            setAllCities(cities);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+    interface City {
+        name: string;
+      }
+    async function getAllCitiesInIsrael() {
+        try {
+          const response = await axios.get('http://api.geonames.org/searchJSON?country=IL&username=liel&maxRows=100');
+          // Extract the list of cities
+          const israelCities: string[] = response.data.geonames.map((city: City) => city.name);
+          return israelCities;
+        } catch (error) {
+          console.error(error);
+          throw error; // Rethrow the error
+        }
+      }
    
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -82,9 +116,11 @@ function SignUp(): JSX.Element {
         setIsSubmit(true);
         try {
             const newUser = await addUser(formValues);
-              setConnectedUser(formValues);
-              history.push("/products");
-              window.location.reload();
+            localStorage.setItem("accessToken", newUser.headers.authorization);
+            localStorage.setItem("refreshToken", newUser.headers.refreshtoken);
+            localStorage.setItem('user', JSON.stringify(newUser.data));
+            setConnectedUser(formValues);
+            history.push("/products");
           } catch (error: any) {
               if(error.response.status === 500){
                   setUserError("change user Name")
