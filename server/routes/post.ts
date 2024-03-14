@@ -153,6 +153,46 @@ router.post('/delete', authenticate, postController.deletePostController);
  */
 router.post('/update', authenticate, postController.updatePostController);
 
+
+/**
+ * @swagger
+ * posst/getPostID/{postID}:
+ *   get:
+ *     summary: Get Post by ID
+ *     tags: [Posts]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: postID
+ *         required: true
+ *         description: The ID of the post to retrieve.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Post found. Returns the post object.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 postId:
+ *                   type: string
+ *                   example: "12345"
+ *       '404':
+ *         description: Post not found
+ *         content:
+ *           application/json:
+ *             example: {"errors": ["Post not found"]}
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             example: {"message": "Internal Server Error"}
+ */
+
+
 router.get('/getPostID/:postID', authenticate, postController.getPostByIdController);
 
 
