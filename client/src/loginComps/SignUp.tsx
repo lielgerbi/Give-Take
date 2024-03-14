@@ -73,7 +73,7 @@ function SignUp(): JSX.Element {
     };
 
     const handleDownload = async (): Promise<void> => {
-        if (selectedFile) {
+        if (selectedFile && selectedFile!== null) {
             var guid= uuidv4();
             const fileExtension = selectedFile.name.split('.').pop();
             guid = guid + "." + fileExtension;
@@ -95,8 +95,8 @@ function SignUp(): JSX.Element {
       const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
         var preview = document.getElementById('preview') as HTMLImageElement;
         const file = event.target.files![0];
-        setSelectedFile(file);
         if (file) {
+            setSelectedFile(file);
             var reader = new FileReader();
     
             reader.onload = function(e) {
@@ -110,7 +110,7 @@ function SignUp(): JSX.Element {
           }
     };
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-        handleDownload();
+        await handleDownload();
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
