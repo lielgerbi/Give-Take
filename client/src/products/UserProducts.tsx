@@ -26,6 +26,9 @@ function UserProducts() {
       }
     }
   }, []);
+  const handleClickUpload = () => {
+    history.push('/newProduct');
+  };
 
   const handleDelete = async (post: any) => { // Define type for post
     try {
@@ -50,6 +53,7 @@ function UserProducts() {
     <div className="col-lg-9">
       <div className="d-flex flex-column h-100">
 
+          {allProducts.length>0?
             <div
               className={
                 "row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 g-3 mb-4 flex-shrink-0"
@@ -80,8 +84,12 @@ function UserProducts() {
                     </div>
                   );
               })}
+            </div>:
+            <div>
+              <h1>You haven't upload products yet</h1>
+              <span onClick={handleClickUpload}>upload now</span>
             </div>
-
+            }
           </div>
         </div>
       </div>
