@@ -83,7 +83,7 @@ function SignUp(): JSX.Element {
         try {
             const newUser = await addUser(formValues);
               setConnectedUser(formValues);
-              history.push("/landing");
+              history.push("/products");
               window.location.reload();
           } catch (error: any) {
               if(error.response.status === 500){

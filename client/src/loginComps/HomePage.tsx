@@ -52,7 +52,7 @@ function HomePage(): JSX.Element {
         try {
             const newUser = await updateUser(formValues);
             setConnectedUser(newUser.data);
-            history.push("/landing");
+            history.push("/products");
         } catch (error) {
             console.error("Error adding user:", error);
         }

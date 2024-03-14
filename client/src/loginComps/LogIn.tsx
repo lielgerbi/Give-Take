@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { GlobalContext } from "../GlobalContext";
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import "./loginPage.css";
 import {
     findUser,
@@ -28,7 +27,6 @@ function LogIn(): JSX.Element {
         googleUser: false
     };
     const [ googleUser, setGoogleUser ] = useState<boolean>();;
-    // const [ profile, setProfile ] = useState<any[]>([]);
     const [formValues, setFormValues] = useState<FormValues>(initialValues);
     const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
     const [isSubmit, setIsSubmit] = useState<boolean>(false);
@@ -43,7 +41,7 @@ function LogIn(): JSX.Element {
     useEffect(() => {    
         if(connectedUser !== undefined){ 
             fetchData();
-            history.push("/landing");
+            history.push("/products");
         } 
     }, [connectedUser]);
 
@@ -70,17 +68,13 @@ function LogIn(): JSX.Element {
             localStorage.setItem("refreshToken", user.headers.refreshtoken);
             localStorage.setItem('user', JSON.stringify(user.data));
             setConnectedUser(user.data);
-            history.push("/landing");
+            history.push("/products");
 
         } catch (error) {
             setUserNotExist(true);
             console.error("not find user:", error);
         }
     };
-    const handleLogin = () => {
-        window.location.href = 'https://node66.cs.colman.ac.il/auth/google';
-    };
-
     useEffect(() => {
         console.log(formErrors);
         if (Object.keys(formErrors).length === 0 && isSubmit) {
@@ -100,67 +94,23 @@ function LogIn(): JSX.Element {
         } else if (values.password.length > 10) {
             errors.password = "Password cannot exceed more than 10 characters";
         }
-       
         return errors;
     };
-
-    const login = useGoogleLogin({
-        // onSuccess: (codeResponse: GoogleLoginResponse) => setGoogleUser(codeResponse),
-        // onError: (error: Error) => console.log('Login Failed:', error)
-    });
     interface City {
       name: string;
-      // Add other properties if available in your data
     }
     async function getAllCitiesInIsrael() {
       try {
         const response = await axios.get('http://api.geonames.org/searchJSON?country=IL&username=liel&maxRows=100');
-      
         // Extract the list of cities
         const israelCities: string[] = response.data.geonames.map((city: City) => city.name);
         return israelCities;
       } catch (error) {
         console.error(error);
-        throw error; // Rethrow the error if needed
+        throw error; // Rethrow the error
       }
     }
   
-    // const handleGoogleUser = async () => {
-    //     try {
-    //         if (googleUser) {
-    //             const response = await axios.get(
-    //                 `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleUser.access_token}`,
-    //                 {
-    //                     headers: {
-    //                         Authorization: `Bearer ${googleUser.access_token}`,
-    //                         Accept: 'application/json'
-    //                     }
-    //                 }
-    //             );
-    //             if (response.data) {
-    //                 formValues.userName = response.data.email;
-    //                 formValues.firstName = response.data.given_name;
-    //                 formValues.lastName = response.data.family_name;
-    //                 formValues.email = response.data.email;
-    //                 formValues.password = response.data.email;
-    //                 formValues.confirmPassword = response.data.email;
-    //                 formValues.googleUser = true;
-    //                 const user = await findUser(formValues.userName, formValues.password);
-    //                 localStorage.setItem("accessToken", user.headers.authorization);
-    //                 localStorage.setItem("refreshToken", user.headers.refreshtoken);
-    //                 localStorage.setItem('user', JSON.stringify(user.data));
-    //                 setConnectedUser(user.data);
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.error("Error adding user:", error);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     handleGoogleUser();
-    // }, [googleUser]);
-
     return (
         <div className="bgImg">
             <div className="container_login">
@@ -194,7 +144,6 @@ function LogIn(): JSX.Element {
                         <button type="submit" className="singbutton">Submit</button>
                     </div>
                 </form>
-                <button onClick={handleLogin}>Sign in with Google 🚀 </button>
                 <div className="text">
                     Already have an account? <span>Login</span>
                 </div>

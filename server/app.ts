@@ -5,7 +5,6 @@ import mongoose from 'mongoose';
 import users from './routes/user';
 import posts from './routes/post';
 import file from './routes/file';
-import google from './routes/google';
 import categories from './routes/categories';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swaggerConfig';
@@ -45,7 +44,6 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
       app.use('/users', users);
       app.use('/posts', posts);
       app.use('/categories', categories);
-      app.use('/google',google )
       
       // Serve Swagger UI
       app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

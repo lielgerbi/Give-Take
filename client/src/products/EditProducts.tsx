@@ -73,7 +73,7 @@ function EditProduct() {
             console.log("edit", post);
             const products = await getAllProducts();
             setAllProducts(products.data);
-            history.push("/landing");
+            history.push("/myPost");
         } catch (error) {
             console.error("Error adding user:", error);
         }

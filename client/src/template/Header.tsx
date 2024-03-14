@@ -55,7 +55,7 @@ function Header() {
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
         <div className="container-fluid">
           {currentUser !== undefined &&
-            <Link className="navbar-brand" to="/landing" onClick={changeNav}>
+            <Link className="navbar-brand" to="/products" onClick={changeNav}>
               <FontAwesomeIcon
                 icon={["fab", "bootstrap"]}
                 className="ms-1"
