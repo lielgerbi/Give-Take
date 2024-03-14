@@ -6,7 +6,6 @@ import { GlobalContext } from "../GlobalContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { v4 as uuidv4 } from 'uuid';
-const { Option } = Select;
 
 import {
   newPost,
