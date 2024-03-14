@@ -44,8 +44,8 @@ function HomePage(): JSX.Element {
     }, []);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-        await handleDownload();
         e.preventDefault();
+        await handleDownload();
         setFormErrors(validate(formValues));
         setIsSubmit(true);
 
