@@ -85,7 +85,7 @@ function UserProducts() {
                   );
               })}
             </div>:
-            <div>
+            <div style={{paddingTop:"50px"}}>
               <h1>You haven't upload products yet</h1>
               <span onClick={handleClickUpload}>upload now</span>
             </div>
