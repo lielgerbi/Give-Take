@@ -22,7 +22,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* height: 115vh; */
+    height: 100vh;
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    
+}
+.container_signup {
+    padding-top: 33px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
     max-width: 500px;
     width: 100%;
     margin: auto;
