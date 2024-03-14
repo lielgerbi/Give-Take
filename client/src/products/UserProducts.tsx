@@ -8,12 +8,13 @@ import {
   deletePostUser,
   getAllProducts,
 } from "../ApiService";
+import Product from "./Product";
 
 function UserProducts() {
   const history = useHistory();
   const { connectedUser, allProducts, setAllProducts, setEditPost } = useContext(GlobalContext);
   const [currentUser, setCurrentUser] = useState<{ userName: string } | null>(null); // Define type for currentUser
-
+  const countUserProducts = allProducts.filter(product=> product.userName === connectedUser.userName).length;
   useEffect(() => {
     // Check if user data exists in localStorage
     const storedUser = localStorage.getItem('user');
@@ -53,7 +54,7 @@ function UserProducts() {
     <div className="col-lg-9">
       <div className="d-flex flex-column h-100">
 
-          {allProducts.length>0?
+          {countUserProducts.length>0?
             <div
               className={
                 "row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 g-3 mb-4 flex-shrink-0"
