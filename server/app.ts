@@ -24,7 +24,7 @@ const setupApp = new Promise<Application>((resolve, reject) => { // Change here
     .then(() => {
       db = mongoose.connection.useDb('give&take');
       console.log('connect to mongo');
-      
+      app.use(cors());
       app.use(cors({
         origin: ['http://193.106.55.226', 'http://10.10.248.226'],
         exposedHeaders: ['authorization', 'refreshToken'],
