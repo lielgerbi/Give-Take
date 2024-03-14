@@ -113,8 +113,9 @@ function SignUp(): JSX.Element {
         await handleDownload();
         e.preventDefault();
         setFormErrors(validate(formValues));
-        setIsSubmit(true);
+        console.log(formErrors);
         try {
+            setIsSubmit(true);
             const newUser = await addUser(formValues);
             localStorage.setItem("accessToken", newUser.headers.authorization);
             localStorage.setItem("refreshToken", newUser.headers.refreshtoken);
@@ -128,6 +129,9 @@ function SignUp(): JSX.Element {
             console.error("Error adding user:", error);
           }
     };
+    const handleClickLogin = () => {
+        history.push('/');
+      };
 
     const validate = (values: typeof initialValues): {[key: string]: string} => {
         const errors: {[key: string]: string} = {};
@@ -309,7 +313,7 @@ function SignUp(): JSX.Element {
                 </form>
                 {/* <button onClick={login}>Sign in with Google 🚀 </button> */}
                 <div className="text">
-                    Already have an account? <span>Login</span>
+                    Already have an account? <span  onClick={handleClickLogin}>Login</span>
                 </div>
             </div>
             </div>

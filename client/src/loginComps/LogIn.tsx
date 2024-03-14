@@ -110,7 +110,11 @@ function LogIn(): JSX.Element {
         throw error; // Rethrow the error
       }
     }
-  
+    const handleClickSignup = () => {
+        history.push('/signUp');
+      };
+
+
     return (
         <div className="bgImg">
             <div className="container_login">
@@ -145,7 +149,7 @@ function LogIn(): JSX.Element {
                     </div>
                 </form>
                 <div className="text">
-                    New here? <span>SignUp</span>
+                    New here? <span onClick={handleClickSignup} >SignUp</span>
                 </div>
             </div>
         </div>
