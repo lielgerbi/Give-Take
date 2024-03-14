@@ -7,7 +7,6 @@ interface City {
     value: string;
     label: string;
 }
-
 interface SelectedFilters {
     categories: string[];
     subCategories: string[];
@@ -41,7 +40,16 @@ function FilterMenuLeft({ updateFilteredProducts }: { updateFilteredProducts: (f
 
     const onChangeCity = (value: string) => {
         console.log(`selected ${value}`);
-        setSelectCity(value)
+        if(value == 'Clear')
+        {
+            setSelectCity(undefined)
+        }
+        else{
+            setSelectCity(value)
+        }
+        
+        
+
     };
 
     const handleApplyFilters = () => {
@@ -110,7 +118,7 @@ function FilterMenuLeft({ updateFilteredProducts }: { updateFilteredProducts: (f
                         placeholder="Select City"
                         style={{ width: 150 }}
                         onChange={onChangeCity}
-                        options={[...menuCities, { value: undefined, label: 'Clear' }]} // Add Clear option
+                        options={[...menuCities, { value: 'Clear', label: 'Clear' }]} // Add Clear option
                     />
                 </div>
             </li>
