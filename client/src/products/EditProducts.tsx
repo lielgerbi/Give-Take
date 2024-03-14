@@ -80,7 +80,7 @@ function EditProduct() {
     };
 
     const handleDownload = async () => {
-        if (selectedFile) {
+        if (selectedFile && selectedFile!==null) {
             var guid = uuidv4();
             const fileExtension = selectedFile.name.split('.').pop();
             guid = guid + "." + fileExtension;
@@ -115,7 +115,7 @@ function EditProduct() {
         var preview = document.getElementById('preview') as HTMLImageElement;
         const file = event.target.files?.[0];
         setSelectedFile(file || null);
-        if (file) {
+        if (file !== null && file) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
