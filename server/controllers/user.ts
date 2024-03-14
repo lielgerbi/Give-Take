@@ -44,7 +44,9 @@ const createUserController = async (req: Request, res: Response): Promise<void> 
       res.status(500).json({ errors: ['User name exists'] });
     } else {
       const newUser = await createUserService(req.body.newUser);
-      res.status(200).json(newUser);
+      const accessToken = jwt.sign({ user }, secretKey, { expiresIn: '1h' });
+      const refreshToken = jwt.sign({ user }, secretKey, { expiresIn: '1d' });
+      res.status(200).header('refreshToken', refreshToken).header('authorization', accessToken).json(newUser);
     }
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error' });
