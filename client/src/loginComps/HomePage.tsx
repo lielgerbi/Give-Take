@@ -135,7 +135,6 @@ function HomePage(): JSX.Element {
                     )}
 
                     <form onSubmit={handleSubmit}>
-                        <h1>User Details</h1>
                         <div className="ui divider"></div>
                         <div className="ui form">
                             <div className="field">
@@ -194,17 +193,6 @@ function HomePage(): JSX.Element {
                                 />
                             </div>
                             <p>{formErrors.email}</p>
-                            <div className="field">
-                                <label>Password</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    placeholder="Password"
-                                    value={formValues.password}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <p>{formErrors.password}</p>
                             <div className="image-uploader-container">
                                 <label className="file-input-label">
                                     <input

@@ -132,7 +132,6 @@ function EditProduct() {
         <div className="bgImg">
             <div className="container_signup">
                 <form onSubmit={handleSubmit}>
-                    <h1>upload product</h1>
                     <div className="ui divider"></div>
                     <div className="ui form">
                         <div className="field">
