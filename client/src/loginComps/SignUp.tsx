@@ -15,7 +15,7 @@ import {
 } from "../ApiService";
 
 function SignUp(): JSX.Element {
-    const [ googleUser, setGoogleUser ] = useState<boolean>();;
+    const [googleUser, setGoogleUser] = useState<GoogleUser | null>(null);
     const initialValues = {
         userName: "",
         firstName:"",
@@ -53,6 +53,10 @@ function SignUp(): JSX.Element {
     }
     interface City {
         name: string;
+      }
+      interface GoogleUser {
+        access_token: string;
+        // Add other properties as needed
       }
     async function getAllCitiesInIsrael() {
         try {
@@ -175,20 +179,22 @@ function SignUp(): JSX.Element {
         return flag;
     };
 
-    const login = useGoogleLogin({
-        // onSuccess: (codeResponse) => setGoogleUser(codeResponse),
-        // onError: (error) => console.log('Login Failed:', error)
-    });
+    // function login(){
+    //     useGoogleLogin({
+    //         onSuccess: (codeResponse: any) => setGoogleUser(codeResponse),
+    //         onError: (error) => console.log('Login Failed:', error)
+    //     });
+    // }
 
     // useEffect(() => {
     //     const fetchData = async (): Promise<void> => {
     //       try {
-    //         if (googleUser) {
+    //         if (googleUser !==null) {
     //           const response = await axios.get(
     //             `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${googleUser.access_token}`,
     //             {
     //               headers: {
-    //                 Authorization: `Bearer ${googleUser.access_token}`,
+    //                 Authorization: `Bearer ${googleUser?.access_token}`,
     //                 Accept: 'application/json'
     //               }
     //             }
@@ -210,9 +216,6 @@ function SignUp(): JSX.Element {
     //           }
     //         }
     //       } catch (error) {
-    //         if (error.response && error.response.status === 500) {
-    //           setUserError("change user Name");
-    //         }
     //         console.error("Error adding user:", error);
     //       }
     //     };

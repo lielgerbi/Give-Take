@@ -1,13 +1,14 @@
-const setupApp = require('../app');
-const request = require("supertest");
-const mongoose = require("mongoose");
-const jwt = require('jsonwebtoken');
+import request from 'supertest';
+import setupApp from '../app';
+import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import { Application } from 'express';
 
 // Mock the jwt library
 jest.mock('jsonwebtoken');
-var app;
+var app :Application;
 beforeAll(async()=>{
-    app = await setupApp;
+  app = await setupApp;
 })
 
 afterAll(async () => {
@@ -23,7 +24,7 @@ describe('Categories Controller', () => {
     test('should get categories with valid authentication', async () => {
       // Mock the decoded user
       const mockUser = { id: '123', username: 'testuser' };
-      jwt.verify.mockReturnValue({ user: mockUser });
+      (jwt.verify as jest.Mock).mockReturnValue(mockUser)
   
       // Mock the request headers
       const headers = {

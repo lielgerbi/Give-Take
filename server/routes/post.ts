@@ -153,4 +153,7 @@ router.post('/delete', authenticate, postController.deletePostController);
  */
 router.post('/update', authenticate, postController.updatePostController);
 
+router.get('/getPostID/:postID', authenticate, postController.getPostByIdController);
+
+
 export default router;

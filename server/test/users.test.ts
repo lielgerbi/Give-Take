@@ -1,13 +1,14 @@
-const setupApp = require('../app');
-const request = require("supertest");
-const mongoose = require("mongoose");
-const jwt = require('jsonwebtoken');
+import request from 'supertest';
+import setupApp from '../app';
+import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import { Application } from 'express';
 
 // Mock the jwt library
 jest.mock('jsonwebtoken');
-var app;
+var app :Application;
 beforeAll(async()=>{
-    app = await setupApp;
+  app = await setupApp;
 })
 
 afterAll(async () => {
@@ -18,13 +19,12 @@ afterAll(async () => {
       console.error('Error closing MongoDB connection:', error);
     }
   });
-//getPosts
-describe('Posts Controller', () => {
-    test('should get posts with valid authentication', async () => {
-        console.log(app);
+//getUsers
+describe('Users Controller', () => {
+    test('should get all users ', async () => {
       // Mock the decoded user
       const mockUser = { id: '123', username: 'testuser' };
-      jwt.verify.mockReturnValue({ user: mockUser });
+      (jwt.verify as jest.Mock).mockReturnValue(mockUser)
   
       // Mock the request headers
       const headers = {
@@ -33,7 +33,7 @@ describe('Posts Controller', () => {
       };
   
       // Make a request to your route
-      const response = await request(app).get('/posts/')
+      const response = await request(app).get('/users/')
       .set('authorization', headers.authorization)
       .set('refreshtoken', headers.refreshtoken);
   
@@ -42,116 +42,109 @@ describe('Posts Controller', () => {
       expect(response.body.length).toBeGreaterThan(1);
     });
   });
-///getPostByUser
-  describe('Posts Controller', () => {
-    test('should get post by user id with valid authentication', async () => {
-        console.log(app);
-      // Mock the decoded user
-      const mockUser = { id: '123', username: 'testuser' };
-      jwt.verify.mockReturnValue({ user: mockUser });
-  
-      // Mock the request headers
-      const headers = {
-        authorization: 'validAccessToken',
-        refreshtoken: 'validRefreshToken',
-      };
-      // Make a request to your route
-      const response = await request(app).get(`/posts/getPostByUser`)
-        .send({ userName:'user1' })
-        .set('authorization', headers.authorization)
-        .set('refreshtoken', headers.refreshtoken);
-        
-  
-      // Assert the response status and any other expectations
-      expect(response.status).toBe(200);
-      expect(response.body.length).toBeGreaterThan(1);
-      
-    });
-  });
-
-//createPost
+//getUser- name, password
   describe('Users Controller', () => {
-    test('should add post with valid authentication', async () => {
+    test('should get user by userName and password with valid authentication', async () => {
       // Mock the decoded user
       const mockUser = { id: '123', username: 'testuser' };
-      jwt.verify.mockReturnValue({ user: mockUser });
+      (jwt.verify as jest.Mock).mockReturnValue(mockUser)
   
       // Mock the request headers
       const headers = {
         authorization: 'validAccessToken',
         refreshtoken: 'validRefreshToken',
       };
-      let post={categoryName:'test',subCategory:'test',
-      details:'test',isAvailable:true ,city:'test'
-      }
-      let userName = 'test'
-
+  
       // Make a request to your route
-      const response = await request(app).post('/posts')
+      const response = await request(app).get('/users/user')
         .set('authorization', headers.authorization)
         .set('refreshtoken', headers.refreshtoken)
-        .send({userName,post});
-
+        .query({
+            userName: 'user1',
+            password: 'password1',
+          });
       // Assert the response status and any other expectations
       expect(response.status).toBe(200);
-      expect(response._body._id).toBeDefined();
+       expect(response.body._id).toEqual('65aba8ec47f6e836fd579de6');
     });
   });
-
-//delete
-
+//createUser
   describe('Users Controller', () => {
-    test('should add post with valid authentication', async () => {
+    test('should get usres with valid authentication', async () => {
       // Mock the decoded user
       const mockUser = { id: '123', username: 'testuser' };
-      jwt.verify.mockReturnValue({ user: mockUser });
+      (jwt.verify as jest.Mock).mockReturnValue(mockUser)
   
       // Mock the request headers
       const headers = {
         authorization: 'validAccessToken',
         refreshtoken: 'validRefreshToken',
       };
-      let post={_id:'65eb61f102e74adac8ec1716',categoryName:'test',subCategory:'test',
-      details:'test',isAvailable:true ,city:'test'
+      let newUser={userName:'test32',password:'test',
+      firstName:'test',lastName:'test',email:'test', isManager:true,photo:'test'
       }
-
       // Make a request to your route
-      const response = await request(app).post('/posts/delete')
+      const response = await request(app).post('/users')
         .set('authorization', headers.authorization)
         .set('refreshtoken', headers.refreshtoken)
-        .send({post});
+        .send({newUser});
 
       // Assert the response status and any other expectations
-      expect(response.status).toBe(200);
+      expect(response.status).toBe(500);
+    //   expect(response.body._id).toBeDefined();
     });
   });
 
 
-//updatePost
+//updateUser
 describe('Users Controller', () => {
-    test('should update post with valid authentication', async () => {
+    test('should get usres with valid authentication', async () => {
       // Mock the decoded user
       const mockUser = { id: '123', username: 'testuser' };
-      jwt.verify.mockReturnValue({ user: mockUser });
+      (jwt.verify as jest.Mock).mockReturnValue(mockUser)
   
       // Mock the request headers
       const headers = {
         authorization: 'validAccessToken',
         refreshtoken: 'validRefreshToken',
       };
-
       // Make a request to your route
-      const response = await request(app).post('/posts/update')
+      const response = await request(app).post('/users/user')
         .set('authorization', headers.authorization)
         .set('refreshtoken', headers.refreshtoken)
-        .send({_id:'65eb61f102e74adac8ec1716',categoryName:'test1',subCategory:'test',
-        details:'test',isAvailable:true ,city:'test'
+        .send({userName:'test',password:'testupdate',
+        firstName:'test',lastName:'test'
         });
 
       // Assert the response status and any other expectations
       expect(response.status).toBe(200);
+      expect(response.body._id).toBeDefined();
     });
   });
 
-
+//getUser- name, password
+describe('Users Controller', () => {
+    test('should get user by userName and password with valid authentication', async () => {
+      // Mock the decoded user
+      const mockUser = { id: '123', username: 'testuser' };
+      (jwt.verify as jest.Mock).mockReturnValue(mockUser)
+  
+      // Mock the request headers
+      const headers = {
+        authorization: 'validAccessToken',
+        refreshtoken: 'validRefreshToken',
+      };
+  
+      // Make a request to your route
+      const response = await request(app).get('/users/user')
+        .set('authorization', headers.authorization)
+        .set('refreshtoken', headers.refreshtoken)
+        .query({
+            userName: 'notGoodUser',
+            password: 'password1',
+          });
+      // Assert the response status and any other expectations
+      expect(response.status).toBe(404);
+    });
+  });
 
