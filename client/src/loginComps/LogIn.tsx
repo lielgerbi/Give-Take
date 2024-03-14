@@ -77,6 +77,9 @@ function LogIn(): JSX.Element {
             console.error("not find user:", error);
         }
     };
+    const handleLogin = () => {
+        window.location.href = 'https://node66.cs.colman.ac.il/auth/google';
+    };
 
     useEffect(() => {
         console.log(formErrors);
@@ -191,7 +194,7 @@ function LogIn(): JSX.Element {
                         <button type="submit" className="singbutton">Submit</button>
                     </div>
                 </form>
-                {/* <button onClick={login}>Sign in with Google 🚀 </button> */}
+                <button onClick={handleLogin}>Sign in with Google 🚀 </button>
                 <div className="text">
                     Already have an account? <span>Login</span>
                 </div>
