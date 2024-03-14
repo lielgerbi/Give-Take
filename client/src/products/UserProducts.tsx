@@ -54,7 +54,7 @@ function UserProducts() {
     <div className="col-lg-9">
       <div className="d-flex flex-column h-100">
 
-          {countUserProducts.length>0?
+          {countUserProducts>0?
             <div
               className={
                 "row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-4 g-3 mb-4 flex-shrink-0"
