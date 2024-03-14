@@ -31,7 +31,7 @@ function EditProduct() {
         subCategory: editPost.subCategory,
         details: editPost.details,
         city: editPost.city,
-        photo: ""
+        photo: editPost.photo
     });
     const [isSubmit, setIsSubmit] = useState(false);
     const [categoryIndex, setCategoryIndex] = useState(-1);
