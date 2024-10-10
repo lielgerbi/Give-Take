@@ -2,7 +2,7 @@ import request from 'supertest';
 import setupApp from '../app';
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { Application } from 'express';
+import { Application } from 'expresss';
 
 // Mock the jwt library
 jest.mock('jsonwebtoken');
